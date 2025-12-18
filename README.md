@@ -1,45 +1,13 @@
 # BlackLake Marketing Site
 
-High-end, precision-engineered marketing site for BlackLake — built to showcase our philosophy:
-
-**Elite software. Intelligent systems. Absolute craftsmanship.**
-
-The site combines Next.js 15, Tailwind CSS, and Framer Motion with advanced UI/UX patterns, intelligent animations, and a curated design system built for clarity, speed, and control.
-
-This project serves as the foundational marketing layer for the BlackLake brand — modern, minimal, fast, and engineered with intention.
+Marketing site for BlackLake, built with Next.js (App Router), TypeScript, Tailwind CSS, and Framer Motion.
 
 ---
 
-## IMPORTANT — CONTENT GUIDANCE (FOR AI + DEVELOPERS)
+## Content & Brand
 
-**❗ All text, paragraphs, headings, and descriptive content in the UI should be placeholder-only.**  
-BlackLake's actual marketing copy, messaging, and brand narrative will be added later.
-
-The focus at this stage is exclusively on:
-
-- **Design quality and consistency**
-- **Elite UX/UI interaction patterns**
-- **Brand alignment with BlackLake’s identity**
-- **Motion design, depth, clarity, and craftsmanship**
-- **Structure and component architecture**
-- **Layout, animation, and user flow**
-
-Use placeholder text such as:
-
-- `"BlackLake Headline Placeholder"`
-- `"Subheading placeholder — refined later."`
-- `"Short description Lorem ipsum placeholder."`
-- `"Call to Action"`
-- `"Feature heading placeholder"`  
-- `"Feature description placeholder"`
-
-Absolutely **no real marketing copy** should be created or inserted.
-
-This keeps the build:
-- brand-agnostic  
-- flexible  
-- modular  
-- ready for final copywriting later  
+- Content, tone, and component usage guidelines live in `instructions/`.
+- When changing copy, prefer concrete, constraint-aware language over hype.
 
 ---
 
@@ -66,7 +34,6 @@ This keeps the build:
 - Framer Motion with shared variants (`lib/motion.ts`)
 - Magnetic / kinetic micro-interactions
 - Scroll-linked animation and layered depth motion
-- Optional GSAP ScrollTrigger integration (off by default)
 
 ### AI & Enhanced Features (Optional)
 - AI-generated placeholder blurbs for prototyping (not final content)
@@ -129,58 +96,45 @@ lib/
   └─ ai.ts             
 
 public/
-  ├─ og-image.png      
+  ├─ og-image.svg
   ├─ logo/             
   └─ textures/         
 
 tailwind.config.ts
-Running Locally
-Node ≥ 20.9.0 (repo uses .nvmrc = 20.11.0)
 
-bash
-Copy code
+## Running Locally
+
+- Node `>= 20.9.0` (repo uses `.nvmrc` = `20.11.0`)
+
+```bash
 nvm install
 nvm use
 npm install
 npm run dev
-Then visit:
+```
 
-arduino
-Copy code
-http://localhost:3000
-Linting & Type Safety
-bash
-Copy code
+Visit `http://localhost:3000`.
+
+## Linting & Type Safety
+
+```bash
 npm run lint
 npm run typecheck
-Strict rules enforced:
+```
 
-Strict TS
+## Build
 
-ESLint modern React rules
-
-Prettier
-
-No unused components
-
-Build
-bash
-Copy code
+```bash
 npm run build
-Deployment (Vercel)
-Vercel Next.js adapter
+```
 
-Static optimisations
+## Deployment
 
-Edge runtime for light server routes
+- Expected env var: `NEXT_PUBLIC_SITE_URL=https://useblacklake.com`
 
-Required env var:
+## Branding Notes
 
-ini
-Copy code
-NEXT_PUBLIC_SITE_URL=https://useblacklake.com
-Branding Notes
-Replace OG image (public/og-image.png)
+- Update the OpenGraph image (`public/og-image.svg`) if needed.
 
 Insert final BlackLake logos
 

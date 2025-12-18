@@ -32,44 +32,44 @@ const caseStudies: CaseStudy[] = [
     title: "BigQuery Pipeline Optimization",
     client: "PredictX (via ECS)",
     industry: "Predictive Analytics",
-    description: "Reduced BigQuery processing time from 45 minutes to 2.5 minutes through query optimization and pipeline restructuring. Enabled real-time predictive analytics for agricultural markets.",
+    description: "A BigQuery-based daily market data pipeline was delaying model refreshes. The constraints were time-to-data, cost, and operational predictability. The work reduced processing time from tens of minutes to a few minutes by changing query structure and pipeline design.",
     image: "/case-studies/bigquery.jpg",
     gradient: "from-blue-600 to-cyan-400",
     tags: ["BigQuery", "GCP", "Data Engineering", "Python"],
     timeline: "3 months",
     teamSize: "Solo engineer",
-    challenge: "The existing analytics pipeline took 45 minutes to process daily market data, making real-time predictions impossible. Complex nested queries and poor partitioning strategy were causing massive compute costs and delays.",
-    solution: "Restructured the entire BigQuery pipeline with proper partitioning and clustering. Replaced nested queries with materialized views and incremental processing. Implemented Pub/Sub for real-time data ingestion and wrote custom Python orchestration for pipeline management.",
+    challenge: "Context: a production analytics pipeline ingesting and transforming daily market data for time-sensitive downstream models. Constraint: predictable time-to-data without runaway BigQuery scan cost. Risk: late or stale data feeding model refreshes, plus brittle jobs that were hard to diagnose. What was failing: long runtimes driven by complex nested queries and weak partitioning/clustering.",
+    solution: "Architectural changes: reshaped the pipeline into staged transforms with incremental processing, and aligned partitioning/clustering to access patterns. Reduced expensive scans by replacing deeply nested queries with materialised intermediate steps. Added Pub/Sub-based ingestion and Python orchestration to make runs observable and easier to operate.",
     results: [
       {
         metric: "Processing Time",
-        value: "20x Faster",
-        description: "Reduced from 45 minutes to 2.5 minutes"
+        value: "Minutes-level",
+        description: "Reduced runtime from tens of minutes to a few minutes"
       },
       {
         metric: "Data Volume",
-        value: "1M+ Records",
-        description: "Processing 1M+ agricultural market records daily"
+        value: "Daily ingestion",
+        description: "Stable processing of a daily market dataset"
       },
       {
         metric: "Cost Reduction",
-        value: "65%",
-        description: "Reduced monthly BigQuery compute costs"
+        value: "Lower spend",
+        description: "Reduced unnecessary BigQuery compute and scan cost"
       },
       {
         metric: "Latency",
-        value: "<3s",
-        description: "Real-time predictions now possible"
+        value: "Fresher data",
+        description: "Shorter time-to-data for downstream model refresh"
       }
     ],
     technologies: ["BigQuery", "Python", "Pub/Sub", "Cloud Functions", "Terraform", "dbt", "Airflow"],
     keyFeatures: [
-      "Partitioned and clustered tables for optimal query performance",
-      "Materialized views replacing complex nested queries",
-      "Pub/Sub integration for real-time data streaming",
-      "Automated pipeline orchestration with Cloud Functions",
-      "Infrastructure-as-code with Terraform",
-      "Comprehensive monitoring and alerting"
+      "Partitioning and clustering aligned to access patterns",
+      "Staged transforms to replace deeply nested queries",
+      "Incremental processing to reduce scan cost",
+      "Pub/Sub ingestion with idempotent handling",
+      "Orchestration designed for retries and visibility",
+      "Monitoring and alerting for operational control"
     ]
   },
   {
@@ -77,44 +77,44 @@ const caseStudies: CaseStudy[] = [
     title: "V2X 5G Network Integration",
     client: "Telecommunications R&D Project",
     industry: "Telecommunications",
-    description: "Built the data processing layer for a Vehicle-to-Everything (V2X) communication system running on 5G infrastructure. Real-time sensor data processing with sub-10ms latency requirements.",
+    description: "Built the data processing layer for a Vehicle-to-Everything (V2X) system on 5G infrastructure. The constraints were tight latency budgets, reliability, and predictable behaviour under load.",
     image: "/case-studies/v2x.jpg",
     gradient: "from-emerald-500 to-teal-400",
     tags: ["5G", "Real-Time Systems", "V2X", "IoT"],
     timeline: "6 months",
     teamSize: "Part of 4-person team",
-    challenge: "V2X systems require processing thousands of sensor readings per second with extremely low latency. Any delay could impact vehicle safety. The system needed to handle 10,000+ concurrent connections while maintaining sub-10ms processing time.",
-    solution: "Designed a multi-layer architecture with edge processing for time-critical decisions and cloud aggregation for analytics. Used Kafka for event streaming, Redis for state management, and custom C++ modules for the most latency-sensitive operations.",
+    challenge: "Context: safety-adjacent V2X communication where processing delays can change system behaviour. Constraint: single-digit millisecond latency budgets on critical paths, with high event volume and many concurrent connections. Risk: unpredictable processing times and cascading back-pressure. What was at stake: reliability under load and controlled degradation when the system is stressed.",
+    solution: "Architectural changes: a multi-layer design that keeps time-critical decisions at the edge and pushes aggregation to cloud paths. Used Kafka to separate ingestion from downstream processing and Redis for low-latency state. Implemented custom modules for the most latency-sensitive operations and designed for redundancy and graceful degradation.",
     results: [
       {
         metric: "Latency",
-        value: "<8ms",
-        description: "End-to-end processing latency achieved"
+        value: "Single-digit ms target",
+        description: "Designed around tight latency budgets on critical paths"
       },
       {
         metric: "Connections",
-        value: "10K+",
-        description: "Concurrent vehicle connections supported"
+        value: "At scale",
+        description: "Designed to support large numbers of concurrent connections"
       },
       {
         metric: "Uptime",
-        value: "99.99%",
-        description: "System availability for safety-critical operations"
+        value: "High availability",
+        description: "Redundancy and graceful degradation for critical paths"
       },
       {
         metric: "Throughput",
-        value: "50K msg/s",
-        description: "Peak message processing capacity"
+        value: "High throughput",
+        description: "Event pipeline tuned for sustained load"
       }
     ],
     technologies: ["Kafka", "Redis", "C++", "Python", "5G NR", "Docker", "Kubernetes", "Prometheus"],
     keyFeatures: [
-      "Edge computing architecture for sub-10ms latency",
-      "Kafka-based event streaming for high throughput",
-      "Redundant processing for safety-critical reliability",
-      "Real-time monitoring and anomaly detection",
+      "Edge-first processing for tight latency budgets",
+      "Event streaming to decouple ingestion and processing",
+      "State management designed for low-latency access",
+      "Redundancy on critical paths",
       "Graceful degradation under load",
-      "Integration with 5G network slicing"
+      "Monitoring to detect drift and saturation"
     ]
   },
   {
@@ -122,44 +122,44 @@ const caseStudies: CaseStudy[] = [
     title: "AI Recipe Generation Platform",
     client: "Food Tech Startup",
     industry: "Consumer Technology",
-    description: "Full-stack platform with RAG-powered recipe generation. Users input ingredients, dietary preferences, and the AI generates personalized recipes with nutritional analysis.",
+    description: "Built a full-stack recipe generation product with retrieval and structured constraints. The constraints were output quality, dietary correctness, and interactive latency for a consumer UX.",
     image: "/case-studies/recipe.jpg",
     gradient: "from-purple-600 to-pink-500",
     tags: ["RAG", "Vertex AI", "React Native", "Full-Stack"],
     timeline: "4 months",
     teamSize: "Solo engineer",
-    challenge: "Creating genuinely useful AI-generated recipes requires understanding ingredient combinations, cooking techniques, and nutritional science. Generic LLM outputs weren't good enough—recipes needed to be accurate, safe, and actually taste good.",
-    solution: "Built a RAG pipeline using Vertex AI with a curated corpus of 50,000+ verified recipes. The system understands ingredient substitutions, cooking chemistry, and dietary restrictions. React Native mobile app with real-time generation and saved recipe management.",
+    challenge: "Context: a consumer product where outputs must be usable, repeatable, and safe for dietary restrictions. Constraint: seconds-level response for interactive use, without sacrificing correctness. Risk: plausible but wrong recipes, inconsistent instructions, and user trust erosion. What was failing: baseline prompting produced errors and variability that were hard to explain.",
+    solution: "Architectural changes: added retrieval against a curated corpus and enforced structured constraints around substitutions and dietary restrictions. Built the product end-to-end (generation, saving, and nutrition analysis) so behaviour could be tested and iterated in real flows, not demos.",
     results: [
       {
-        metric: "User Rating",
-        value: "4.6/5",
-        description: "Average recipe satisfaction rating"
+        metric: "Recipe Quality",
+        value: "Improved",
+        description: "Reduced obvious errors compared to baseline prompting"
       },
       {
         metric: "Generation Time",
-        value: "<4s",
-        description: "Time to generate personalized recipe"
+        value: "Seconds-level",
+        description: "Fast generation for an interactive UX"
       },
       {
-        metric: "Accuracy",
-        value: "94%",
-        description: "Nutritional calculation accuracy"
+        metric: "Nutrition",
+        value: "Validated",
+        description: "Nutrition analysis computed from structured ingredient data"
       },
       {
         metric: "Recipes Generated",
-        value: "25K+",
-        description: "Total recipes created by users"
+        value: "In production",
+        description: "Generation and save flows integrated end-to-end"
       }
     ],
     technologies: ["Vertex AI", "LangChain", "React Native", "Next.js", "PostgreSQL", "Pinecone", "GCP", "Expo"],
     keyFeatures: [
-      "RAG pipeline with 50K+ verified recipe corpus",
-      "Ingredient substitution intelligence",
+      "Retrieval against a curated recipe corpus",
+      "Structured constraints for substitutions",
       "Dietary restriction handling (allergies, preferences)",
-      "Accurate nutritional analysis per serving",
-      "React Native mobile app (iOS + Android)",
-      "Saved recipes with shopping list generation"
+      "Nutrition analysis from structured ingredients",
+      "Mobile app for real user flows",
+      "Saved recipes with repeatable generation"
     ]
   }
 ];

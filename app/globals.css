@@ -24,7 +24,7 @@
   /* Effects */
   --cursor-x: 50%;
   --cursor-y: 50%;
-  --glow-opacity: 0.3;
+  --glow-opacity: 0.2;
   --blur-sm: 20px;
   --blur-md: 40px;
   --blur-lg: 80px;
@@ -74,7 +74,7 @@ body {
   
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-electric via-blue-500 to-accent-electric bg-[length:200%_100%];
-    animation: gradient-shift 3s ease infinite;
+    animation: gradient-shift 8s ease infinite;
   }
   
   /* Glass morphism */
@@ -92,15 +92,15 @@ body {
   
   /* Glow effects */
   .glow-electric {
-    box-shadow: 0 0 60px rgba(var(--accent), 0.6), 0 0 120px rgba(var(--accent), 0.3);
+    box-shadow: 0 0 40px rgba(var(--accent), 0.35), 0 0 80px rgba(var(--accent), 0.18);
   }
   
   .glow-electric-sm {
-    box-shadow: 0 0 20px rgba(var(--accent), 0.3);
+    box-shadow: 0 0 16px rgba(var(--accent), 0.22);
   }
   
   .glow-electric-lg {
-    box-shadow: 0 0 80px rgba(var(--accent), 0.7), 0 0 160px rgba(var(--accent), 0.4);
+    box-shadow: 0 0 56px rgba(var(--accent), 0.4), 0 0 120px rgba(var(--accent), 0.22);
   }
   
   /* Shimmer effect */
@@ -177,6 +177,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rotate-loop { animation: none !important; }
   .marquee-paused { animation-play-state: paused !important; }
+  .text-gradient { animation: none !important; }
 }
 
 @keyframes marquee {

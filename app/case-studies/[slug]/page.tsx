@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import PageShell from "@/components/layout/PageShell";
 import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
 import { getCaseStudy, getAllCaseStudies } from "@/lib/case-studies";
+import { siteConfig } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const caseStudies = getAllCaseStudies();
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: caseStudy.title,
       description: caseStudy.description,
       type: "article",
-      images: [caseStudy.image],
+      images: [new URL(caseStudy.image, siteConfig.url).toString()],
     },
   };
 }

@@ -4,7 +4,7 @@ const pages = ["", "about", "services", "work", "contact"];
 export default function sitemap() {
   const lastModified = new Date().toISOString();
   return pages.map((path) => ({
-    url: `${siteUrl}/${path}`.replace(/\/\/+/, "/"),
+    url: new URL(path, siteUrl.endsWith("/") ? siteUrl : `${siteUrl}/`).toString(),
     lastModified,
   }));
 }

@@ -1,4 +1,13 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * BlackLake Design System - Tailwind Configuration
+ * 
+ * This configuration enforces the BlackLake design system tokens.
+ * DO NOT use arbitrary values (e.g., `text-[14px]`, `bg-[#123456]`).
+ * If you need a new token, add it here first.
+ * 
+ * @see /BLACKLAKE-DESIGN-SYSTEM.md for full documentation
+ * @type {import('tailwindcss').Config}
+ */
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,7 +16,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // Enhanced color system
+      // ============================================
+      // COLOR SYSTEM
+      // ============================================
+      // Primary brand color: Electric Blue (#007CFF)
+      // Use for: CTAs, links, accents, hover states
+      // DO NOT modify these values without updating design system docs
       colors: {
         accent: {
           electric: "#007CFF",
@@ -41,18 +55,24 @@ module.exports = {
           info: "#3B82F6",
         },
       },
-      // Enhanced border radius
+      // ============================================
+      // BORDER RADIUS SCALE
+      // ============================================
+      // Use: rounded-lg for cards, rounded-xl for large elements
       borderRadius: {
-        xs: "0.25rem",   // 4px
-        sm: "0.375rem",  // 6px
-        DEFAULT: "0.5rem", // 8px
-        md: "0.75rem",   // 12px
-        lg: "1rem",      // 16px
-        xl: "1.5rem",    // 24px
-        "2xl": "2rem",   // 32px
-        "3xl": "3rem",   // 48px
+        xs: "0.25rem",   // 4px - Small pills
+        sm: "0.375rem",  // 6px - Buttons (small)
+        DEFAULT: "0.5rem", // 8px - Default
+        md: "0.75rem",   // 12px - Cards
+        lg: "1rem",      // 16px - Large cards (MOST COMMON)
+        xl: "1.5rem",    // 24px - Feature cards
+        "2xl": "2rem",   // 32px - Hero elements
+        "3xl": "3rem",   // 48px - Special features
       },
-      // Enhanced shadow system
+      // ============================================
+      // SHADOW & GLOW SYSTEM
+      // ============================================
+      // Use glow-* for electric blue glows, card/button for standard elevation
       boxShadow: {
         'glow-sm': "0 0 10px rgba(0, 124, 255, 0.2)",
         'glow-md': "0 0 20px rgba(0, 124, 255, 0.3)",
@@ -64,32 +84,45 @@ module.exports = {
         ambient: "0 0 40px rgba(0,0,0,0.08)",
         electric: "0 0 40px rgba(0, 124, 255, 0.45)",
       },
-      // Enhanced transitions
+      // ============================================
+      // TRANSITION TIMING
+      // ============================================
+      // Use: duration-fast for hover, duration-normal for entrances
       transitionDuration: {
-        instant: "100ms",
-        fast: "200ms",
-        normal: "300ms",
-        slow: "500ms",
-        slower: "800ms",
-        standard: "400ms",
-        spring: "600ms",
-        page: "800ms",
+        instant: "100ms",  // Button feedback
+        fast: "200ms",     // Hover states (MOST COMMON)
+        normal: "300ms",   // Standard transitions (MOST COMMON)
+        slow: "500ms",     // Content reveals
+        slower: "800ms",   // Page transitions
+        standard: "400ms", // Alternative
+        spring: "600ms",   // Spring animations
+        page: "800ms",     // Full page (MAX - never exceed)
       },
-      // Max width system
+      // ============================================
+      // CONTAINER & MAX-WIDTH SYSTEM
+      // ============================================
       maxWidth: {
         site: "1440px",
         content: "1280px",
         narrow: "768px",
         reading: "65ch",
       },
-      // Enhanced spacing
+      // ============================================
+      // SPACING EXTENSIONS
+      // ============================================
+      // Base scale: 4, 8, 12, 16, 24, 32, 48, 64px
+      // Use these for special cases only
       spacing: {
-        18: "4.5rem",
-        22: "5.5rem",
-        88: "22rem",
-        96: "24rem",
-        128: "32rem",
+        18: "4.5rem",  // 72px
+        22: "5.5rem",  // 88px
+        88: "22rem",   // 352px
+        96: "24rem",   // 384px
+        128: "32rem",  // 512px
       },
+      // ============================================
+      // ANIMATION SYSTEM
+      // ============================================
+      // Prefer minimal motion; keep effects subtle and optional
       animation: {
         "gradient-shift": "gradient-shift 3s ease infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
