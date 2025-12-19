@@ -8,6 +8,17 @@ import { services } from "./data";
 export const metadata: Metadata = pageMetadata.services;
 
 export default function ServicesPage() {
+  const blueprintDeliverables = [
+    "Current-state system map (boundaries + data contracts)",
+    "Baseline metrics (latency, cost, failure modes)",
+    "Risk register (technical + operational)",
+    "Guardrails and rollback strategy",
+    "Option paths (stabilise vs modernise vs rebuild)",
+    "Recommended plan with sequencing + milestones",
+    "Ownership + operating model notes",
+    "\"What to measure next\" checklist",
+  ];
+
   return (
     <PageShell>
       <section className="bg-white">
@@ -116,6 +127,21 @@ export default function ServicesPage() {
               <div key={step.title} className="rounded-2xl border border-gray-200 bg-white p-6">
                 <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{step.title}</div>
                 <p className="mt-3 text-sm text-gray-600 leading-relaxed">{step.body}</p>
+
+                {step.title === "Blueprint" ? (
+                  <div className="mt-5">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Blueprint deliverables</p>
+                    <ul className="mt-3 space-y-2 text-sm text-gray-600">
+                      {blueprintDeliverables.map((deliverable) => (
+                        <li key={deliverable} className="flex gap-2">
+                          <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
+                          <span>{deliverable}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 text-sm font-semibold text-gray-700">Typically delivered in 1–2 weeks.</p>
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

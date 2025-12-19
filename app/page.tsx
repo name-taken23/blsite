@@ -29,7 +29,7 @@ export default function Home() {
             {proof.map((item) => (
               <Link
                 key={`${item.caseStudySlug}-${item.metric}`}
-                href={`/work#${item.caseStudySlug}`}
+                href={`/case-studies/${item.caseStudySlug}`}
                 className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 transition-colors"
               >
                 <div className="text-2xl md:text-3xl font-semibold text-gray-900">{item.value}</div>

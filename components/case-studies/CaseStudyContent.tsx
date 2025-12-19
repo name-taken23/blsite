@@ -10,6 +10,8 @@ interface CaseStudyContentProps {
 }
 
 export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
+  const outcomes = caseStudy.results.slice(0, 5);
+
   return (
     <div className="bg-white">
       <section className="max-w-7xl mx-auto px-6 pt-24 pb-12">
@@ -68,6 +70,25 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
                 A real project described with constraints, tradeoffs, and what was delivered.
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-10 rounded-2xl border border-gray-200 bg-gray-50 p-6">
+          <div className="flex items-baseline justify-between gap-6">
+            <h2 className="text-lg font-semibold text-gray-900">Outcomes</h2>
+            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">First-order signals</div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {outcomes.map((result) => (
+              <div key={result.metric} className="rounded-xl border border-gray-200 bg-white p-6">
+                <div className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">{result.value}</div>
+                <div className="mt-2 text-sm font-semibold text-gray-900">{result.metric}</div>
+                {result.description ? (
+                  <div className="mt-2 text-sm text-gray-600 leading-relaxed">{result.description}</div>
+                ) : null}
+              </div>
+            ))}
           </div>
         </div>
       </section>

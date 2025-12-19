@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile navigation dialog backdrop */
+.bl-mobile-menu::backdrop {
+  background: rgba(17, 24, 39, 0.55);
+}
+
 /* ============================================
    DESIGN SYSTEM CSS VARIABLES
    ============================================ */
