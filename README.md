@@ -132,6 +132,17 @@ npm run build
 
 - Expected env var: `NEXT_PUBLIC_SITE_URL=https://useblacklake.com`
 
+### Contact Form (Resend)
+
+The contact form posts to `POST /api/contact` (Vercel Function) and sends:
+- An email to the site owner with submission details
+- A confirmation email to the user
+
+Required env vars:
+- `RESEND_API_KEY`
+- `CONTACT_OWNER_EMAIL` (e.g. `hello@useblacklake.com`)
+- `CONTACT_FROM_EMAIL` (must be a verified sender in Resend, e.g. `BlackLake <hello@useblacklake.com>`)
+
 ## Branding Notes
 
 - Update the OpenGraph image (`public/og-image.svg`) if needed.

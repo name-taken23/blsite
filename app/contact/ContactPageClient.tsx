@@ -5,22 +5,23 @@ import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { Mail, MapPin } from "lucide-react";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useState } from "react";
 
 type ContactFormState = {
   name: string;
   email: string;
-  topic: string;
-  subject: string;
-  message: string;
+  systemInScope: string;
+  primaryConstraint: string;
+  context: string;
 };
 
-const topics = [
-  { value: "cloud-platform", label: "Cloud / platform" },
-  { value: "data", label: "Data pipelines / warehouse" },
-  { value: "applied-ai", label: "Applied AI (RAG / evals / integration)" },
-  { value: "reliability-performance", label: "Reliability / performance" },
-  { value: "product", label: "Product engineering" },
+const primaryConstraints = [
+  { value: "latency", label: "Latency" },
+  { value: "cost", label: "Cost" },
+  { value: "risk", label: "Risk" },
+  { value: "reliability", label: "Reliability" },
+  { value: "security", label: "Security" },
+  { value: "compliance", label: "Compliance" },
   { value: "other", label: "Other" },
 ] as const;
 
@@ -28,33 +29,66 @@ export default function ContactPageClient() {
   const [form, setForm] = useState<ContactFormState>({
     name: "",
     email: "",
-    topic: "",
-    subject: "",
-    message: "",
+    systemInScope: "",
+    primaryConstraint: "",
+    context: "",
   });
 
-  const topicLabel = useMemo(() => {
-    return topics.find((t) => t.value === form.topic)?.label ?? "";
-  }, [form.topic]);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [error, setError] = useState<string>("");
 
-  const submitViaEmail = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const subject = form.subject.trim() || "BlackLake inquiry";
+    if (status === "submitting") return;
+
+    setStatus("submitting");
+    setError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          systemInScope: form.systemInScope,
+          primaryConstraint: form.primaryConstraint,
+          context: form.context,
+        }),
+      });
+
+      if (!res.ok) {
+        setStatus("error");
+        setError("Submission failed. Please use email instead.");
+        return;
+      }
+
+      setStatus("success");
+    } catch {
+      setStatus("error");
+      setError("Submission failed. Please use email instead.");
+    }
+  };
+
+  const mailtoHref = (() => {
+    const subject = "BlackLake Blueprint request";
     const bodyLines = [
-      `Name: ${form.name.trim()}`,
-      `Email: ${form.email.trim()}`,
-      form.topic ? `Topic: ${topicLabel || form.topic}` : "",
+      `Name: ${form.name.trim() || ""}`,
+      `Email: ${form.email.trim() || ""}`,
+      `System in scope: ${form.systemInScope.trim() || ""}`,
+      `Primary constraint: ${form.primaryConstraint || ""}`,
       "",
-      form.message.trim(),
+      form.context.trim() || "",
     ].filter(Boolean);
 
     const mailto = new URL("mailto:hello@useblacklake.com");
     mailto.searchParams.set("subject", subject);
     mailto.searchParams.set("body", bodyLines.join("\n"));
-
-    window.location.href = mailto.toString();
-  };
+    return mailto.toString();
+  })();
 
   return (
     <PageShell>
@@ -108,7 +142,21 @@ export default function ContactPageClient() {
             </div>
 
             <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 md:p-8">
-              <form className="space-y-6" onSubmit={submitViaEmail}>
+              {status === "success" ? (
+                <div className="space-y-4">
+                  <div className="text-sm font-semibold text-gray-900">Request received</div>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    A confirmation email has been sent to <span className="font-semibold text-gray-900">{form.email}</span>.
+                    If you don’t see it, check spam or email hello@useblacklake.com.
+                  </p>
+                  <div className="pt-2">
+                    <MagneticButton href="/work" className="w-full justify-center">
+                      View selected work
+                    </MagneticButton>
+                  </div>
+                </div>
+              ) : (
+                <form className="space-y-6" onSubmit={submit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="sr-only">
@@ -142,21 +190,37 @@ export default function ContactPageClient() {
                   </div>
                 </div>
 
+                <div>
+                  <label htmlFor="systemInScope" className="sr-only">
+                    System in scope
+                  </label>
+                  <Input
+                    id="systemInScope"
+                    name="systemInScope"
+                    autoComplete="off"
+                    placeholder="System in scope (e.g. data pipeline, platform, API)"
+                    value={form.systemInScope}
+                    onChange={(e) => setForm((s) => ({ ...s, systemInScope: e.target.value }))}
+                    required
+                  />
+                </div>
+
                 <div className="relative">
-                  <label htmlFor="topic" className="sr-only">
-                    Topic
+                  <label htmlFor="primaryConstraint" className="sr-only">
+                    Primary constraint
                   </label>
                   <select
-                    id="topic"
-                    name="topic"
-                    value={form.topic}
-                    onChange={(e) => setForm((s) => ({ ...s, topic: e.target.value }))}
+                    id="primaryConstraint"
+                    name="primaryConstraint"
+                    value={form.primaryConstraint}
+                    onChange={(e) => setForm((s) => ({ ...s, primaryConstraint: e.target.value }))}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-electric/25 focus:border-transparent transition-all duration-200 bg-white appearance-none text-gray-700"
                   >
-                    <option value="">Select topic</option>
-                    {topics.map((t) => (
-                      <option key={t.value} value={t.value}>
-                        {t.label}
+                    <option value="">Primary constraint</option>
+                    {primaryConstraints.map((c) => (
+                      <option key={c.value} value={c.label}>
+                        {c.label}
                       </option>
                     ))}
                   </select>
@@ -181,48 +245,39 @@ export default function ContactPageClient() {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="sr-only">
-                    Subject
-                  </label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    autoComplete="off"
-                    placeholder="Subject"
-                    value={form.subject}
-                    onChange={(e) => setForm((s) => ({ ...s, subject: e.target.value }))}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="sr-only">
-                    Message
+                  <label htmlFor="context" className="sr-only">
+                    Context (optional)
                   </label>
                   <TextArea
-                    id="message"
-                    name="message"
-                    placeholder="Message"
+                    id="context"
+                    name="context"
+                    placeholder="Optional context (what you run today, where the risk sits, what must change)"
                     rows={6}
-                    value={form.message}
-                    onChange={(e) => setForm((s) => ({ ...s, message: e.target.value }))}
-                    required
+                    value={form.context}
+                    onChange={(e) => setForm((s) => ({ ...s, context: e.target.value }))}
                   />
                 </div>
 
                 <div className="pt-4">
                   <MagneticButton
                     className="w-full justify-center"
-                    aria-label="Send message via email"
+                    aria-label="Submit contact form"
                     type="submit"
+                    disabled={status === "submitting"}
                   >
-                    Open email draft
+                    {status === "submitting" ? "Submitting…" : "Send"}
                   </MagneticButton>
                 </div>
 
+                {status === "error" && (
+                  <p className="text-xs text-red-600">{error}</p>
+                )}
+
                 <p className="text-xs text-gray-500">
-                  This form opens an email draft in your mail client.
+                  Prefer email? <a className="underline" href={mailtoHref}>Open an email draft</a>.
                 </p>
               </form>
+              )}
             </div>
           </div>
         </div>

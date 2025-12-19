@@ -1,103 +1,43 @@
 import PageShell from "@/components/layout/PageShell";
-import {
-  Cloud,
-  Brain,
-  Layers,
-  MapPin,
-  Briefcase,
-  Calendar,
-  Code2,
-  Database,
-  Cpu,
-  GitBranch,
-  Terminal,
-  CheckCircle2,
-} from "lucide-react";
-import Link from "next/link";
+import { CheckCircle2 } from "lucide-react";
+import MagneticButton from "@/components/ui/MagneticButton";
 
-const expertise = [
+const principles = [
   {
-    icon: Cloud,
-    title: "Cloud Architecture",
+    title: "Start with constraints",
     description:
-      "Design and operate GCP (BigQuery, Pub/Sub, Cloud Functions, Vertex AI) and AWS estates. Infrastructure-as-code with Terraform.",
-    tools: ["GCP", "AWS", "Terraform", "Docker", "K8s"],
+      "Define what cannot break (budgets, SLAs, contracts, compliance). Design work so those constraints are testable and monitored.",
   },
   {
-    icon: Brain,
-    title: "Applied AI",
+    title: "Measure before changing",
     description:
-      "Retrieval (RAG), evaluation, and automation in production. Measured quality, monitored behaviour, and controlled data access.",
-    tools: ["Vertex AI", "LangChain", "Pinecone", "OpenAI"],
+      "Baseline latency, cost, failure modes, and operator load. Changes ship behind guardrails with an explicit rollback path.",
   },
   {
-    icon: Layers,
-    title: "Full-Stack Development",
+    title: "Prefer boring interfaces",
     description:
-      "React, React Native, Next.js, TypeScript. Event-driven systems with Kafka. Mobile and web, shipped and maintained.",
-    tools: ["React", "Next.js", "TypeScript", "Kafka"],
+      "Stabilise boundaries and data contracts so teams can iterate without cascading coordination or brittle integration.",
+  },
+  {
+    title: "Make operations a first-class deliverable",
+    description:
+      "Runbooks, alerts, and ownership are part of delivery. If it cannot be operated, it is not finished.",
   },
 ];
 
-const techStack = [
-  { icon: Code2, name: "TypeScript", category: "Language" },
-  { icon: Database, name: "BigQuery", category: "Data" },
-  { icon: Cpu, name: "Vertex AI", category: "ML" },
-  { icon: GitBranch, name: "Terraform", category: "IaC" },
-  { icon: Terminal, name: "Python", category: "Language" },
-  { icon: Cloud, name: "GCP", category: "Cloud" },
+const credibility = [
+  "Reduced a production analytics pipeline critical path from tens of minutes to low single-digit minutes, improving time-to-data predictability.",
+  "Engineered event-processing paths around a single-digit millisecond latency budget with controlled degradation under load.",
+  "Shipped an interactive constrained-generation product with seconds-level latency and fewer obvious baseline failures.",
+  "Delivered changes that reduce operator load by making behaviour observable and diagnosable.",
 ];
 
-const experience = [
-  {
-    role: "Founder",
-    company: "BlackLake",
-    period: "2024 – Present",
-    description:
-      "Founder-led delivery of production modernisation: automation and intelligence where it reduces operational load, backed by platform work that holds under real constraints.",
-    highlights: [
-      "Founder-led delivery",
-      "Clear ownership",
-      "End-to-end accountability",
-    ],
-    current: true,
-  },
-  {
-    role: "Software Engineer",
-    company: "Predictive analytics platform (via ECS)",
-    period: "2021 – 2024",
-    description:
-      "Improved a production analytics platform by reducing warehouse cost and latency, and making pipeline behaviour easier to measure and operate.",
-    highlights: ["BigQuery optimisation", "Pipeline reliability", "Cost visibility"],
-    current: false,
-  },
-  {
-    role: "Software Engineer",
-    company: "Telecommunications R&D",
-    period: "2020 – 2021",
-    description:
-      "Built systems with tight latency budgets and reliability constraints, where predictability mattered more than feature velocity.",
-    highlights: ["Latency budgets", "Operational constraints", "Performance testing"],
-    current: false,
-  },
-];
-
-const values = [
-  {
-    title: "Direct Communication",
-    description:
-      "You work directly with me. No account layers. No handoffs.",
-  },
-  {
-    title: "Production Focus",
-    description:
-      "I design for operability. If a prototype helps, it is used to reduce risk. The deliverable is production change.",
-  },
-  {
-    title: "Honest Assessment",
-    description:
-      "I will say when an approach will not hold, and what I would do instead. Clear expectations from day one.",
-  },
+const goodFit = [
+  "You have a production system where change is risky because behaviour is poorly measured or poorly understood.",
+  "Latency, cost, and reliability budgets exist, but they are not enforced in delivery (no baselines, guardrails, or rollback).",
+  "A data pipeline feeds downstream decisions and refresh cycles, and missed windows create business impact.",
+  "You need to ship AI-enabled functionality with explicit constraints, evaluation, and known failure modes.",
+  "Ownership is unclear across teams, and progress is blocked by handoffs rather than technical complexity.",
 ];
 
 export default function AboutPageClient() {
@@ -105,62 +45,23 @@ export default function AboutPageClient() {
     <PageShell>
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-          <div className="grid gap-10 md:grid-cols-2 md:items-start">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                <MapPin className="w-3.5 h-3.5 text-gray-500" />
-                London, UK
-              </div>
-
-              <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
-                James Reed
-              </h1>
-              <p className="mt-3 text-lg text-gray-600">Founder, BlackLake</p>
-
-              <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
-                BlackLake exists to modernise production systems without ambiguity. I take direct ownership of the work: define the constraints, make the trade-offs explicit, and deliver changes you can operate. Quality, latency, cost, and security are treated as requirements.
-              </p>
-
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-lg bg-accent-electric px-8 py-4 text-sm font-semibold text-white hover:bg-accent-electricDark transition-colors"
-                >
-                  Start with a Blueprint
-                </Link>
-                <Link
-                  href="/work"
-                  className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-                >
-                  View selected work
-                </Link>
-              </div>
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
+              Operating philosophy
             </div>
 
-            <div>
-              <div className="rounded-2xl border border-gray-200 bg-white">
-                <div className="px-6 py-5 border-b border-gray-100">
-                  <p className="text-sm font-semibold text-gray-900">Working stack</p>
-                  <p className="mt-1 text-sm text-gray-600">Tools I ship and operate with.</p>
-                </div>
-                <div className="p-6 grid grid-cols-2 gap-3">
-                  {techStack.map((tech) => (
-                    <div
-                      key={tech.name}
-                      className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3"
-                    >
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-50">
-                        <tech.icon className="w-4.5 h-4.5 text-gray-700" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="truncate text-sm font-semibold text-gray-900">{tech.name}</div>
-                        <div className="text-xs text-gray-500">{tech.category}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
+              Modernise production systems with clarity, control, and ownership.
+            </h1>
+
+            <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
+              BlackLake approaches production change as risk management. Constraints are made explicit, budgets are measured,
+              and delivery is structured so changes can be rolled out safely and reversed quickly.
+            </p>
+            <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed">
+              The objective is controlled progress: clearer behaviour, lower operational load, and systems that remain changeable
+              without trading reliability for throughput.
+            </p>
           </div>
         </div>
       </section>
@@ -170,28 +71,19 @@ export default function AboutPageClient() {
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">The Approach</p>
+            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Principles</p>
             <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
-              Why founder-led delivery
+              Practical delivery rules
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {values.map((value) => (
-              <div key={value.title} className="rounded-2xl border border-gray-200 bg-white p-6">
-                <div className="flex items-center gap-2 text-sm font-semibold text-gray-900">
-                  <CheckCircle2 className="w-4 h-4 text-accent-electric" />
-                  {value.title}
-                </div>
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed">{value.description}</p>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {principles.map((principle) => (
+              <div key={principle.title} className="rounded-2xl border border-gray-200 bg-white p-6">
+                <div className="text-sm font-semibold text-gray-900">{principle.title}</div>
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed">{principle.description}</p>
               </div>
             ))}
-          </div>
-
-          <div className="mt-12 max-w-3xl">
-            <p className="text-lg md:text-xl font-medium text-gray-900 leading-relaxed">
-              “Most delivery risk comes from unclear ownership and handoffs. BlackLake keeps ownership with one engineer and a clear interface to the work.”
-            </p>
           </div>
         </div>
       </section>
@@ -199,50 +91,24 @@ export default function AboutPageClient() {
       <section className="bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Background</p>
-            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Experience</h2>
+            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Credibility</p>
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
+              Founder delivery, compressed
+            </h2>
+            <p className="mt-4 text-base text-gray-600 leading-relaxed">
+              Examples are described with industry + system descriptors to preserve confidentiality.
+            </p>
           </div>
 
-          <div className="mt-10 space-y-4">
-            {experience.map((exp) => (
-              <div
-                key={`${exp.company}-${exp.period}`}
-                className={`rounded-2xl border bg-white p-6 md:p-8 ${exp.current ? "border-accent-electric/30" : "border-gray-200"}`}
-              >
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      {exp.current && (
-                        <span className="rounded-full bg-accent-electric px-2 py-0.5 text-xs font-semibold text-white">Current</span>
-                      )}
-                      <span className="inline-flex items-center gap-1 text-sm text-gray-500">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {exp.period}
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-semibold text-gray-900">{exp.role}</h3>
-                    <p className="mt-1 text-sm font-semibold text-gray-700">{exp.company}</p>
-                  </div>
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50">
-                    <Briefcase className="w-5 h-5 text-gray-600" />
-                  </div>
-                </div>
-
-                <p className="mt-4 text-sm text-gray-600 leading-relaxed">{exp.description}</p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {exp.highlights.map((highlight) => (
-                    <span
-                      key={highlight}
-                      className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
-                    >
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="mt-10 max-w-3xl rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
+            <ul className="space-y-4">
+              {credibility.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
+                  <span className="text-sm md:text-base text-gray-700 leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -250,32 +116,21 @@ export default function AboutPageClient() {
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Capabilities</p>
-            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Core expertise</h2>
+            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Fit</p>
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
+              When BlackLake is a good fit
+            </h2>
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {expertise.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-gray-200 bg-white p-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50">
-                  <item.icon className="w-5 h-5 text-gray-700" />
-                </div>
-
-                <h3 className="mt-5 text-lg font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed">{item.description}</p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {item.tools.map((tool) => (
-                    <span
-                      key={tool}
-                      className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="mt-10 max-w-3xl rounded-2xl border border-gray-200 bg-gray-50 p-6 md:p-8">
+            <ul className="space-y-4">
+              {goodFit.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
+                  <span className="text-sm md:text-base text-gray-700 leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -284,25 +139,12 @@ export default function AboutPageClient() {
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-10">
             <div className="max-w-3xl">
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
-                Build with control
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Start with a Blueprint</h2>
               <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed">
-                If you are modernising production systems, start with the BlackLake Blueprint. Send a short note with context, constraints, and what must change.
+                The BlackLake Blueprint is a paid, structured first step. It defines constraints, risks, success measures, and a delivery sequence you can operate.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-lg bg-accent-electric px-8 py-4 text-sm font-semibold text-white hover:bg-accent-electricDark transition-colors"
-                >
-                  Start with a Blueprint
-                </Link>
-                <Link
-                  href="/work"
-                  className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-                >
-                  View selected work
-                </Link>
+              <div className="mt-8">
+                <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
               </div>
             </div>
           </div>

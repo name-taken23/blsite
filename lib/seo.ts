@@ -149,7 +149,7 @@ export const pageMetadata = {
   about: generateMetadata({
     title: "About",
     description:
-      "About BlackLake. Founder-led delivery for production modernisation, with clear ownership, explicit constraints, and pragmatic engineering.",
+      "How BlackLake approaches production change: explicit constraints, controlled rollout, and clear ownership.",
     path: "/about",
   }),
 
@@ -163,7 +163,7 @@ export const pageMetadata = {
   work: generateMetadata({
     title: "Case Studies",
     description:
-      "Selected work with context: constraints, trade-offs, and what changed across applied AI, cloud/data platforms, and reliability/performance work.",
+      "Selected work written with context, constraints, interventions, measured outcomes, and why it matters across applied AI, cloud/data platforms, and reliability/performance work.",
     path: "/work",
   }),
 

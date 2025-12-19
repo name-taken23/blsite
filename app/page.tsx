@@ -3,14 +3,43 @@ import Hero from "@/components/sections/Hero";
 import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { services } from "./services/data";
-import { getAllCaseStudies } from "@/lib/case-studies";
+import { getAllCaseStudies, getProofMetrics } from "@/lib/case-studies";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies().slice(0, 3);
+  const proof = getProofMetrics(4);
 
   return (
     <PageShell>
       <Hero />
+
+      <section className="bg-white">
+        <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Proof</p>
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
+              Outcomes, stated conservatively
+            </h2>
+            <p className="mt-4 text-base text-gray-600 leading-relaxed">
+              Quantified signals from case studies, described without client identifiers.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {proof.map((item) => (
+              <Link
+                key={`${item.caseStudySlug}-${item.metric}`}
+                href={`/work#${item.caseStudySlug}`}
+                className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 transition-colors"
+              >
+                <div className="text-2xl md:text-3xl font-semibold text-gray-900">{item.value}</div>
+                <div className="mt-2 text-sm font-semibold text-gray-900">{item.metric}</div>
+                <div className="mt-2 text-sm text-gray-600 leading-relaxed">{item.context}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <div className="border-t border-gray-100" />
 
@@ -52,7 +81,7 @@ export default function Home() {
             <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Selected work</p>
             <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Examples with context</h2>
             <p className="mt-4 text-base text-gray-600 leading-relaxed">
-              Case studies focus on constraints, trade-offs, and what changed. No theatre.
+              Each case study follows the same structure: context, constraint, intervention, measured outcome, and why it matters.
             </p>
           </div>
 

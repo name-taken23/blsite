@@ -2,15 +2,19 @@
 export interface CaseStudy {
   slug: string;
   title: string;
-  client: string;
   industry: string;
   description: string;
   image: string;
   tags: string[];
   timeline: string;
   teamSize: string;
-  challenge: string;
-  solution: string;
+  narrative: {
+    context: string;
+    constraint: string;
+    intervention: string;
+    measuredOutcome: string;
+    whyItMatters: string;
+  };
   results: {
     metric: string;
     value: string;
@@ -29,22 +33,32 @@ export interface CaseStudy {
 const caseStudies: CaseStudy[] = [
   {
     slug: "bigquery-optimization",
-    title: "BigQuery Pipeline Optimization",
-    client: "PredictX (via ECS)",
-    industry: "Predictive Analytics",
-    description: "A BigQuery-based daily market data pipeline was delaying model refreshes. The constraints were time-to-data, cost, and operational predictability. The work reduced processing time from tens of minutes to a few minutes by changing query structure and pipeline design.",
+    title: "Daily market data pipeline modernisation",
+    industry: "Predictive analytics platform",
+    description:
+      "A production analytics pipeline was delaying downstream refresh cycles and driving unpredictable warehouse spend. Work focused on time-to-data and operational predictability without breaking data contracts.",
     image: "/case-studies/bigquery.jpg",
     gradient: "from-blue-600 to-cyan-400",
     tags: ["BigQuery", "GCP", "Data Engineering", "Python"],
     timeline: "3 months",
     teamSize: "Solo engineer",
-    challenge: "Context: a production analytics pipeline ingesting and transforming daily market data for time-sensitive downstream models. Constraint: predictable time-to-data without runaway BigQuery scan cost. Risk: late or stale data feeding model refreshes, plus brittle jobs that were hard to diagnose. What was failing: long runtimes driven by complex nested queries and weak partitioning/clustering.",
-    solution: "Architectural changes: reshaped the pipeline into staged transforms with incremental processing, and aligned partitioning/clustering to access patterns. Reduced expensive scans by replacing deeply nested queries with materialised intermediate steps. Added Pub/Sub-based ingestion and Python orchestration to make runs observable and easier to operate.",
+    narrative: {
+      context:
+        "A production analytics pipeline ingested and transformed daily market data for time-sensitive downstream models.",
+      constraint:
+        "Time-to-data had to become predictable without increasing scan cost or breaking downstream data contracts and refresh schedules.",
+      intervention:
+        "Reshaped the pipeline into staged transforms with incremental processing, aligned partitioning/clustering to access patterns, and replaced deeply nested queries with materialised intermediate steps. Added idempotent ingestion and orchestration so runs were observable and diagnosable.",
+      measuredOutcome:
+        "Runtime reduced from tens of minutes to low single-digit minutes on the critical path, with a corresponding reduction in unnecessary warehouse scan/compute.",
+      whyItMatters:
+        "Fresher model inputs, fewer missed refresh windows, and more predictable cloud spend—without increasing operator burden.",
+    },
     results: [
       {
-        metric: "Processing Time",
-        value: "Minutes-level",
-        description: "Reduced runtime from tens of minutes to a few minutes"
+        metric: "Pipeline runtime",
+        value: "Tens of minutes → low single-digit minutes",
+        description: "Reduced end-to-end processing time on the critical path"
       },
       {
         metric: "Data Volume",
@@ -52,14 +66,14 @@ const caseStudies: CaseStudy[] = [
         description: "Stable processing of a daily market dataset"
       },
       {
-        metric: "Cost Reduction",
-        value: "Lower spend",
-        description: "Reduced unnecessary BigQuery compute and scan cost"
+        metric: "Warehouse scan cost",
+        value: "Reduced",
+        description: "Less unnecessary scan/compute through incremental processing and query restructuring"
       },
       {
-        metric: "Latency",
-        value: "Fresher data",
-        description: "Shorter time-to-data for downstream model refresh"
+        metric: "Time-to-data predictability",
+        value: "Improved",
+        description: "More consistent refresh timing for downstream consumers"
       }
     ],
     technologies: ["BigQuery", "Python", "Pub/Sub", "Cloud Functions", "Terraform", "dbt", "Airflow"],
@@ -74,22 +88,32 @@ const caseStudies: CaseStudy[] = [
   },
   {
     slug: "v2x-network-system",
-    title: "V2X 5G Network Integration",
-    client: "Telecommunications R&D Project",
-    industry: "Telecommunications",
-    description: "Built the data processing layer for a Vehicle-to-Everything (V2X) system on 5G infrastructure. The constraints were tight latency budgets, reliability, and predictable behaviour under load.",
+    title: "Low-latency event processing for V2X on 5G",
+    industry: "Telecommunications systems",
+    description:
+      "Designed and implemented the data processing layer for a V2X system on 5G infrastructure. The work focused on tight latency budgets and predictable behaviour under load.",
     image: "/case-studies/v2x.jpg",
     gradient: "from-emerald-500 to-teal-400",
     tags: ["5G", "Real-Time Systems", "V2X", "IoT"],
     timeline: "6 months",
     teamSize: "Part of 4-person team",
-    challenge: "Context: safety-adjacent V2X communication where processing delays can change system behaviour. Constraint: single-digit millisecond latency budgets on critical paths, with high event volume and many concurrent connections. Risk: unpredictable processing times and cascading back-pressure. What was at stake: reliability under load and controlled degradation when the system is stressed.",
-    solution: "Architectural changes: a multi-layer design that keeps time-critical decisions at the edge and pushes aggregation to cloud paths. Used Kafka to separate ingestion from downstream processing and Redis for low-latency state. Implemented custom modules for the most latency-sensitive operations and designed for redundancy and graceful degradation.",
+    narrative: {
+      context:
+        "A V2X system required low-latency processing where delays change behaviour and failure modes have operational impact.",
+      constraint:
+        "Critical paths could not exceed a single-digit millisecond latency budget, and the system had to remain predictable under saturation rather than cascading into back-pressure.",
+      intervention:
+        "Implemented an edge/cloud split so time-critical decisions stayed close to ingress, decoupled ingestion from processing via event streaming, and designed low-latency state access. Added redundancy on critical paths and explicit degradation behaviours for overload scenarios.",
+      measuredOutcome:
+        "Latency-sensitive paths were engineered around a single-digit millisecond budget, with failure modes constrained to controlled degradation under load.",
+      whyItMatters:
+        "Predictable performance reduces operational risk: teams can set hard budgets, reason about saturation, and avoid brittle behaviour at peak load.",
+    },
     results: [
       {
-        metric: "Latency",
-        value: "Single-digit ms target",
-        description: "Designed around tight latency budgets on critical paths"
+        metric: "Critical-path latency budget",
+        value: "Single-digit milliseconds",
+        description: "Engineered around a hard budget on time-sensitive paths"
       },
       {
         metric: "Connections",
@@ -97,9 +121,9 @@ const caseStudies: CaseStudy[] = [
         description: "Designed to support large numbers of concurrent connections"
       },
       {
-        metric: "Uptime",
-        value: "High availability",
-        description: "Redundancy and graceful degradation for critical paths"
+        metric: "Degradation behaviour",
+        value: "Controlled",
+        description: "Explicit overload handling to prevent cascading back-pressure"
       },
       {
         metric: "Throughput",
@@ -119,37 +143,47 @@ const caseStudies: CaseStudy[] = [
   },
   {
     slug: "ai-recipe-platform",
-    title: "AI Recipe Generation Platform",
-    client: "Food Tech Startup",
-    industry: "Consumer Technology",
-    description: "Built a full-stack recipe generation product with retrieval and structured constraints. The constraints were output quality, dietary correctness, and interactive latency for a consumer UX.",
+    title: "Interactive constrained-generation product",
+    industry: "Applied AI product",
+    description:
+      "Built an interactive generation product where outputs needed to be repeatable, constrained, and safe for defined rules. Work focused on reducing obvious failure modes while keeping interactive latency.",
     image: "/case-studies/recipe.jpg",
     gradient: "from-purple-600 to-pink-500",
     tags: ["RAG", "Vertex AI", "React Native", "Full-Stack"],
     timeline: "4 months",
     teamSize: "Solo engineer",
-    challenge: "Context: a consumer product where outputs must be usable, repeatable, and safe for dietary restrictions. Constraint: seconds-level response for interactive use, without sacrificing correctness. Risk: plausible but wrong recipes, inconsistent instructions, and user trust erosion. What was failing: baseline prompting produced errors and variability that were hard to explain.",
-    solution: "Architectural changes: added retrieval against a curated corpus and enforced structured constraints around substitutions and dietary restrictions. Built the product end-to-end (generation, saving, and nutrition analysis) so behaviour could be tested and iterated in real flows, not demos.",
+    narrative: {
+      context:
+        "An interactive generation workflow needed outputs that users could follow reliably, not one-off responses.",
+      constraint:
+        "Responses had to remain seconds-level for an interactive UX, while adhering to explicit rules (e.g. substitutions and restriction handling) that could not be violated.",
+      intervention:
+        "Added retrieval against a curated corpus and enforced structured constraints around allowed substitutions and restrictions. Built end-to-end flows (generation, saving, and analysis) so behaviour could be tested in real user journeys rather than demos.",
+      measuredOutcome:
+        "Reduced obvious baseline failure cases and maintained seconds-level generation, with outputs constrained by explicit rules and supported by structured downstream analysis.",
+      whyItMatters:
+        "Constrained, testable behaviour makes AI features operable: teams can set limits, detect regressions, and ship iterative improvements without silent drift.",
+    },
     results: [
       {
-        metric: "Recipe Quality",
-        value: "Improved",
-        description: "Reduced obvious errors compared to baseline prompting"
+        metric: "Baseline failure rate",
+        value: "Reduced",
+        description: "Fewer obvious errors compared to baseline prompting"
       },
       {
-        metric: "Generation Time",
+        metric: "Interactive latency",
         value: "Seconds-level",
-        description: "Fast generation for an interactive UX"
+        description: "Maintained response time suitable for interactive use"
       },
       {
-        metric: "Nutrition",
-        value: "Validated",
-        description: "Nutrition analysis computed from structured ingredient data"
+        metric: "Constraint adherence",
+        value: "Enforced",
+        description: "Outputs constrained by explicit rules and structured fields"
       },
       {
-        metric: "Recipes Generated",
+        metric: "End-to-end workflow",
         value: "In production",
-        description: "Generation and save flows integrated end-to-end"
+        description: "Generation and save flows integrated for real usage"
       }
     ],
     technologies: ["Vertex AI", "LangChain", "React Native", "Next.js", "PostgreSQL", "Pinecone", "GCP", "Expo"],
@@ -174,4 +208,44 @@ export function getCaseStudy(slug: string): CaseStudy | undefined {
 
 export function getFeaturedCaseStudies(limit: number = 3): CaseStudy[] {
   return caseStudies.slice(0, limit);
+}
+
+export type ProofMetric = {
+  value: string;
+  metric: string;
+  context: string;
+  caseStudySlug: string;
+};
+
+export function getProofMetrics(limit: number = 4): ProofMetric[] {
+  const bySlugAndMetric = new Set<string>();
+  const picked: ProofMetric[] = [];
+
+  const curated: Array<{ slug: CaseStudy["slug"]; metric: string }> = [
+    { slug: "bigquery-optimization", metric: "Pipeline runtime" },
+    { slug: "bigquery-optimization", metric: "Warehouse scan cost" },
+    { slug: "v2x-network-system", metric: "Critical-path latency budget" },
+    { slug: "ai-recipe-platform", metric: "Interactive latency" },
+  ];
+
+  for (const target of curated) {
+    const study = getCaseStudy(target.slug);
+    const result = study?.results.find((r) => r.metric === target.metric);
+    if (!study || !result) continue;
+
+    const key = `${study.slug}::${result.metric}`;
+    if (bySlugAndMetric.has(key)) continue;
+    bySlugAndMetric.add(key);
+
+    picked.push({
+      value: result.value,
+      metric: result.metric,
+      context: `${study.industry} — ${study.title}`,
+      caseStudySlug: study.slug,
+    });
+
+    if (picked.length >= limit) break;
+  }
+
+  return picked;
 }

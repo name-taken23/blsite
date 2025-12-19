@@ -39,7 +39,7 @@ export default function WorkPageClient() {
               Selected work
             </h1>
             <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
-              Work examples with context: constraints, trade-offs, and what changed. Outcomes depend on baselines and the system you’re operating.
+              Case studies are written to preserve confidentiality: industry + system descriptors, constraints first, and outcomes stated conservatively.
             </p>
           </div>
         </div>
@@ -59,6 +59,7 @@ export default function WorkPageClient() {
 
           <Link
             href={`/case-studies/${featured.slug}`}
+            id={featured.slug}
             className="mt-8 block rounded-2xl border border-gray-200 bg-white hover:border-gray-300 transition-colors"
           >
             <div className="p-6 md:p-8">
@@ -106,6 +107,7 @@ export default function WorkPageClient() {
               <Link
                 key={caseStudy.slug}
                 href={`/case-studies/${caseStudy.slug}`}
+                id={caseStudy.slug}
                 className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 transition-colors"
               >
                 <div className="flex items-center justify-between gap-4">

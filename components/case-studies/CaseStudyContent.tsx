@@ -96,15 +96,18 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
       <section className="max-w-3xl mx-auto px-6 py-12">
         <div className="space-y-12">
           <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
-              Context and constraints
-            </h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.challenge}</p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Context</h2>
+            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.context}</p>
           </div>
 
           <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">What changed</h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.solution}</p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Constraint</h2>
+            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.constraint}</p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Intervention</h2>
+            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.intervention}</p>
 
             <div className="mt-8 rounded-2xl border border-gray-200 bg-gray-50 p-6">
               <h3 className="text-lg font-semibold text-gray-900">Key decisions</h3>
@@ -117,6 +120,16 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
                 ))}
               </ul>
             </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Measured outcome</h2>
+            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.measuredOutcome}</p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Why it matters</h2>
+            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.whyItMatters}</p>
           </div>
         </div>
       </section>
