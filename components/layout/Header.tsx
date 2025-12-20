@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import BrandMark from "@/components/brand/BrandMark";
+import Button from "@/components/ui/Button";
+import AppIcon from "@/components/ui/AppIcon";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -114,14 +116,16 @@ export default function Header() {
             className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors"
             onClick={() => setIsMobileMenuOpen((v) => !v)}
           >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMobileMenuOpen ? <AppIcon icon={X} size="md" /> : <AppIcon icon={Menu} size="md" />}
           </button>
-          <Link
+          <Button
             href="/contact"
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-lg bg-accent-electric text-white hover:bg-accent-electricDark transition-colors"
+            variant="primary"
+            size="md"
+            className="hidden sm:inline-flex"
           >
             Start with a Blueprint
-          </Link>
+          </Button>
           <ThemeToggle />
         </div>
       </div>
@@ -149,7 +153,7 @@ export default function Header() {
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors"
               onClick={closeMobileMenu}
             >
-              <X className="h-5 w-5" />
+              <AppIcon icon={X} size="md" />
             </button>
           </div>
 
@@ -176,13 +180,15 @@ export default function Header() {
             </div>
 
             <div className="mt-6">
-              <Link
+              <Button
                 href="/contact"
                 onClick={closeMobileMenu}
-                className="inline-flex w-full items-center justify-center rounded-lg bg-accent-electric px-8 py-4 text-sm font-semibold text-white hover:bg-accent-electricDark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2"
+                variant="primary"
+                size="lg"
+                className="w-full"
               >
                 Start with a Blueprint
-              </Link>
+              </Button>
 
               <p className="mt-4 text-xs text-gray-500 leading-relaxed">
                 A paid, structured first step that defines constraints, risks, and a delivery sequence.

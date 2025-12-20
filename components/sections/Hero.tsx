@@ -1,7 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Button from "@/components/ui/Button";
+import Chip from "@/components/ui/Chip";
+import List from "@/components/ui/List";
 import SignalWave from "@/components/graphics/SignalWave";
 import Section from "@/components/ui/Section";
 import BrandMark from "@/components/brand/BrandMark";
@@ -27,8 +29,8 @@ export default function Hero() {
             <BrandMark variant="lockup" size="md" />
           </div>
 
-          <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-gray-700">
-            Clarity. Speed. Control.
+          <div className="inline-flex">
+            <Chip label="Clarity. Speed. Control." tone="neutral" />
           </div>
 
           <div className="relative">
@@ -55,18 +57,22 @@ export default function Hero() {
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-            <Link
-              href="/work"
-              className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-            >
+            <Button href="/work" variant="secondary" size="lg">
               View selected work
-            </Link>
+            </Button>
           </div>
 
-          <div className="mt-10 flex flex-col gap-2 text-sm text-gray-600">
-            <div>Founder-led delivery</div>
-            <div>Baselines, guardrails, controlled rollout</div>
-            <div>Work shown with context</div>
+          <div className="mt-10">
+            <List
+              items={[
+                "Founder-led delivery",
+                "Baselines, guardrails, controlled rollout",
+                "Work shown with context",
+              ]}
+              variant="none"
+              density="compact"
+              className="text-sm text-gray-600"
+            />
           </div>
         </div>
 
@@ -95,9 +101,9 @@ export default function Hero() {
             >
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Constraints</div>
               <div className="mt-3 flex flex-wrap gap-2">
-                <IconBadge icon={<Gauge className="h-full w-full" />} label="Latency budget" tone="tinted" />
-                <IconBadge icon={<Coins className="h-full w-full" />} label="Cost ceiling" tone="tinted" />
-                <IconBadge icon={<Shield className="h-full w-full" />} label="Change risk" tone="tinted" />
+                <IconBadge icon={Gauge} label="Latency budget" tone="tinted" />
+                <IconBadge icon={Coins} label="Cost ceiling" tone="tinted" />
+                <IconBadge icon={Shield} label="Change risk" tone="tinted" />
               </div>
             </Surface>
 
@@ -107,10 +113,15 @@ export default function Hero() {
               className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
             >
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deliverable</div>
-              <ul className="mt-3 space-y-2 text-sm text-gray-700 leading-relaxed">
-                <li>Scoped plan and delivery sequence</li>
-                <li>Risks, guardrails, and rollback path</li>
-              </ul>
+              <List
+                items={[
+                  "Scoped plan and delivery sequence",
+                  "Risks, guardrails, and rollback path",
+                ]}
+                variant="none"
+                density="compact"
+                className="mt-3"
+              />
             </Surface>
           </div>
         </Surface>

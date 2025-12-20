@@ -2,6 +2,10 @@ import PageShell from "@/components/layout/PageShell";
 import Hero from "@/components/sections/Hero";
 import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Button from "@/components/ui/Button";
+import Chip from "@/components/ui/Chip";
+import FeatureIcon from "@/components/ui/FeatureIcon";
+import Stepper from "@/components/ui/Stepper";
 import { services } from "./services/data";
 import { getAllCaseStudies, getProofMetrics } from "@/lib/case-studies";
 import OutcomeDelta from "@/components/graphics/OutcomeDelta";
@@ -56,17 +60,17 @@ export default function Home() {
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {services.map((service) => (
             <Surface key={service.title} variant="raised" className="p-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50">
-                <service.icon className="w-5 h-5 text-gray-700" />
-              </div>
+              <FeatureIcon icon={service.icon} tone="neutral" />
               <h3 className="mt-5 text-lg font-semibold text-gray-900">{service.title}</h3>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">{service.description}</p>
-              <Link
+              <Button
                 href="/services"
-                className="mt-5 inline-flex items-center text-sm font-semibold text-gray-900 hover:text-accent-electric transition-colors"
+                variant="tertiary"
+                size="sm"
+                className="mt-5 px-0"
               >
                 See how it works
-              </Link>
+              </Button>
             </Surface>
           ))}
         </div>
@@ -109,12 +113,7 @@ export default function Home() {
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">{caseStudy.description}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {caseStudy.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
-                  >
-                    {tag}
-                  </span>
+                  <Chip key={tag} label={tag} size="sm" />
                 ))}
               </div>
             </Surface>
@@ -122,12 +121,9 @@ export default function Home() {
         </div>
 
         <div className="mt-10">
-          <Link
-            href="/work"
-            className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-          >
+          <Button href="/work" variant="secondary" size="lg">
             View selected work
-          </Link>
+          </Button>
         </div>
       </Section>
 
@@ -141,27 +137,25 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {[
-            {
-              title: "Blueprint",
-              body: "A paid assessment that produces scope, risks, and a delivery sequence you can run.",
-            },
-            {
-              title: "Build",
-              body: "Ship changes with baselines, guardrails, and controlled rollout.",
-            },
-            {
-              title: "Calibrate",
-              body: "Measure behaviour, tighten the system, and hand over runbooks and ownership.",
-            },
-          ].map((step) => (
-            <Surface key={step.title} variant="raised" className="p-6">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{step.title}</div>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">{step.body}</p>
-            </Surface>
-          ))}
-        </div>
+        <Surface variant="raised" className="mt-10 p-6 md:p-8">
+          <Stepper
+            steps={[
+              {
+                title: "Blueprint",
+                description: "A paid assessment that produces scope, risks, and a delivery sequence you can run.",
+              },
+              {
+                title: "Build",
+                description: "Ship changes with baselines, guardrails, and controlled rollout.",
+              },
+              {
+                title: "Calibrate",
+                description: "Measure behaviour, tighten the system, and hand over runbooks and ownership.",
+              },
+            ]}
+            className="max-w-xl"
+          />
+        </Surface>
       </Section>
 
       <Section variant="framed">
@@ -173,12 +167,9 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-              <Link
-                href="/work"
-                className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-              >
+              <Button href="/work" variant="secondary" size="lg">
                 View selected work
-              </Link>
+              </Button>
             </div>
           </div>
         </Surface>
