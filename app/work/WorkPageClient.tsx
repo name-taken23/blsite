@@ -3,6 +3,9 @@
 import PageShell from "@/components/layout/PageShell";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Section from "@/components/ui/Section";
+import Surface from "@/components/ui/Surface";
+import OutcomeTile from "@/components/ui/OutcomeTile";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { Clock } from "lucide-react";
 import Link from "next/link";
 import { getAllCaseStudies } from "@/lib/case-studies";
@@ -39,10 +42,14 @@ export default function WorkPageClient() {
           <div className="mt-6 h-10 w-full opacity-60">
             <TopologyLines className="h-full w-full" />
           </div>
-          <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">Selected work</h1>
-          <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
-            Case studies are written to preserve confidentiality: industry + system descriptors, constraints first, and outcomes stated conservatively.
-          </p>
+          <div className="mt-6">
+            <SectionHeading
+              title="Selected work"
+              subtitle="Case studies are written to preserve confidentiality: industry + system descriptors, constraints first, and outcomes stated conservatively."
+              size="lg"
+              as="h1"
+            />
+          </div>
         </div>
       </Section>
 
@@ -50,36 +57,22 @@ export default function WorkPageClient() {
 
       <Section variant="framed" containerClassName="py-14 md:py-16">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Featured</p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">{featured.title}</h2>
-          <p className="mt-4 text-gray-600 leading-relaxed">{featured.description}</p>
+          <SectionHeading
+            eyebrow="Featured"
+            title={featured.title}
+            subtitle={featured.description}
+            size="md"
+          />
         </div>
 
-        <div id={featured.slug} className="mt-8 rounded-2xl border border-gray-200 bg-white">
-          <div className="p-6 md:p-8">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {pickTopResults(featured.results).map((result) => (
-                <div
-                  key={`${featured.slug}::${result.metric}`}
-                  className="rounded-xl border border-gray-200 bg-gray-50 p-4"
-                >
-                  <div className="text-xl md:text-2xl font-semibold text-gray-900">{result.value}</div>
-                  <div className="mt-1 text-xs font-semibold text-gray-700">{result.metric}</div>
-                  <div className="mt-1 text-xs text-gray-600 leading-relaxed">{result.description}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold text-gray-700">
-              <span className="rounded-full border border-gray-200 bg-white px-3 py-1">{featured.industry}</span>
-              <span className="inline-flex items-center gap-1 text-gray-600">
-                <Clock className="w-3.5 h-3.5" />
-                {featured.timeline}
+        <Surface id={featured.slug} variant="raised" className="mt-8 p-6 md:p-8">
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
+            <div className="max-w-xl">
+              <span className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700">
+                Confidential case study
               </span>
-            </div>
 
-            <div className="mt-6 flex items-baseline justify-between gap-4">
-              <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900">
+              <h3 className="mt-4 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
                 <Link
                   href={`/case-studies/${featured.slug}`}
                   aria-label={`Read case study: ${featured.title}`}
@@ -88,51 +81,77 @@ export default function WorkPageClient() {
                   {featured.title}
                 </Link>
               </h3>
-              <Link
-                href={`/case-studies/${featured.slug}`}
-                aria-label={`Read case study: ${featured.title}`}
-                className="shrink-0 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700 hover:border-gray-300 transition-colors"
-              >
-                Read case study
-              </Link>
-            </div>
-            <p className="mt-3 text-sm md:text-base text-gray-600 leading-relaxed">{featured.description}</p>
+              <p className="mt-4 text-base text-gray-600 leading-relaxed">{featured.description}</p>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {featured.technologies.slice(0, 8).map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
-                >
-                  {tech}
+              <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold text-gray-700">
+                <span className="rounded-full border border-gray-200 bg-white px-3 py-1">{featured.industry}</span>
+                <span className="inline-flex items-center gap-1 text-gray-600">
+                  <Clock className="w-3.5 h-3.5" />
+                  {featured.timeline}
                 </span>
-              ))}
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                {featured.technologies.slice(0, 6).map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href={`/case-studies/${featured.slug}`}
+                  aria-label={`Read case study: ${featured.title}`}
+                  className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:border-gray-300 transition-colors"
+                >
+                  Read case study
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.08]">
+                <TopologyLines className="h-full w-full" />
+              </div>
+
+              <div className="relative grid gap-3">
+                {pickTopResults(featured.results).map((result) => (
+                  <OutcomeTile
+                    key={`${featured.slug}::${result.metric}`}
+                    value={result.value}
+                    metric={result.metric}
+                    context={result.description}
+                    surfaceVariant="inset"
+                    className="p-5"
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </Surface>
       </Section>
 
       <Section variant="tinted" containerClassName="py-14 md:py-16">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">More projects</p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Additional work</h2>
+          <SectionHeading eyebrow="More projects" title="Additional work" size="md" />
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {rest.map((caseStudy) => (
-            <div key={caseStudy.slug} id={caseStudy.slug} className="rounded-2xl border border-gray-200 bg-white p-6">
-              <div className="grid gap-3 sm:grid-cols-2">
-                {pickTopResults(caseStudy.results).map((result) => (
-                  <div
-                    key={`${caseStudy.slug}::${result.metric}`}
-                    className="rounded-xl border border-gray-200 bg-gray-50 p-4"
-                  >
-                    <div className="text-lg font-semibold text-gray-900">{result.value}</div>
-                    <div className="mt-1 text-xs font-semibold text-gray-700">{result.metric}</div>
-                    <div className="mt-1 text-xs text-gray-600 leading-relaxed">{result.description}</div>
-                  </div>
-                ))}
-              </div>
+            <Surface key={caseStudy.slug} id={caseStudy.slug} variant="raised" className="p-6">
+              {caseStudy.results[0] ? (
+                <OutcomeTile
+                  value={caseStudy.results[0].value}
+                  metric={caseStudy.results[0].metric}
+                  context={caseStudy.results[0].description}
+                  surfaceVariant="inset"
+                  className="p-5"
+                />
+              ) : null}
 
               <p className="mt-5 text-xs font-semibold text-gray-600">
                 {caseStudy.industry}
@@ -161,6 +180,7 @@ export default function WorkPageClient() {
                   Read case study
                 </Link>
               </div>
+
               <p className="mt-4 text-sm text-gray-600 leading-relaxed">{caseStudy.description}</p>
 
               <div className="mt-5 flex flex-wrap gap-2">
@@ -173,18 +193,19 @@ export default function WorkPageClient() {
                   </span>
                 ))}
               </div>
-            </div>
+            </Surface>
           ))}
         </div>
       </Section>
 
       <Section variant="framed">
-        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-10">
+        <Surface variant="inset" className="p-8 md:p-10">
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Discuss a similar system</h2>
-            <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed">
-              BlackLake works best with teams tackling complex technical problems. Share your context and constraints, and I’ll suggest a practical next step.
-            </p>
+            <SectionHeading
+              title="Discuss a similar system"
+              subtitle="BlackLake works best with teams tackling complex technical problems. Share your context and constraints, and I’ll suggest a practical next step."
+              size="lg"
+            />
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
               <Link
@@ -195,7 +216,7 @@ export default function WorkPageClient() {
               </Link>
             </div>
           </div>
-        </div>
+        </Surface>
       </Section>
     </PageShell>
   );

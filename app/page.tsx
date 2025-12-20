@@ -6,6 +6,9 @@ import { services } from "./services/data";
 import { getAllCaseStudies, getProofMetrics } from "@/lib/case-studies";
 import OutcomeDelta from "@/components/graphics/OutcomeDelta";
 import Section from "@/components/ui/Section";
+import Surface from "@/components/ui/Surface";
+import OutcomeTile from "@/components/ui/OutcomeTile";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies().slice(0, 3);
@@ -17,47 +20,41 @@ export default function Home() {
 
       <Section variant="framed" cornerGraphic={<OutcomeDelta />}>
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Proof</p>
-          <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
-            Outcomes, stated conservatively
-          </h2>
-          <p className="mt-4 text-base text-gray-600 leading-relaxed">
-            Quantified signals from case studies, described without client identifiers.
-          </p>
+          <SectionHeading
+            eyebrow="Proof"
+            title="Outcomes, stated conservatively"
+            subtitle="Quantified signals from case studies, described without client identifiers."
+            size="lg"
+          />
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {proof.map((item) => (
-            <Link
+            <OutcomeTile
               key={`${item.caseStudySlug}-${item.metric}`}
               href={`/case-studies/${item.caseStudySlug}`}
-              className="group relative rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 transition-colors"
-            >
-              <div className="pointer-events-none absolute right-4 top-4 text-accent-electric opacity-60 transition-opacity group-hover:opacity-95">
-                <OutcomeDelta />
-              </div>
-              <div className="text-2xl md:text-3xl font-semibold text-gray-900">{item.value}</div>
-              <div className="mt-2 text-sm font-semibold text-gray-900">{item.metric}</div>
-              <div className="mt-2 text-sm text-gray-600 leading-relaxed">{item.context}</div>
-            </Link>
+              value={item.value}
+              metric={item.metric}
+              context={item.context}
+              icon={<OutcomeDelta />}
+            />
           ))}
         </div>
       </Section>
 
       <Section variant="tinted">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Pillars</p>
-          <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
-            Systems. Intelligence. Product.
-          </h2>
-          <p className="mt-4 text-base text-gray-600 leading-relaxed">
-            Work is scoped around what actually blocks production change: brittle systems, unclear behaviour, and tools that don’t match operators.
-          </p>
+          <SectionHeading
+            eyebrow="Pillars"
+            title="Systems. Intelligence. Product."
+            subtitle="Work is scoped around what actually blocks production change: brittle systems, unclear behaviour, and tools that don’t match operators."
+            size="lg"
+          />
         </div>
 
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {services.map((service) => (
-            <div key={service.title} className="rounded-2xl border border-gray-200 bg-white p-6">
+            <Surface key={service.title} variant="raised" className="p-6">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50">
                 <service.icon className="w-5 h-5 text-gray-700" />
               </div>
@@ -69,26 +66,29 @@ export default function Home() {
               >
                 See how it works
               </Link>
-            </div>
+            </Surface>
           ))}
         </div>
       </Section>
 
       <Section variant="plain">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Selected work</p>
-          <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Examples with context</h2>
-          <p className="mt-4 text-base text-gray-600 leading-relaxed">
-            Each case study follows the same structure: context, constraint, intervention, measured outcome, and why it matters.
-          </p>
+          <SectionHeading
+            eyebrow="Selected work"
+            title="Examples with context"
+            subtitle="Each case study follows the same structure: context, constraint, intervention, measured outcome, and why it matters."
+            size="lg"
+          />
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {caseStudies.map((caseStudy) => (
-            <Link
+            <Surface
               key={caseStudy.slug}
+              as={Link}
               href={`/case-studies/${caseStudy.slug}`}
-              className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 transition-colors"
+              variant="raised"
+              className="p-6 transition-colors"
             >
               <p className="text-xs font-semibold text-gray-600">
                 {caseStudy.industry}
@@ -107,7 +107,7 @@ export default function Home() {
                   </span>
                 ))}
               </div>
-            </Link>
+            </Surface>
           ))}
         </div>
 
@@ -145,16 +145,16 @@ export default function Home() {
               body: "Measure behaviour, tighten the system, and hand over runbooks and ownership.",
             },
           ].map((step) => (
-            <div key={step.title} className="rounded-2xl border border-gray-200 bg-white p-6">
+            <Surface key={step.title} variant="raised" className="p-6">
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{step.title}</div>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">{step.body}</p>
-            </div>
+            </Surface>
           ))}
         </div>
       </Section>
 
       <Section variant="framed">
-        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-10">
+        <Surface variant="inset" className="p-8 md:p-10">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Start with a Blueprint</h2>
             <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed">
@@ -170,7 +170,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </div>
+        </Surface>
       </Section>
     </PageShell>
   );

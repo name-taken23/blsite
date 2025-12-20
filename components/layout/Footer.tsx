@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
+import BrandMark from "@/components/brand/BrandMark";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,11 +12,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="max-w-7xl mx-auto px-6 py-12">
+    <footer className="relative border-t border-gray-200 bg-white overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute right-6 top-1/2 -translate-y-1/2 opacity-5">
+        <BrandMark variant="mark" size="lg" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
           <div className="space-y-2">
-            <div className="text-sm font-semibold tracking-[0.22em] text-gray-900">BLACKLAKE</div>
+            <Link href="/" aria-label="BlackLake" className="inline-flex items-center">
+              <BrandMark variant="lockup" size="sm" />
+            </Link>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <MapPin className="w-3.5 h-3.5" />
               <span>Made in London</span>

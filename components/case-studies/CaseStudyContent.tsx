@@ -4,13 +4,49 @@ import { CaseStudy } from "@/lib/case-studies";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
+import OutcomeTile from "@/components/ui/OutcomeTile";
+import Surface from "@/components/ui/Surface";
+import OutcomeDelta from "@/components/graphics/OutcomeDelta";
+import TopologyLines from "@/components/graphics/TopologyLines";
 
 interface CaseStudyContentProps {
   caseStudy: CaseStudy;
 }
 
 export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
-  const outcomes = caseStudy.results.slice(0, 5);
+  const outcomeStrip = caseStudy.results.slice(0, 3);
+
+  const sections = [
+    { id: "context", label: "Context" },
+    { id: "constraint", label: "Constraint" },
+    { id: "intervention", label: "Intervention" },
+    { id: "outcomes", label: "Outcomes" },
+    { id: "why-it-matters", label: "Why it matters" },
+    { id: "implementation", label: "Implementation" },
+  ] as const;
+
+  const scrollToSection = (id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  };
+
+  const ReportSection = (props: { id: string; title: string; children: React.ReactNode }) => {
+    const { id, title, children } = props;
+
+    return (
+      <div id={id} className="relative scroll-mt-28 pt-10">
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gray-200" />
+        <div aria-hidden="true" className="pointer-events-none absolute right-0 top-6 text-accent-electric opacity-[0.18]">
+          <OutcomeDelta />
+        </div>
+        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">{title}</h2>
+        <div className="mt-4">{children}</div>
+      </div>
+    );
+  };
 
   return (
     <div className="bg-white">
@@ -73,84 +109,108 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
           </div>
         </div>
 
-        <div className="mt-10 rounded-2xl border border-gray-200 bg-gray-50 p-6">
-          <div className="flex items-baseline justify-between gap-6">
-            <h2 className="text-lg font-semibold text-gray-900">Outcomes</h2>
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">First-order signals</div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {outcomes.map((result) => (
-              <div key={result.metric} className="rounded-xl border border-gray-200 bg-white p-6">
-                <div className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">{result.value}</div>
-                <div className="mt-2 text-sm font-semibold text-gray-900">{result.metric}</div>
-                {result.description ? (
-                  <div className="mt-2 text-sm text-gray-600 leading-relaxed">{result.description}</div>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-3xl mx-auto px-6 py-12">
-        <div className="space-y-12">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Context</h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.context}</p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Constraint</h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.constraint}</p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Intervention</h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.intervention}</p>
-
-            <div className="mt-8 rounded-2xl border border-gray-200 bg-gray-50 p-6">
-              <h3 className="text-lg font-semibold text-gray-900">Key decisions</h3>
-              <ul className="mt-4 space-y-3">
-                {caseStudy.keyFeatures.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+        {outcomeStrip.length ? (
+          <Surface variant="inset" className="mt-10 p-6">
+            <div className="flex items-baseline justify-between gap-6">
+              <h2 className="text-sm font-semibold text-gray-900">Executive skim</h2>
+              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Outcome strip</div>
             </div>
-          </div>
 
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Measured outcome</h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.measuredOutcome}</p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Why it matters</h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.whyItMatters}</p>
-          </div>
-        </div>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {outcomeStrip.map((result) => (
+                <OutcomeTile
+                  key={result.metric}
+                  value={result.value}
+                  metric={result.metric}
+                  context={result.description ?? ""}
+                  surfaceVariant="plain"
+                  className="p-5 w-full sm:flex-1 sm:min-w-[240px]"
+                />
+              ))}
+            </div>
+          </Surface>
+        ) : null}
       </section>
 
       <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="max-w-3xl">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Implementation</h2>
-          <p className="mt-4 text-gray-600 leading-relaxed">
-            Practical technology choices that matched the constraints.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10">
+          <aside className="hidden lg:block">
+            <div className="sticky top-28">
+              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">On this page</div>
+              <nav className="mt-4">
+                <ul className="space-y-2">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection(section.id)}
+                        className="w-full text-left text-sm font-semibold text-gray-700 hover:text-accent-electric transition-colors"
+                      >
+                        {section.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          {caseStudy.technologies.map((tech) => (
-            <span
-              key={tech}
-              className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-gray-700"
-            >
-              {tech}
-            </span>
-          ))}
+              <div className="mt-6 h-10 w-full opacity-[0.18]">
+                <TopologyLines className="h-full w-full" />
+              </div>
+            </div>
+          </aside>
+
+          <div className="max-w-3xl">
+            <div className="space-y-10">
+              <ReportSection id="context" title="Context">
+                <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.context}</p>
+              </ReportSection>
+
+              <ReportSection id="constraint" title="Constraint">
+                <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.constraint}</p>
+              </ReportSection>
+
+              <ReportSection id="intervention" title="Intervention">
+                <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.intervention}</p>
+
+                <Surface variant="inset" className="mt-8 p-6">
+                  <h3 className="text-lg font-semibold text-gray-900">Key decisions</h3>
+                  <ul className="mt-4 space-y-3">
+                    {caseStudy.keyFeatures.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Surface>
+              </ReportSection>
+
+              <ReportSection id="outcomes" title="Outcomes">
+                <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.measuredOutcome}</p>
+              </ReportSection>
+
+              <ReportSection id="why-it-matters" title="Why it matters">
+                <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.whyItMatters}</p>
+              </ReportSection>
+
+              <ReportSection id="implementation" title="Implementation">
+                <p className="text-gray-600 leading-relaxed">
+                  Practical technology choices that matched the constraints.
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {caseStudy.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-gray-700"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </ReportSection>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -38,12 +38,22 @@
   /* Shadows */
   --shadow-electric: 0 0 20px rgba(var(--accent), 0.3);
   --shadow-electric-strong: 0 0 40px rgba(var(--accent), 0.5);
+
+  /* Background texture (ultra subtle) */
+  --texture-grid-rgb: 0, 0, 0;
+  --texture-grid-alpha: 0.028;
+  --texture-glow-alpha: 0.06;
+  --texture-grid-size: 72px;
 }
 
 :root.dark {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 12, 12, 13;
   --background-end-rgb: 12, 12, 13;
+
+  --texture-grid-rgb: 255, 255, 255;
+  --texture-grid-alpha: 0.018;
+  --texture-glow-alpha: 0.04;
 }
 
 /* ============================================
@@ -61,11 +71,43 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  position: relative;
+  isolation: isolate;
   overflow-x: hidden;
   font-feature-settings: "kern" 1, "liga" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle blueprint texture + soft glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(
+      900px 700px at 30% 10%,
+      rgba(var(--accent), var(--texture-glow-alpha)),
+      transparent 60%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(var(--texture-grid-rgb), var(--texture-grid-alpha)) 0,
+      rgba(var(--texture-grid-rgb), var(--texture-grid-alpha)) 1px,
+      transparent 1px,
+      transparent var(--texture-grid-size)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(var(--texture-grid-rgb), var(--texture-grid-alpha)) 0,
+      rgba(var(--texture-grid-rgb), var(--texture-grid-alpha)) 1px,
+      transparent 1px,
+      transparent var(--texture-grid-size)
+    );
+  opacity: 0.9;
 }
 
 /* ============================================

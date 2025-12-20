@@ -26,15 +26,25 @@ export default function Section<T extends ElementType = "section">({
   const backgroundClassName =
     variant === "tinted" ? "bg-gray-50" : "bg-white";
 
+  const hasSeparators = variant === "tinted" || variant === "framed";
+
   return (
     <Component
       className={cn(
         backgroundClassName,
-        variant === "framed" && "relative overflow-hidden",
+        (variant === "framed" || variant === "tinted") && "relative",
+        variant === "framed" && "overflow-hidden",
         className
       )}
       {...props}
     >
+      {hasSeparators ? (
+        <>
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gray-200/70 dark:bg-white/10" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gray-200/70 dark:bg-white/10" />
+        </>
+      ) : null}
+
       {variant === "framed" ? (
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent-electric/30" />
       ) : null}

@@ -5,6 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import BrandMark from "@/components/brand/BrandMark";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,9 +65,23 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Brand */}
-        <Link href="/" className="flex items-center">
-          <span className="text-sm font-semibold tracking-[0.22em] text-gray-900">
-            BLACKLAKE
+        <Link
+          href="/"
+          aria-label="BlackLake"
+          className={[
+            "flex items-center",
+            "transition-transform duration-300",
+            isScrolled ? "scale-95" : "scale-100",
+          ].join(" ")}
+        >
+          <span
+            className={[
+              "inline-flex items-center",
+              "transition-all duration-300",
+              isScrolled ? "drop-shadow-sm" : "",
+            ].join(" ")}
+          >
+            <BrandMark variant="lockup" size="sm" />
           </span>
         </Link>
 
@@ -125,7 +140,9 @@ export default function Header() {
       >
         <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white border-l border-gray-200 shadow-sm">
           <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100">
-            <div className="text-xs font-semibold tracking-[0.22em] text-gray-900">BLACKLAKE</div>
+            <Link href="/" onClick={closeMobileMenu} aria-label="BlackLake" className="inline-flex items-center">
+              <BrandMark variant="lockup" size="sm" />
+            </Link>
             <button
               type="button"
               aria-label="Close menu"
