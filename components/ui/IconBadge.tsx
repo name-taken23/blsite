@@ -1,5 +1,7 @@
-import type { ReactElement, ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import type { ReactElement } from "react";
 import { cn } from "@/lib/utils";
+import { ICON_SIZES } from "./iconSystem";
 
 type IconBadgeSize = "sm" | "md";
 type IconBadgeTone = "neutral" | "tinted";
@@ -7,12 +9,12 @@ type IconBadgeTone = "neutral" | "tinted";
 const sizeClassName: Record<IconBadgeSize, { container: string; icon: string; text: string }> = {
   sm: {
     container: "px-3 py-1 text-xs",
-    icon: "h-4 w-4",
+    icon: ICON_SIZES.sm,
     text: "text-gray-700",
   },
   md: {
     container: "px-3.5 py-1.5 text-sm",
-    icon: "h-[18px] w-[18px]",
+    icon: ICON_SIZES.md,
     text: "text-gray-700",
   },
 };
@@ -22,14 +24,31 @@ const toneClassName: Record<IconBadgeTone, string> = {
   tinted: "bg-gray-50",
 };
 
+/**
+ * IconBadge - Badge component with optional icon.
+ * 
+ * Behavior:
+ * - If icon is provided: icon is shown, NO accent dot
+ * - If no icon: accent dot is shown for visual identity
+ * 
+ * Icons are sized automatically by IconBadge - do NOT pass className to the icon.
+ * 
+ * @example
+ * <IconBadge label="System map" /> // Shows dot
+ * <IconBadge icon={Clock} label="2 weeks" /> // Shows icon, no dot
+ */
 export default function IconBadge(props: {
-  icon?: ReactNode;
+  /** Lucide icon component (will be sized automatically) */
+  icon?: LucideIcon;
   label: string;
   size?: IconBadgeSize;
   tone?: IconBadgeTone;
   className?: string;
-}) : ReactElement {
-  const { icon, label, size = "sm", tone = "neutral", className } = props;
+}): ReactElement {
+  const { icon: Icon, label, size = "sm", tone = "neutral", className } = props;
+
+  // Show dot only when no icon is provided
+  const showDot = !Icon;
 
   return (
     <span
@@ -42,11 +61,11 @@ export default function IconBadge(props: {
         className
       )}
     >
-      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent-electric/60" />
-      {icon ? (
-        <span aria-hidden="true" className={cn("text-gray-600", sizeClassName[size].icon)}>
-          {icon}
-        </span>
+      {showDot ? (
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent-electric/60" />
+      ) : null}
+      {Icon ? (
+        <Icon className={cn(sizeClassName[size].icon, "text-gray-600")} aria-hidden="true" />
       ) : null}
       <span>{label}</span>
     </span>

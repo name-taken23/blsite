@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { forwardRef } from "react";
+import Button from "./Button";
 
 type BaseProps = {
   children: React.ReactNode;
@@ -20,50 +20,40 @@ type MagneticButtonButtonProps = BaseProps &
 
 type MagneticButtonProps = MagneticButtonLinkProps | MagneticButtonButtonProps;
 
-const baseClasses =
-  "inline-flex items-center justify-center rounded-lg bg-accent-electric px-8 py-4 text-sm font-semibold text-white hover:bg-accent-electricDark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2";
-
-function cx(a: string, b?: string) {
-  return b ? `${a} ${b}` : a;
-}
-
+/**
+ * MagneticButton - Primary CTA button.
+ * 
+ * This is now a thin wrapper around Button variant="primary" size="lg"
+ * to maintain backwards compatibility while using a single source of truth.
+ */
 const MagneticButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, MagneticButtonProps>(
   ({ children, className = "", href, ...rest }, ref) => {
     if (href) {
-      if (href.startsWith("/")) {
-        return (
-          <Link
-            ref={ref as any}
-            href={href}
-            className={cx(baseClasses, className)}
-            {...(rest as Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children" | "href">)}
-          >
-            {children}
-          </Link>
-        );
-      }
-
       return (
-        <a
-          ref={ref as any}
+        <Button
+          ref={ref as React.Ref<HTMLAnchorElement>}
           href={href}
-          className={cx(baseClasses, className)}
+          variant="primary"
+          size="lg"
+          className={className}
           {...(rest as Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children" | "href">)}
         >
           {children}
-        </a>
+        </Button>
       );
     }
 
     return (
-      <button
-        ref={ref as any}
-        className={cx(baseClasses, className)}
+      <Button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        variant="primary"
+        size="lg"
+        className={className}
         type={(rest as React.ButtonHTMLAttributes<HTMLButtonElement>).type ?? "button"}
         {...(rest as Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">)}
       >
         {children}
-      </button>
+      </Button>
     );
   }
 );
