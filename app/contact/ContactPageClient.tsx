@@ -5,6 +5,7 @@ import BrandMark from "@/components/brand/BrandMark";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Stepper from "@/components/ui/Stepper";
 import Surface from "@/components/ui/Surface";
+import SectionHeading from "@/components/ui/SectionHeading";
 import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
 import { CheckCircle2, Mail, MapPin } from "lucide-react";
@@ -98,13 +99,12 @@ export default function ContactPageClient() {
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
-              Start with a Blueprint
-            </h1>
-            <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
-              The BlackLake Blueprint is a paid, structured first step for organisations running production systems.
-              Share what you run today, where the risk sits, and what must change.
-            </p>
+            <SectionHeading
+              title="Start with a Blueprint"
+              subtitle="The BlackLake Blueprint is a paid, structured first step for organisations running production systems. Share what you run today, where the risk sits, and what must change."
+              size="lg"
+              as="h1"
+            />
           </div>
         </div>
       </section>
@@ -115,13 +115,12 @@ export default function ContactPageClient() {
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div>
-              <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">What happens next</p>
-              <h2 className="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
-                A simple intake flow.
-              </h2>
-              <p className="mt-4 text-base text-gray-600 leading-relaxed max-w-xl">
-                Share enough context to understand the system and constraint. You’ll get a fit-check reply and, if it’s a match, a scoped Blueprint start.
-              </p>
+              <SectionHeading
+                eyebrow="What happens next"
+                title="A simple intake flow."
+                subtitle="Share enough context to understand the system and constraint. You’ll get a fit-check reply and, if it’s a match, a scoped Blueprint start."
+                size="md"
+              />
 
               <div className="mt-8 max-w-xl">
                 <Stepper
@@ -216,10 +215,14 @@ export default function ContactPageClient() {
                   <form className="space-y-6" onSubmit={submit}>
                     <div>
                       <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Request</div>
-                      <h2 className="mt-2 text-xl font-semibold text-gray-900">Blueprint intake</h2>
-                      <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                        Short, high-signal questions. Enough to understand the system and constraint.
-                      </p>
+                      <div className="mt-2">
+                        <SectionHeading
+                          title="Blueprint intake"
+                          subtitle="Short, high-signal questions. Enough to understand the system and constraint."
+                          size="md"
+                          as="h2"
+                        />
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

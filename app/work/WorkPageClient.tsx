@@ -6,9 +6,10 @@ import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
+import OutcomeStrip from "@/components/ui/OutcomeStrip";
 import { Clock } from "lucide-react";
 import Link from "next/link";
-import { getAllCaseStudies } from "@/lib/case-studies";
+import { getAllCaseStudies, getProofMetrics } from "@/lib/case-studies";
 import TopologyLines from "@/components/graphics/TopologyLines";
 
 export default function WorkPageClient() {
@@ -139,6 +140,15 @@ export default function WorkPageClient() {
         <div className="max-w-3xl">
           <SectionHeading eyebrow="More projects" title="Additional work" size="md" />
         </div>
+
+        <OutcomeStrip
+          className="mt-8 max-w-5xl"
+          items={getProofMetrics(3).map((item) => ({
+            value: item.value,
+            metric: item.metric,
+            href: `/case-studies/${item.caseStudySlug}`,
+          }))}
+        />
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {rest.map((caseStudy) => (

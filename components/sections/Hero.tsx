@@ -7,6 +7,9 @@ import Section from "@/components/ui/Section";
 import BrandMark from "@/components/brand/BrandMark";
 import HeroBackdrop from "@/components/graphics/HeroBackdrop";
 import TopologyLines from "@/components/graphics/TopologyLines";
+import Surface from "@/components/ui/Surface";
+import IconBadge from "@/components/ui/IconBadge";
+import { Coins, Gauge, Shield } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -67,50 +70,50 @@ export default function Hero() {
           </div>
         </div>
 
-        <div
-          className={[
-            "group rounded-2xl border border-gray-200 bg-gray-50 p-6 lg:mt-2",
-            "transition-all duration-200",
-            "hover:border-gray-300 hover:shadow-sm",
-          ].join(" ")}
+        <Surface
+          variant="tinted"
+          className="group p-6 lg:mt-2 transition-all duration-200 hover:border-gray-300 hover:shadow-sm"
         >
           <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">System snapshot</div>
 
           <div className="mt-5 grid gap-3">
             {/* Panel A */}
-            <div className="rounded-xl border border-gray-200 bg-white p-4 transition-colors duration-200 group-hover:border-gray-300">
+            <Surface
+              variant="plain"
+              className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
+            >
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Signal</div>
               <div className="mt-3 h-28">
                 <SignalWave className="h-full w-full" />
               </div>
-            </div>
+            </Surface>
 
             {/* Panel B */}
-            <div className="rounded-xl border border-gray-200 bg-white p-4 transition-colors duration-200 group-hover:border-gray-300">
+            <Surface
+              variant="plain"
+              className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
+            >
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Constraints</div>
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700">
-                  Latency budget
-                </span>
-                <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700">
-                  Cost ceiling
-                </span>
-                <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700">
-                  Change risk
-                </span>
+                <IconBadge icon={<Gauge className="h-full w-full" />} label="Latency budget" tone="tinted" />
+                <IconBadge icon={<Coins className="h-full w-full" />} label="Cost ceiling" tone="tinted" />
+                <IconBadge icon={<Shield className="h-full w-full" />} label="Change risk" tone="tinted" />
               </div>
-            </div>
+            </Surface>
 
             {/* Panel C */}
-            <div className="rounded-xl border border-gray-200 bg-white p-4 transition-colors duration-200 group-hover:border-gray-300">
+            <Surface
+              variant="plain"
+              className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
+            >
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deliverable</div>
               <ul className="mt-3 space-y-2 text-sm text-gray-700 leading-relaxed">
                 <li>Scoped plan and delivery sequence</li>
                 <li>Risks, guardrails, and rollback path</li>
               </ul>
-            </div>
+            </Surface>
           </div>
-        </div>
+        </Surface>
       </div>
     </Section>
   );

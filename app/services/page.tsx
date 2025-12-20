@@ -9,6 +9,7 @@ import BlueprintGrid from "@/components/graphics/BlueprintGrid";
 import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
+import IconBadge from "@/components/ui/IconBadge";
 import { services } from "./data";
 import { Clock, FileText, Shield, Map as MapIcon, Wrench, Gauge } from "lucide-react";
 
@@ -143,22 +144,11 @@ export default function ServicesPage() {
                 />
 
                 <div className="mt-8 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                    <Clock className="h-3.5 w-3.5 text-gray-600" />
-                    Typically 1-2 weeks
-                  </span>
-                  <span className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                    System map
-                  </span>
-                  <span className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                    Risk register
-                  </span>
-                  <span className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                    Guardrails
-                  </span>
-                  <span className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                    Sequenced plan
-                  </span>
+                  <IconBadge icon={<Clock className="h-full w-full" />} label="Typically 1-2 weeks" />
+                  <IconBadge label="System map" />
+                  <IconBadge label="Risk register" />
+                  <IconBadge label="Guardrails" />
+                  <IconBadge label="Sequenced plan" />
                 </div>
               </div>
 

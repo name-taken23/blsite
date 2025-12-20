@@ -9,6 +9,7 @@ import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
+import OutcomeStrip from "@/components/ui/OutcomeStrip";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies().slice(0, 3);
@@ -81,7 +82,16 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <OutcomeStrip
+          className="mt-10 max-w-4xl"
+          items={getProofMetrics(3).map((item) => ({
+            value: item.value,
+            metric: item.metric,
+            href: `/case-studies/${item.caseStudySlug}`,
+          }))}
+        />
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
           {caseStudies.map((caseStudy) => (
             <Surface
               key={caseStudy.slug}
@@ -123,11 +133,12 @@ export default function Home() {
 
       <Section variant="tinted">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-wide text-accent-electric uppercase">Process</p>
-          <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Blueprint → Build → Calibrate</h2>
-          <p className="mt-4 text-base text-gray-600 leading-relaxed">
-            Modernisation work stays safe when constraints and rollback are explicit.
-          </p>
+          <SectionHeading
+            eyebrow="Process"
+            title="Blueprint → Build → Calibrate"
+            subtitle="Modernisation work stays safe when constraints and rollback are explicit."
+            size="lg"
+          />
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">

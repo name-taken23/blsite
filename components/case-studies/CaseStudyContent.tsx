@@ -6,6 +6,7 @@ import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import Surface from "@/components/ui/Surface";
+import SectionHeading from "@/components/ui/SectionHeading";
 import OutcomeDelta from "@/components/graphics/OutcomeDelta";
 import TopologyLines from "@/components/graphics/TopologyLines";
 
@@ -42,7 +43,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
         <div aria-hidden="true" className="pointer-events-none absolute right-0 top-6 text-accent-electric opacity-[0.18]">
           <OutcomeDelta />
         </div>
-        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">{title}</h2>
+        <SectionHeading title={title} size="md" />
         <div className="mt-4">{children}</div>
       </div>
     );
@@ -230,12 +231,14 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
 
       <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="rounded-2xl border border-gray-200 bg-gray-50 p-10 text-center">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
-            Discuss a similar system
-          </h2>
-          <p className="mt-4 text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            If this resembles your constraints, share a short description of what you run today and what needs to change.
-          </p>
+          <div className="max-w-2xl mx-auto">
+            <SectionHeading
+              title="Discuss a similar system"
+              subtitle="If this resembles your constraints, share a short description of what you run today and what needs to change."
+              size="md"
+              align="center"
+            />
+          </div>
           <div className="mt-8 flex justify-center">
             <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
           </div>

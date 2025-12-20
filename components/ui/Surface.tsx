@@ -18,7 +18,10 @@ type SurfaceOwnProps<T extends ElementType> = {
 type SurfaceProps<T extends ElementType> = SurfaceOwnProps<T> &
   Omit<ComponentPropsWithoutRef<T>, keyof SurfaceOwnProps<T>>;
 
-const base = "relative overflow-hidden border border-gray-200";
+const base = cn(
+  "relative overflow-hidden border border-gray-200",
+  "focus-within:border-gray-300 focus-within:ring-1 focus-within:ring-accent-electric/15"
+);
 
 const variantClassName: Record<SurfaceVariant, string> = {
   plain: "bg-white",
