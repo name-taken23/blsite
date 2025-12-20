@@ -2,9 +2,13 @@ import PageShell from "@/components/layout/PageShell";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/seo";
-import Link from "next/link";
 import Script from "next/script";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Button from "@/components/ui/Button";
+import Chip from "@/components/ui/Chip";
+import List from "@/components/ui/List";
+import FeatureIcon from "@/components/ui/FeatureIcon";
+import AppIcon from "@/components/ui/AppIcon";
 import BlueprintGrid from "@/components/graphics/BlueprintGrid";
 import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
@@ -105,9 +109,7 @@ export default function ServicesPage() {
 
       <Section variant="plain">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-            Services
-          </div>
+          <Chip label="Services" tone="neutral" />
           <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
             Production modernisation,
             <span className="block text-gray-700">delivered with control.</span>
@@ -117,12 +119,9 @@ export default function ServicesPage() {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-            <Link
-              href="/work"
-              className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-            >
+            <Button href="/work" variant="secondary" size="lg">
               View selected work
-            </Link>
+            </Button>
           </div>
         </div>
       </Section>
@@ -144,7 +143,7 @@ export default function ServicesPage() {
                 />
 
                 <div className="mt-8 flex flex-wrap items-center gap-2">
-                  <IconBadge icon={<Clock className="h-full w-full" />} label="Typically 1-2 weeks" />
+                  <IconBadge icon={Clock} label="Typically 1-2 weeks" />
                   <IconBadge label="System map" />
                   <IconBadge label="Risk register" />
                   <IconBadge label="Guardrails" />
@@ -155,47 +154,26 @@ export default function ServicesPage() {
               <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-1">
                 <div>
                   <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <MapIcon className="h-4 w-4" />
+                    <AppIcon icon={MapIcon} size="sm" />
                     Map
                   </div>
-                  <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                    {blueprintGroups.map.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <List items={blueprintGroups.map} variant="dot" className="mt-3" />
                 </div>
 
                 <div>
                   <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <Shield className="h-4 w-4" />
+                    <AppIcon icon={Shield} size="sm" />
                     Risk
                   </div>
-                  <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                    {blueprintGroups.risk.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <List items={blueprintGroups.risk} variant="dot" className="mt-3" />
                 </div>
 
                 <div>
                   <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <FileText className="h-4 w-4" />
+                    <AppIcon icon={FileText} size="sm" />
                     Plan
                   </div>
-                  <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                    {blueprintGroups.plan.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <List items={blueprintGroups.plan} variant="dot" className="mt-3" />
                 </div>
               </div>
             </div>
@@ -216,40 +194,19 @@ export default function ServicesPage() {
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           <Surface variant="inset" className="p-6">
             <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">System map</div>
-            <ul className="mt-4 space-y-2 text-sm text-gray-600">
-              {blueprintGroups.map.map((item) => (
-                <li key={item} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <List items={blueprintGroups.map} variant="dot" className="mt-4" />
           </Surface>
 
           <Surface variant="inset" className="p-6">
             <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Risk & guardrails</div>
-            <ul className="mt-4 space-y-2 text-sm text-gray-600">
-              {blueprintGroups.risk.map((item) => (
-                <li key={item} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <List items={blueprintGroups.risk} variant="dot" className="mt-4" />
           </Surface>
 
           <Surface variant="inset" className="p-6">
             <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
               Delivery plan & operating model
             </div>
-            <ul className="mt-4 space-y-2 text-sm text-gray-600">
-              {blueprintGroups.plan.map((item) => (
-                <li key={item} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <List items={blueprintGroups.plan} variant="dot" className="mt-4" />
           </Surface>
         </div>
       </Section>
@@ -262,23 +219,14 @@ export default function ServicesPage() {
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {services.map((service) => (
             <Surface key={service.title} variant="raised" className="p-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50">
-                <service.icon className="w-5 h-5 text-gray-700" />
-              </div>
+              <FeatureIcon icon={service.icon} tone="neutral" />
               <h3 className="mt-5 text-lg font-semibold text-gray-900">{service.title}</h3>
               <p className="mt-3 text-sm font-semibold text-gray-700">{service.problem}</p>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">{service.description}</p>
 
               <div className="mt-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Focus</p>
-                <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <List items={service.features} variant="dot" className="mt-3" />
               </div>
 
               <Surface variant="inset" className="mt-6 rounded-xl p-4">
@@ -287,13 +235,10 @@ export default function ServicesPage() {
                 <p className="mt-2 text-sm text-gray-600">{service.why}</p>
               </Surface>
 
-              <div className="mt-6 flex flex-col gap-2">
-                <Link
-                  href={service.caseStudy}
-                  className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-                >
+              <div className="mt-6">
+                <Button href={service.caseStudy} variant="secondary" size="md">
                   View related case study
-                </Link>
+                </Button>
               </div>
             </Surface>
           ))}
@@ -316,9 +261,7 @@ export default function ServicesPage() {
 
             <div className="grid gap-6 md:grid-cols-3">
               <div className="relative">
-                <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-200 bg-white">
-                  <MapIcon className="h-5 w-5 text-accent-electric" />
-                </div>
+                <FeatureIcon icon={MapIcon} tone="accent" size="lg" className="relative z-10" />
                 <div className="mt-4 text-sm font-semibold text-gray-900">Blueprint</div>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                   Define constraints, map the system, and produce a scoped plan with risks and guardrails.
@@ -326,9 +269,7 @@ export default function ServicesPage() {
               </div>
 
               <div className="relative">
-                <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-200 bg-white">
-                  <Wrench className="h-5 w-5 text-accent-electric" />
-                </div>
+                <FeatureIcon icon={Wrench} tone="accent" size="lg" className="relative z-10" />
                 <div className="mt-4 text-sm font-semibold text-gray-900">Build</div>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                   Implement in controlled slices with baselines, rollout controls, and clear ownership.
@@ -336,9 +277,7 @@ export default function ServicesPage() {
               </div>
 
               <div className="relative">
-                <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-200 bg-white">
-                  <Gauge className="h-5 w-5 text-accent-electric" />
-                </div>
+                <FeatureIcon icon={Gauge} tone="accent" size="lg" className="relative z-10" />
                 <div className="mt-4 text-sm font-semibold text-gray-900">Calibrate</div>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                   Measure behaviour, tighten cost and reliability, and hand over runbooks and guardrails.
@@ -359,12 +298,9 @@ export default function ServicesPage() {
             />
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-              <Link
-                href="/work"
-                className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-              >
+              <Button href="/work" variant="secondary" size="lg">
                 View selected work
-              </Link>
+              </Button>
             </div>
           </div>
         </Surface>

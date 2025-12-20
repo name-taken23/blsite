@@ -2,6 +2,8 @@
 
 import PageShell from "@/components/layout/PageShell";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Button from "@/components/ui/Button";
+import Chip from "@/components/ui/Chip";
 import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
@@ -36,9 +38,7 @@ export default function WorkPageClient() {
     <PageShell>
       <Section variant="plain">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-            Selected case studies
-          </div>
+          <Chip label="Selected case studies" tone="neutral" />
 
           <div className="mt-6 h-10 w-full opacity-60">
             <TopologyLines className="h-full w-full" />
@@ -69,9 +69,7 @@ export default function WorkPageClient() {
         <Surface id={featured.slug} variant="raised" className="mt-8 p-6 md:p-8">
           <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div className="max-w-xl">
-              <span className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700">
-                Confidential case study
-              </span>
+              <Chip label="Confidential case study" tone="tinted" />
 
               <h3 className="mt-4 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
                 <Link
@@ -84,33 +82,26 @@ export default function WorkPageClient() {
               </h3>
               <p className="mt-4 text-base text-gray-600 leading-relaxed">{featured.description}</p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold text-gray-700">
-                <span className="rounded-full border border-gray-200 bg-white px-3 py-1">{featured.industry}</span>
-                <span className="inline-flex items-center gap-1 text-gray-600">
-                  <Clock className="w-3.5 h-3.5" />
-                  {featured.timeline}
-                </span>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Chip label={featured.industry} />
+                <Chip icon={Clock} label={featured.timeline} />
               </div>
 
               <div className="mt-6 flex flex-wrap items-center gap-2">
                 {featured.technologies.slice(0, 6).map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
-                  >
-                    {tech}
-                  </span>
+                  <Chip key={tech} label={tech} size="sm" />
                 ))}
               </div>
 
               <div className="mt-8">
-                <Link
+                <Button
                   href={`/case-studies/${featured.slug}`}
+                  variant="secondary"
+                  size="sm"
                   aria-label={`Read case study: ${featured.title}`}
-                  className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:border-gray-300 transition-colors"
                 >
                   Read case study
-                </Link>
+                </Button>
               </div>
             </div>
 
@@ -127,6 +118,7 @@ export default function WorkPageClient() {
                     metric={result.metric}
                     context={result.description}
                     surfaceVariant="inset"
+                    ornament="rail"
                     className="p-5"
                   />
                 ))}
@@ -159,18 +151,15 @@ export default function WorkPageClient() {
                   metric={caseStudy.results[0].metric}
                   context={caseStudy.results[0].description}
                   surfaceVariant="inset"
+                  ornament="rail"
                   className="p-5"
                 />
               ) : null}
 
-              <p className="mt-5 text-xs font-semibold text-gray-600">
-                {caseStudy.industry}
-                <span className="mx-2 text-gray-300">•</span>
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  {caseStudy.timeline}
-                </span>
-              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <Chip label={caseStudy.industry} size="sm" />
+                <Chip icon={Clock} label={caseStudy.timeline} size="sm" />
+              </div>
 
               <div className="mt-3 flex items-baseline justify-between gap-4">
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -182,25 +171,21 @@ export default function WorkPageClient() {
                     {caseStudy.title}
                   </Link>
                 </h3>
-                <Link
+                <Button
                   href={`/case-studies/${caseStudy.slug}`}
+                  variant="secondary"
+                  size="sm"
                   aria-label={`Read case study: ${caseStudy.title}`}
-                  className="shrink-0 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700 hover:border-gray-300 transition-colors"
                 >
                   Read case study
-                </Link>
+                </Button>
               </div>
 
               <p className="mt-4 text-sm text-gray-600 leading-relaxed">{caseStudy.description}</p>
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {caseStudy.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700"
-                  >
-                    {tag}
-                  </span>
+                  <Chip key={tag} label={tag} size="sm" />
                 ))}
               </div>
             </Surface>
@@ -218,12 +203,9 @@ export default function WorkPageClient() {
             />
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-              <Link
-                href="/about"
-                className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-gray-900 hover:border-gray-300 transition-colors"
-              >
+              <Button href="/about" variant="secondary" size="lg">
                 About BlackLake
-              </Link>
+              </Button>
             </div>
           </div>
         </Surface>
