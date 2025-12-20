@@ -1,14 +1,18 @@
 "use client";
 
 import { CaseStudy } from "@/lib/case-studies";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
-import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Button from "@/components/ui/Button";
+import Chip from "@/components/ui/Chip";
+import List from "@/components/ui/List";
+import AppIcon from "@/components/ui/AppIcon";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
 import OutcomeDelta from "@/components/graphics/OutcomeDelta";
 import TopologyLines from "@/components/graphics/TopologyLines";
+import BrandMark from "@/components/brand/BrandMark";
 
 interface CaseStudyContentProps {
   caseStudy: CaseStudy;
@@ -53,25 +57,22 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
     <div className="bg-white">
       <section className="max-w-7xl mx-auto px-6 pt-24 pb-12">
         <div className="mb-8">
-          <Link
+          <Button
             href="/work"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            variant="tertiary"
+            size="sm"
+            className="gap-2 px-0"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <AppIcon icon={ArrowLeft} size="sm" />
             Back to Work
-          </Link>
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div>
             <div className="flex flex-wrap gap-2 mb-6">
               {caseStudy.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-gray-700"
-                >
-                  {tag}
-                </span>
+                <Chip key={tag} label={tag} size="sm" />
               ))}
             </div>
 
@@ -99,15 +100,22 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
             </dl>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
-            <div className={`h-56 rounded-xl bg-gradient-to-br ${caseStudy.gradient}`} />
+          <Surface variant="tinted" className="p-6">
+            <div className="relative h-56 rounded-xl bg-gray-100 overflow-hidden">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.08]">
+                <TopologyLines className="h-full w-full" />
+              </div>
+              <div aria-hidden="true" className="pointer-events-none absolute right-4 bottom-4 opacity-10">
+                <BrandMark variant="mark" size="md" />
+              </div>
+            </div>
             <div className="mt-6 text-sm text-gray-600 leading-relaxed">
               <div className="font-semibold text-gray-900">At a glance</div>
               <div className="mt-2">
                 A real project described with constraints, tradeoffs, and what was delivered.
               </div>
             </div>
-          </div>
+          </Surface>
         </div>
 
         {outcomeStrip.length ? (
@@ -125,6 +133,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
                   metric={result.metric}
                   context={result.description ?? ""}
                   surfaceVariant="plain"
+                  ornament="rail"
                   className="p-5 w-full sm:flex-1 sm:min-w-[240px]"
                 />
               ))}
@@ -175,14 +184,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
 
                 <Surface variant="inset" className="mt-8 p-6">
                   <h3 className="text-lg font-semibold text-gray-900">Key decisions</h3>
-                  <ul className="mt-4 space-y-3">
-                    {caseStudy.keyFeatures.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <List items={caseStudy.keyFeatures} variant="check" className="mt-4" itemClassName="text-gray-700" />
                 </Surface>
               </ReportSection>
 
@@ -201,12 +203,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
 
                 <div className="mt-6 flex flex-wrap gap-2">
                   {caseStudy.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-gray-700"
-                    >
-                      {tech}
-                    </span>
+                    <Chip key={tech} label={tech} size="sm" />
                   ))}
                 </div>
               </ReportSection>

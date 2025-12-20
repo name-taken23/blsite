@@ -3,12 +3,15 @@
 import PageShell from "@/components/layout/PageShell";
 import BrandMark from "@/components/brand/BrandMark";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Button from "@/components/ui/Button";
 import Stepper from "@/components/ui/Stepper";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
-import { CheckCircle2, Mail, MapPin } from "lucide-react";
+import List from "@/components/ui/List";
+import FeatureIcon from "@/components/ui/FeatureIcon";
+import { Mail, MapPin } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 
 type ContactFormState = {
@@ -143,26 +146,22 @@ export default function ContactPageClient() {
 
               <div className="mt-10 max-w-xl">
                 <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Reassurance</div>
-                <ul className="mt-4 space-y-3">
-                  {[
+                <List
+                  items={[
                     "Confidential by default.",
                     "Practical constraints first: risk, cost, reliability.",
                     "No mailing lists or spam — just a reply.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-700 leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                  ]}
+                  variant="check"
+                  className="mt-4"
+                  itemClassName="text-sm text-gray-700 leading-relaxed"
+                />
               </div>
 
               <div className="mt-10 max-w-xl grid gap-4 sm:grid-cols-2">
                 <Surface variant="inset" className="p-5">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-gray-200">
-                      <Mail className="w-5 h-5 text-gray-700" />
-                    </div>
+                    <FeatureIcon icon={Mail} tone="neutral" size="md" />
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Email</p>
                       <a
@@ -177,9 +176,7 @@ export default function ContactPageClient() {
 
                 <Surface variant="inset" className="p-5">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-gray-200">
-                      <MapPin className="w-5 h-5 text-gray-700" />
-                    </div>
+                    <FeatureIcon icon={MapPin} tone="neutral" size="md" />
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Location</p>
                       <p className="mt-2 text-sm text-gray-600">London, UK (remote-first)</p>
@@ -206,9 +203,9 @@ export default function ContactPageClient() {
                       If you don’t see it, check spam or email hello@useblacklake.com.
                     </p>
                     <div className="pt-2">
-                      <MagneticButton href="/work" className="w-full justify-center">
+                      <Button href="/work" variant="primary" size="lg" className="w-full">
                         View selected work
-                      </MagneticButton>
+                      </Button>
                     </div>
                   </div>
                 ) : (

@@ -1,9 +1,12 @@
 import PageShell from "@/components/layout/PageShell";
-import { CheckCircle2 } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Chip from "@/components/ui/Chip";
+import List from "@/components/ui/List";
 import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
+import TopologyLines from "@/components/graphics/TopologyLines";
+import BrandMark from "@/components/brand/BrandMark";
 
 const principles = [
   {
@@ -47,10 +50,15 @@ export default function AboutPageClient() {
   return (
     <PageShell>
       <Section variant="plain">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-            Operating philosophy
+        <div className="max-w-3xl relative">
+          {/* Brand moment - subtle watermark */}
+          <div aria-hidden="true" className="pointer-events-none absolute -right-20 top-0 opacity-[0.04] hidden lg:block">
+            <div className="scale-[2] origin-top-right">
+              <BrandMark variant="mark" size="lg" />
+            </div>
           </div>
+
+          <Chip label="Operating philosophy" tone="neutral" />
 
           <div className="mt-6">
             <SectionHeading
@@ -92,15 +100,12 @@ export default function AboutPageClient() {
           />
         </div>
 
-        <Surface variant="raised" className="mt-10 max-w-3xl p-6 md:p-8">
-          <ul className="space-y-4">
-            {credibility.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
-                <span className="text-sm md:text-base text-gray-700 leading-relaxed">{item}</span>
-              </li>
-            ))}
-          </ul>
+        <Surface variant="raised" className="mt-10 max-w-3xl p-6 md:p-8 relative overflow-hidden">
+          {/* Subtle motif */}
+          <div aria-hidden="true" className="pointer-events-none absolute right-0 top-0 w-32 h-32 opacity-[0.06]">
+            <TopologyLines className="h-full w-full" />
+          </div>
+          <List items={credibility} variant="check" className="relative" itemClassName="text-sm md:text-base text-gray-700 leading-relaxed" />
         </Surface>
       </Section>
 
@@ -110,14 +115,7 @@ export default function AboutPageClient() {
         </div>
 
         <Surface variant="raised" className="mt-10 max-w-3xl p-6 md:p-8">
-          <ul className="space-y-4">
-            {goodFit.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-accent-electric flex-shrink-0 mt-0.5" />
-                <span className="text-sm md:text-base text-gray-700 leading-relaxed">{item}</span>
-              </li>
-            ))}
-          </ul>
+          <List items={goodFit} variant="check" className="relative" itemClassName="text-sm md:text-base text-gray-700 leading-relaxed" />
         </Surface>
       </Section>
 
