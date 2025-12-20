@@ -93,27 +93,6 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="max-w-3xl">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
-            Results and signals
-          </h2>
-          <p className="mt-4 text-gray-600 leading-relaxed">
-            Observed outcomes, described with constraints.
-          </p>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {caseStudy.results.map((result) => (
-            <div key={result.metric} className="rounded-xl border border-gray-200 bg-white p-6">
-              <div className="text-2xl md:text-3xl font-semibold text-gray-900">{result.value}</div>
-              <div className="mt-2 text-sm font-semibold text-gray-900">{result.metric}</div>
-              <div className="mt-2 text-sm text-gray-600">{result.description}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="max-w-3xl mx-auto px-6 py-12">
         <div className="space-y-12">
           <div>

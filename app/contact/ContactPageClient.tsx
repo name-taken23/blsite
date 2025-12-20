@@ -217,7 +217,7 @@ export default function ContactPageClient() {
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-electric/25 focus:border-transparent transition-all duration-200 bg-white appearance-none text-gray-700"
                   >
-                    <option value="">Primary constraint</option>
+                    <option value="">Select a constraint</option>
                     {primaryConstraints.map((c) => (
                       <option key={c.value} value={c.label}>
                         {c.label}
