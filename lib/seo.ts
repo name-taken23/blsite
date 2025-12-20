@@ -17,7 +17,7 @@ export const siteConfig = {
   description:
     "Founder-led production modernisation. A paid, structured Blueprint defines constraints, risks, and a scoped plan before changes land in production.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://useblacklake.com",
-  ogImage: "/og-image.svg", // 1200x630px
+  ogImage: "/og-image.png", // 1200x630px (SVG kept as fallback)
   twitterHandle: "", // Optional
   author: "BlackLake",
   keywords: [

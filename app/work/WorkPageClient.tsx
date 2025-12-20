@@ -5,9 +5,13 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import { Clock } from "lucide-react";
 import Link from "next/link";
 import { getAllCaseStudies } from "@/lib/case-studies";
+import TopologyLines from "@/components/graphics/TopologyLines";
 
 export default function WorkPageClient() {
   const caseStudies = getAllCaseStudies();
+
+  const pickTopResults = (results: Array<{ metric: string; value: string; description: string }>) =>
+    results.slice(0, 2);
 
   if (!caseStudies.length) {
     return (
@@ -33,18 +37,31 @@ export default function WorkPageClient() {
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
           <div className="max-w-3xl">
             <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
+              <div className="grid gap-3 sm:grid-cols-2">
+                {pickTopResults(featured.results).map((result) => (
+                  <div
+                    key={`${featured.slug}::${result.metric}`}
+                    className="rounded-xl border border-gray-200 bg-white p-4"
+                  >
+                    <div className="text-lg md:text-xl font-semibold text-gray-900">{result.value}</div>
+                    <div className="mt-1 text-xs font-semibold text-gray-700">{result.metric}</div>
+                    <div className="mt-1 text-xs text-gray-600 leading-relaxed">{result.description}</div>
+                  </div>
+                ))}
+              </div>
+
               Selected case studies
             </div>
-            <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
-              Selected work
-            </h1>
-            <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
-              Case studies are written to preserve confidentiality: industry + system descriptors, constraints first, and outcomes stated conservatively.
-            </p>
-          </div>
-        </div>
-      </section>
 
+            <div className="mt-6 h-10 w-full opacity-60">
+              <TopologyLines className="h-full w-full" />
+            </div>
+            <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
+
+              <h3 className="mt-6 text-xl md:text-2xl font-semibold tracking-tight text-gray-900">
+                {featured.title}
+              </h3>
+              <p className="mt-3 text-sm md:text-base text-gray-600 leading-relaxed">{featured.description}</p>
       <div className="border-t border-gray-100" />
 
       <section className="bg-white">
@@ -110,22 +127,28 @@ export default function WorkPageClient() {
                 id={caseStudy.slug}
                 className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 transition-colors"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="min-w-0">
-                    <p className="text-xs font-semibold text-gray-600">
-                      {caseStudy.industry}
-                      <span className="mx-2 text-gray-300">•</span>
-                      <span className="inline-flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" />
-                        {caseStudy.timeline}
-                      </span>
-                    </p>
-                    <h3 className="mt-3 text-lg font-semibold text-gray-900">{caseStudy.title}</h3>
-                  </div>
-                  <div className="shrink-0 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-                    View
-                  </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {pickTopResults(caseStudy.results).map((result) => (
+                    <div
+                      key={`${caseStudy.slug}::${result.metric}`}
+                      className="rounded-xl border border-gray-200 bg-gray-50 p-4"
+                    >
+                      <div className="text-lg font-semibold text-gray-900">{result.value}</div>
+                      <div className="mt-1 text-xs font-semibold text-gray-700">{result.metric}</div>
+                      <div className="mt-1 text-xs text-gray-600 leading-relaxed">{result.description}</div>
+                    </div>
+                  ))}
                 </div>
+
+                <p className="mt-5 text-xs font-semibold text-gray-600">
+                  {caseStudy.industry}
+                  <span className="mx-2 text-gray-300">•</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    {caseStudy.timeline}
+                  </span>
+                </p>
+                <h3 className="mt-3 text-lg font-semibold text-gray-900">{caseStudy.title}</h3>
 
                 <p className="mt-4 text-sm text-gray-600 leading-relaxed">{caseStudy.description}</p>
 
