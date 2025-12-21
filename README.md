@@ -140,8 +140,8 @@ The contact form posts to `POST /api/contact` (Vercel Function) and sends:
 
 Required env vars:
 - `RESEND_API_KEY`
-- `CONTACT_OWNER_EMAIL` (e.g. `hello@useblacklake.com`)
-- `CONTACT_FROM_EMAIL` (must be a verified sender in Resend, e.g. `BlackLake <hello@useblacklake.com>`)
+- `CONTACT_OWNER_EMAIL` (e.g. `james@blacklake.systems`)
+- `CONTACT_FROM_EMAIL` (must be a verified sender in Resend, e.g. `BlackLake <james@blacklake.systems>`)
 
 ## Branding Notes
 

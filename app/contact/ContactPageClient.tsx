@@ -105,7 +105,7 @@ export default function ContactPageClient() {
       form.context.trim() || "",
     ].filter(Boolean);
 
-    const mailto = new URL("mailto:hello@useblacklake.com");
+    const mailto = new URL("mailto:james@blacklake.systems");
     mailto.searchParams.set("subject", subject);
     mailto.searchParams.set("body", bodyLines.join("\n"));
     return mailto.toString();
@@ -180,10 +180,10 @@ export default function ContactPageClient() {
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Email</p>
                     <a
-                      href="mailto:hello@useblacklake.com"
+                        href="mailto:james@blacklake.systems"
                       className="mt-2 inline-block text-sm font-semibold text-gray-900 hover:text-accent-electric transition-colors"
                     >
-                      hello@useblacklake.com
+                        james@blacklake.systems
                     </a>
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export default function ContactPageClient() {
                     <p className="text-base text-gray-600 leading-relaxed max-w-sm mx-auto">
                       A confirmation email has been sent to <span className="font-semibold text-gray-900">{form.email}</span>.
                       <br className="block my-2" />
-                      If you don’t see it, check spam or email <a href="mailto:hello@useblacklake.com" className="underline hover:text-gray-900">hello@useblacklake.com</a>.
+                      If you don’t see it, check spam or email <a href="mailto:james@blacklake.systems" className="underline hover:text-gray-900">james@blacklake.systems</a>.
                     </p>
                     <div className="pt-4">
                       <Button href="/work" variant="primary" size="lg" className="w-full">

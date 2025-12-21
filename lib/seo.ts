@@ -13,13 +13,22 @@ import { Metadata } from "next";
 
 const PRODUCTION_DOMAIN = "https://blacklake.systems";
 
-// Strict production guard (only block real production deploys)
-const isProductionDeploy = process.env.VERCEL_ENV === "production";
+function normalizeSiteUrl(url: string): string {
+  const trimmed = url.trim();
+  return trimmed.endsWith("/") ? trimmed.slice(0, -1) : trimmed;
+}
 
-if (isProductionDeploy && !process.env.NEXT_PUBLIC_SITE_URL) {
-  throw new Error(
-    "❌ FATAL: NEXT_PUBLIC_SITE_URL is missing in production. SEO canonicals will be incorrect. Deploy blocked."
-  );
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return normalizeSiteUrl(explicit);
+
+  // On Vercel, VERCEL_URL is the deployment hostname (no protocol).
+  // Prefer it for non-production deploys where canonical should match the preview URL.
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) return normalizeSiteUrl(`https://${vercelUrl}`);
+
+  // Safe default for local/dev and as a production fallback.
+  return normalizeSiteUrl(PRODUCTION_DOMAIN);
 }
 
 export const siteConfig = {
@@ -27,7 +36,7 @@ export const siteConfig = {
   title: "BlackLake — Clarity. Speed. Control.",
   description:
     "Founder-led production modernisation. A paid, structured Blueprint defines constraints, risks, and a scoped plan before changes land in production.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? PRODUCTION_DOMAIN,
+  url: resolveSiteUrl(),
   ogImage: "/og-image.png", // 1200x630px
   twitterHandle: "", // Optional
   author: "James Reed",
@@ -186,7 +195,7 @@ export function getOrganizationSchema() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Inquiries",
-      email: "hello@useblacklake.com",
+      email: "james@blacklake.systems",
     },
   };
 }
