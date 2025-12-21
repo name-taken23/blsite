@@ -11,30 +11,33 @@ import { Metadata } from "next";
 // SITE CONFIGURATION
 // ============================================
 
+const PRODUCTION_DOMAIN = "https://blacklake.systems";
+
+// Strict production guard (only block real production deploys)
+const isProductionDeploy = process.env.VERCEL_ENV === "production";
+
+if (isProductionDeploy && !process.env.NEXT_PUBLIC_SITE_URL) {
+  throw new Error(
+    "❌ FATAL: NEXT_PUBLIC_SITE_URL is missing in production. SEO canonicals will be incorrect. Deploy blocked."
+  );
+}
+
 export const siteConfig = {
   name: "BlackLake",
   title: "BlackLake — Clarity. Speed. Control.",
   description:
     "Founder-led production modernisation. A paid, structured Blueprint defines constraints, risks, and a scoped plan before changes land in production.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://useblacklake.com",
-  ogImage: "/og-image.png", // 1200x630px (SVG kept as fallback)
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? PRODUCTION_DOMAIN,
+  ogImage: "/og-image.png", // 1200x630px
   twitterHandle: "", // Optional
-  author: "BlackLake",
+  author: "James Reed",
   keywords: [
     "cloud architecture",
     "applied AI",
-    "machine learning",
-    "LLM evaluation",
-    "RAG",
-    "retrieval",
-    "AI agents",
-    "full-stack development",
-    "GCP architecture",
-    "AWS architecture",
-    "React development",
-    "Next.js development",
-    "enterprise software",
-    "bespoke engineering",
+    "production systems",
+    "modernisation",
+    "system design",
+    "technical strategy",
   ],
 };
 
@@ -53,15 +56,6 @@ interface GenerateMetadataOptions {
 
 /**
  * Generate consistent metadata for any page
- * @param options - Page-specific metadata options
- * @returns Next.js Metadata object
- * 
- * @example
- * export const metadata = generateMetadata({
- *   title: "Cloud Architecture Services",
- *   description: "Enterprise cloud infrastructure that scales",
- *   path: "/services",
- * });
  */
 export function generateMetadata(options: GenerateMetadataOptions = {}): Metadata {
   const {
@@ -89,6 +83,10 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     authors: [{ name: siteConfig.author }],
     creator: siteConfig.author,
     publisher: siteConfig.author,
+    metadataBase: new URL(siteConfig.url),
+    alternates: {
+      canonical,
+    },
     
     // Robots
     robots: {
@@ -103,7 +101,7 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     // Open Graph
     openGraph: {
       type: "website",
-      locale: "en_US",
+      locale: "en_GB",
       url: canonical,
       title: fullTitle,
       description,
@@ -126,14 +124,6 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
       images: [ogImageUrl],
       creator: siteConfig.twitterHandle,
     },
-
-    // Alternate languages (add if needed)
-    // alternates: {
-    //   canonical,
-    //   languages: {
-    //     'en-US': canonical,
-    //   },
-    // },
   };
 }
 
@@ -149,27 +139,27 @@ export const pageMetadata = {
   about: generateMetadata({
     title: "About",
     description:
-      "How BlackLake approaches production change: explicit constraints, controlled rollout, and clear ownership.",
+      "BlackLake is run by James Reed. I help engineering teams gain control over production systems through explicit constraints and sequenced delivery.",
     path: "/about",
   }),
 
   services: generateMetadata({
     title: "Services",
     description:
-      "Modernisation for production systems. Start with the BlackLake Blueprint: a paid, structured assessment that defines constraints, risks, and a scoped plan.",
+      "BlackLake Blueprint: A fixed-price technical assessment that delivers a system map, risk register, and sequenced modernisation plan.",
     path: "/services",
   }),
 
   work: generateMetadata({
     title: "Case Studies",
     description:
-      "Selected work written with context, constraints, interventions, measured outcomes, and why it matters across applied AI, cloud/data platforms, and reliability/performance work.",
+      "Real production engineering case studies. Confidential constraints, measured outcomes, and technical interventions across AI and Cloud platforms.",
     path: "/work",
   }),
 
   contact: generateMetadata({
     title: "Contact",
-    description: "Start with a Blueprint. A paid, structured first step for organisations running production systems.",
+    description: "Start a BlackLake Blueprint. Share your production context and primary constraint to determine fit.",
     path: "/contact",
   }),
 };
@@ -189,40 +179,98 @@ export function getOrganizationSchema() {
     url: siteConfig.url,
     logo: `${siteConfig.url}/logo.png`,
     description: siteConfig.description,
+    founder: {
+      "@type": "Person",
+      name: siteConfig.author,
+    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Inquiries",
-      email: "hello@useblacklake.com", // Update with real email
+      email: "hello@useblacklake.com",
     },
-    sameAs: [
-      // Add social media profiles when available
-      // "https://twitter.com/blacklake",
-      // "https://linkedin.com/company/blacklake",
-      // "https://github.com/blacklake",
-    ],
   };
 }
 
 /**
  * Generate Service schema
  */
-export function getServiceSchema(service: {
-  name: string;
-  description: string;
-  url: string;
-}) {
+export function getServiceSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    serviceType: service.name,
-    description: service.description,
+    serviceType: "Technical Consulting",
     provider: {
       "@type": "Organization",
       name: siteConfig.name,
       url: siteConfig.url,
     },
-    areaServed: "Worldwide",
-    url: service.url,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Modernisation Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "The Blueprint",
+            description: "A structured assessment producing a scoped plan and risk register.",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Build",
+            description: "Implementation of the Blueprint with rollout controls.",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Calibrate",
+            description: "Ongoing optimization and ownership handover.",
+          },
+        },
+      ],
+    },
+  };
+}
+
+/**
+ * Generate Article schema for Case Studies
+ */
+export function getArticleSchema(article: {
+  title: string;
+  description: string;
+  image?: string;
+  publishedAt: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    image: article.image ? `${siteConfig.url}${article.image}` : `${siteConfig.url}${siteConfig.ogImage}`,
+    datePublished: article.publishedAt,
+    author: {
+      "@type": "Person",
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}${article.path}`,
+    },
   };
 }
 
@@ -242,42 +290,3 @@ export function getBreadcrumbSchema(items: Array<{ name: string; url: string }>)
   };
 }
 
-// ============================================
-// VALIDATION HELPERS
-// ============================================
-
-/**
- * Validate heading hierarchy in development
- * Call this in page components during development to ensure proper structure
- */
-export function validateHeadingHierarchy(headings: string[]): void {
-  if (process.env.NODE_ENV !== "development") return;
-
-  const levels = headings.map(h => parseInt(h.replace("h", "")));
-  
-  // Check for single H1
-  const h1Count = levels.filter(l => l === 1).length;
-  if (h1Count === 0) {
-    console.warn("⚠️ SEO Warning: No H1 found on page");
-  } else if (h1Count > 1) {
-    console.warn("⚠️ SEO Warning: Multiple H1s found on page");
-  }
-
-  // Check for skipped levels
-  for (let i = 1; i < levels.length; i++) {
-    if (levels[i] - levels[i - 1] > 1) {
-      console.warn(
-        `⚠️ SEO Warning: Heading level skipped from H${levels[i - 1]} to H${levels[i]}`
-      );
-    }
-  }
-}
-
-/**
- * Check if text meets minimum description length
- */
-export function isDescriptionValid(text: string): boolean {
-  const MIN_LENGTH = 50;
-  const MAX_LENGTH = 160;
-  return text.length >= MIN_LENGTH && text.length <= MAX_LENGTH;
-}

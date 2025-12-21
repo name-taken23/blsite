@@ -6,13 +6,15 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import Button from "@/components/ui/Button";
 import Stepper from "@/components/ui/Stepper";
 import Surface from "@/components/ui/Surface";
+import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
 import List from "@/components/ui/List";
 import FeatureIcon from "@/components/ui/FeatureIcon";
-import { Mail, MapPin } from "lucide-react";
-import { FormEvent, useMemo, useState } from "react";
+import { Mail, MapPin, AlertCircle } from "lucide-react";
+import { FormEvent, useMemo, useState, useEffect } from "react";
+import AppIcon from "@/components/ui/AppIcon";
 
 type ContactFormState = {
   name: string;
@@ -20,6 +22,7 @@ type ContactFormState = {
   systemInScope: string;
   primaryConstraint: string;
   context: string;
+  honey: string; // Anti-spam
 };
 
 const primaryConstraints = [
@@ -33,12 +36,19 @@ const primaryConstraints = [
 ] as const;
 
 export default function ContactPageClient() {
+  const [mountedAt, setMountedAt] = useState<number>(0);
+  
+  useEffect(() => {
+    setMountedAt(Date.now());
+  }, []);
+
   const [form, setForm] = useState<ContactFormState>({
     name: "",
     email: "",
     systemInScope: "",
     primaryConstraint: "",
     context: "",
+    honey: "",
   });
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -64,19 +74,23 @@ export default function ContactPageClient() {
           systemInScope: form.systemInScope,
           primaryConstraint: form.primaryConstraint,
           context: form.context,
+          honey: form.honey,
+          mountedAt, // Anti-spam timing check
         }),
       });
 
+      const body = await res.json();
+
       if (!res.ok) {
         setStatus("error");
-        setError("Submission failed. Please use email instead.");
+        setError(body.error || "Submission failed. Please use email instead.");
         return;
       }
 
       setStatus("success");
     } catch {
       setStatus("error");
-      setError("Submission failed. Please use email instead.");
+      setError("Submission failed. Please check your connection or use email.");
     }
   };
 
@@ -99,110 +113,127 @@ export default function ContactPageClient() {
 
   return (
     <PageShell>
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-          <div className="max-w-3xl">
-            <SectionHeading
-              title="Start with a Blueprint"
-              subtitle="The BlackLake Blueprint is a paid, structured first step for organisations running production systems. Share what you run today, where the risk sits, and what must change."
-              size="lg"
-              as="h1"
-            />
-          </div>
+      <Section variant="plain" containerClassName="pt-24 pb-16 md:pt-32 md:pb-20">
+        <div className="max-w-3xl">
+          <SectionHeading
+            title="Start with a Blueprint"
+            subtitle="The BlackLake Blueprint is a paid, structured first step for organisations running production systems. Share what you run today, where the risk sits, and what must change."
+            size="lg"
+            as="h1"
+          />
         </div>
-      </section>
+      </Section>
 
       <div className="border-t border-gray-100" />
 
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div>
-              <SectionHeading
-                eyebrow="What happens next"
-                title="A simple intake flow."
-                subtitle="Share enough context to understand the system and constraint. You’ll get a fit-check reply and, if it’s a match, a scoped Blueprint start."
-                size="md"
+      <Section variant="plain" containerClassName="pt-16 pb-16 md:pt-20 md:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          
+          {/* LEFT COLUMN: CONTEXT & NEXT STEPS */}
+          <div>
+            <SectionHeading
+              eyebrow="What happens next"
+              title="A simple intake flow."
+              subtitle="Share enough context to understand the system and constraint. You’ll get a fit-check reply and, if it’s a match, a scoped Blueprint start."
+              size="md"
+            />
+
+            <div className="mt-8 max-w-xl">
+              <Stepper
+                steps={[
+                  {
+                    title: "Submit context",
+                    description: "A short description of what you run today and what must change.",
+                  },
+                  {
+                    title: "Fit check reply",
+                    description: "A quick response with questions, constraints, and whether it’s a fit.",
+                  },
+                  {
+                    title: "Blueprint scope + start",
+                    description: "A paid, time-boxed assessment with deliverables and a clear next step.",
+                  },
+                ]}
               />
-
-              <div className="mt-8 max-w-xl">
-                <Stepper
-                  steps={[
-                    {
-                      title: "Submit context",
-                      description: "A short description of what you run today and what must change.",
-                    },
-                    {
-                      title: "Fit check reply",
-                      description: "A quick response with questions, constraints, and whether it’s a fit.",
-                    },
-                    {
-                      title: "Blueprint scope + start",
-                      description: "A paid, time-boxed assessment with deliverables and a clear next step.",
-                    },
-                  ]}
-                />
-              </div>
-
-              <div className="mt-10 max-w-xl">
-                <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Reassurance</div>
-                <List
-                  items={[
-                    "Confidential by default.",
-                    "Practical constraints first: risk, cost, reliability.",
-                    "No mailing lists or spam — just a reply.",
-                  ]}
-                  variant="check"
-                  className="mt-4"
-                  itemClassName="text-sm text-gray-700 leading-relaxed"
-                />
-              </div>
-
-              <div className="mt-10 max-w-xl grid gap-4 sm:grid-cols-2">
-                <Surface variant="inset" className="p-5">
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon icon={Mail} tone="neutral" size="md" />
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Email</p>
-                      <a
-                        href="mailto:hello@useblacklake.com"
-                        className="mt-2 inline-block text-sm font-semibold text-gray-900 hover:text-accent-electric transition-colors"
-                      >
-                        hello@useblacklake.com
-                      </a>
-                    </div>
-                  </div>
-                </Surface>
-
-                <Surface variant="inset" className="p-5">
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon icon={MapPin} tone="neutral" size="md" />
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Location</p>
-                      <p className="mt-2 text-sm text-gray-600">London, UK (remote-first)</p>
-                    </div>
-                  </div>
-                </Surface>
-              </div>
             </div>
 
-            <Surface variant="raised" className="relative p-6 md:p-8">
+            <div className="mt-12 max-w-xl">
+               <Surface variant="inset" className="p-6">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Reassurance</div>
+                  <List
+                    items={[
+                      "Confidential by default.",
+                      "Practical constraints first: risk, cost, reliability.",
+                      "No mailing lists or spam — just a reply.",
+                    ]}
+                    variant="check"
+                    className="mt-4"
+                    itemClassName="text-sm text-gray-700 leading-relaxed"
+                  />
+               </Surface>
+            </div>
+
+            <div className="mt-8 max-w-xl grid gap-4 sm:grid-cols-2">
+              <Surface variant="plain" className="p-5 border border-gray-200">
+                <div className="flex items-start gap-3">
+                  <FeatureIcon icon={Mail} tone="neutral" size="md" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Email</p>
+                    <a
+                      href="mailto:hello@useblacklake.com"
+                      className="mt-2 inline-block text-sm font-semibold text-gray-900 hover:text-accent-electric transition-colors"
+                    >
+                      hello@useblacklake.com
+                    </a>
+                  </div>
+                </div>
+              </Surface>
+              <Surface variant="plain" className="p-5 border border-gray-200">
+                <div className="flex items-start gap-3">
+                  <FeatureIcon icon={MapPin} tone="neutral" size="md" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Location</p>
+                    <p className="mt-2 text-sm text-gray-600">London, UK (remote-first)</p>
+                  </div>
+                </div>
+              </Surface>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: FORM */}
+          <div className="lg:pl-8">
+            <Surface variant="raised" className="relative p-6 md:p-10">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -right-10 -top-10 opacity-[0.06] scale-[3] origin-top-right"
+                className="pointer-events-none absolute -right-10 -top-10 opacity-[0.04] scale-[3] origin-top-right"
               >
                 <BrandMark variant="mark" size="lg" />
               </div>
 
+              <div className="relative z-10 text-center md:text-left mb-8">
+                 <SectionHeading
+                    title="Blueprint intake"
+                    subtitle="Short, high-signal questions. Enough to understand the system and constraint."
+                    size="md"
+                    as="h2"
+                  />
+              </div>
+
               <div className="relative z-10">
                 {status === "success" ? (
-                  <div className="space-y-4">
-                    <div className="text-sm font-semibold text-gray-900">Request received</div>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                  <div className="space-y-6 text-center py-10 animate-in fade-in zoom-in-95 duration-300">
+                    <div className="text-accent-electric mx-auto flex justify-center mb-4">
+                       <div className="h-12 w-12 bg-accent-electric/10 rounded-full flex items-center justify-center">
+                          <AppIcon icon={Mail} size="md" />
+                       </div>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900">Request received</h3>
+                    <p className="text-base text-gray-600 leading-relaxed max-w-sm mx-auto">
                       A confirmation email has been sent to <span className="font-semibold text-gray-900">{form.email}</span>.
-                      If you don’t see it, check spam or email hello@useblacklake.com.
+                      <br className="block my-2" />
+                      If you don’t see it, check spam or email <a href="mailto:hello@useblacklake.com" className="underline hover:text-gray-900">hello@useblacklake.com</a>.
                     </p>
-                    <div className="pt-2">
+                    <div className="pt-4">
                       <Button href="/work" variant="primary" size="lg" className="w-full">
                         View selected work
                       </Button>
@@ -210,16 +241,29 @@ export default function ContactPageClient() {
                   </div>
                 ) : (
                   <form className="space-y-6" onSubmit={submit}>
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Request</div>
-                      <div className="mt-2">
-                        <SectionHeading
-                          title="Blueprint intake"
-                          subtitle="Short, high-signal questions. Enough to understand the system and constraint."
-                          size="md"
-                          as="h2"
+                    {/* Error Banner */}
+                    {status === "error" && error ? (
+                        <div className="rounded-lg bg-red-50 p-4 border border-red-100 flex gap-3 text-red-900 text-sm items-start">
+                            <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
+                            <div className="space-y-1">
+                                <p className="font-semibold">Unable to submit</p>
+                                <p>{error}</p>
+                            </div>
+                        </div>
+                    ) : null}
+
+                    {/* Honeypot Field (Hidden) */}
+                    <div className="hidden" aria-hidden="true">
+                        <label htmlFor="honey">Do not fill this field</label>
+                        <input
+                            type="text"
+                            id="honey"
+                            name="honey"
+                            value={form.honey}
+                            onChange={(e) => setForm((s) => ({ ...s, honey: e.target.value }))}
+                            tabIndex={-1}
+                            autoComplete="off"
                         />
-                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -235,6 +279,7 @@ export default function ContactPageClient() {
                           value={form.name}
                           onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))}
                           required
+                          disabled={status === "submitting"}
                         />
                       </div>
 
@@ -251,6 +296,7 @@ export default function ContactPageClient() {
                           value={form.email}
                           onChange={(e) => setForm((s) => ({ ...s, email: e.target.value }))}
                           required
+                          disabled={status === "submitting"}
                         />
                       </div>
                     </div>
@@ -267,6 +313,7 @@ export default function ContactPageClient() {
                         value={form.systemInScope}
                         onChange={(e) => setForm((s) => ({ ...s, systemInScope: e.target.value }))}
                         required
+                        disabled={status === "submitting"}
                       />
                       <p className="mt-2 text-xs text-gray-500">One sentence is enough.</p>
                     </div>
@@ -281,7 +328,8 @@ export default function ContactPageClient() {
                         value={form.primaryConstraint}
                         onChange={(e) => setForm((s) => ({ ...s, primaryConstraint: e.target.value }))}
                         required
-                        className="w-full h-12 px-4 border border-gray-200 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-accent-electric/25 focus:border-gray-300 transition-all duration-200 appearance-none"
+                        disabled={status === "submitting"}
+                        className="w-full h-12 px-4 border border-gray-200 rounded-lg bg-white text-gray-700 transition-all duration-200 appearance-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:border-gray-300"
                       >
                         <option value="">Primary constraint</option>
                         {primaryConstraints.map((c) => (
@@ -322,25 +370,32 @@ export default function ContactPageClient() {
                         rows={6}
                         value={form.context}
                         onChange={(e) => setForm((s) => ({ ...s, context: e.target.value }))}
+                        disabled={status === "submitting"}
                       />
                       <p className="mt-2 text-xs text-gray-500">If you have it: scale, failure modes, cost sensitivity.</p>
                     </div>
 
                     <div className="pt-2">
                       <MagneticButton
-                        className="w-full justify-center"
+                        className="w-full justify-center disabled:opacity-50 disabled:cursor-wait"
                         aria-label="Submit contact form"
                         type="submit"
                         disabled={status === "submitting"}
                       >
-                        {status === "submitting" ? "Submitting…" : "Send"}
+                        {status === "submitting" ? "Sending Request..." : "Send Request"}
                       </MagneticButton>
                     </div>
 
                     <div className="space-y-2">
-                      {status === "error" ? <p className="text-xs text-red-600">{error}</p> : null}
-                      <p className="text-xs text-gray-500">
-                        Prefer email? <a className="underline" href={mailtoHref}>Open an email draft</a>.
+                      <p className="text-xs text-gray-500 text-center">
+                        Prefer email?{" "}
+                        <a
+                          className="rounded-sm underline hover:text-accent-electric focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                          href={mailtoHref}
+                        >
+                          Open an email draft
+                        </a>
+                        .
                       </p>
                     </div>
                   </form>
@@ -349,7 +404,7 @@ export default function ContactPageClient() {
             </Surface>
           </div>
         </div>
-      </section>
+      </Section>
     </PageShell>
   );
 }

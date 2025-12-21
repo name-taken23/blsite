@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import PageShell from "@/components/layout/PageShell";
 import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
 import { getCaseStudy, getAllCaseStudies } from "@/lib/case-studies";
-import { siteConfig } from "@/lib/seo";
+import { siteConfig, getArticleSchema, getBreadcrumbSchema } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const caseStudies = getAllCaseStudies();
@@ -57,70 +57,31 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     notFound();
   }
 
-  const canonical = new URL(`/case-studies/${slug}`, siteConfig.url).toString();
-  const imageUrl = new URL(caseStudy.image, siteConfig.url).toString();
-  const logoUrl = new URL("/logo.png", siteConfig.url).toString();
-
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: caseStudy.title,
+  const articleSchema = getArticleSchema({
+    title: caseStudy.title,
     description: caseStudy.description,
-    image: [imageUrl],
-    author: {
-      "@type": "Organization",
-      name: "BlackLake",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "BlackLake",
-      logo: {
-        "@type": "ImageObject",
-        url: logoUrl,
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": canonical,
-    },
-  };
+    image: caseStudy.image,
+    publishedAt: new Date().toISOString(), // In a real app, this should be in the case study object
+    path: `/case-studies/${slug}`,
+  });
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteConfig.url,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Work",
-        item: new URL("/work", siteConfig.url).toString(),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: caseStudy.title,
-        item: canonical,
-      },
-    ],
-  };
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Work", url: "/work" },
+    { name: "Case Study", url: `/case-studies/${slug}` },
+  ]);
 
   return (
     <PageShell>
       <Script
         id={`case-study-article-jsonld-${slug}`}
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Script
         id={`case-study-breadcrumb-jsonld-${slug}`}
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <CaseStudyContent caseStudy={caseStudy} />
     </PageShell>

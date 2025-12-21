@@ -59,8 +59,15 @@
 /* ============================================
    BASE STYLES
    ============================================ */
-* {
-  scroll-behavior: smooth;
+
+html {
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {

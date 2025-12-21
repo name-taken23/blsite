@@ -30,18 +30,20 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: cn(
-    "bg-accent-electric text-white",
-    "hover:bg-accent-electricDark",
-    "focus-visible:ring-accent-electric"
+    "bg-accent-electric text-white shadow-button",
+    "hover:bg-accent-electricDark hover:shadow-glow-md",
+    "focus-visible:ring-accent-electric",
+    "active:scale-[0.98]"
   ),
   secondary: cn(
-    "border border-gray-200 bg-white text-gray-900",
-    "hover:border-gray-300 hover:bg-gray-50",
-    "focus-visible:ring-gray-400"
+    "border border-gray-200 bg-white text-gray-900 shadow-sm",
+    "hover:border-gray-300 hover:bg-gray-50 hover:shadow-md",
+    "focus-visible:ring-gray-400",
+    "active:scale-[0.98]"
   ),
   tertiary: cn(
-    "text-gray-900 underline-offset-4",
-    "hover:text-accent-electric hover:underline",
+    "text-gray-600 bg-transparent",
+    "hover:text-gray-900 hover:bg-gray-50",
     "focus-visible:ring-gray-400"
   ),
 };

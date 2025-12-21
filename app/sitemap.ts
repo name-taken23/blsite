@@ -1,11 +1,11 @@
 import { getAllCaseStudies } from "@/lib/case-studies";
+import { siteConfig } from "@/lib/seo";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://useblacklake.com";
 const pages = ["", "about", "services", "work", "contact"];
 
 export default function sitemap() {
   const lastModified = new Date().toISOString();
-  const baseUrl = siteUrl.endsWith("/") ? siteUrl : `${siteUrl}/`;
+  const baseUrl = siteConfig.url.endsWith("/") ? siteConfig.url : `${siteConfig.url}/`;
 
   const staticEntries = pages.map((path) => ({
     url: new URL(path, baseUrl).toString(),

@@ -13,7 +13,9 @@ import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
-import OutcomeStrip from "@/components/ui/OutcomeStrip";
+import { ArrowRight, FileText, Settings2 } from "lucide-react";
+import AppIcon from "@/components/ui/AppIcon";
+import BlueprintGrid from "@/components/graphics/BlueprintGrid";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies().slice(0, 3);
@@ -23,6 +25,7 @@ export default function Home() {
     <PageShell>
       <Hero />
 
+      {/* PROOF SECTION */}
       <Section variant="framed" cornerGraphic={<OutcomeDelta />}>
         <div className="max-w-3xl">
           <SectionHeading
@@ -42,11 +45,13 @@ export default function Home() {
               metric={item.metric}
               context={item.context}
               icon={<OutcomeDelta />}
+              surfaceVariant="raised" 
             />
           ))}
         </div>
       </Section>
 
+      {/* PILLARS SECTION */}
       <Section variant="tinted">
         <div className="max-w-3xl">
           <SectionHeading
@@ -57,77 +62,116 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {services.map((service) => (
-            <Surface key={service.title} variant="raised" className="p-6">
+            <Surface key={service.title} variant="raised" className="p-8 flex flex-col h-full">
               <FeatureIcon icon={service.icon} tone="neutral" />
-              <h3 className="mt-5 text-lg font-semibold text-gray-900">{service.title}</h3>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">{service.description}</p>
-              <Button
-                href="/services"
-                variant="tertiary"
-                size="sm"
-                className="mt-5 px-0"
-              >
-                See how it works
-              </Button>
+              <h3 className="mt-6 text-xl font-semibold text-gray-900 tracking-tight">{service.title}</h3>
+              <p className="mt-3 text-base text-gray-600 leading-relaxed flex-grow">{service.description}</p>
+              
+              <div className="mt-8 pt-8 border-t border-gray-100">
+                <Button
+                  href="/services"
+                  variant="tertiary"
+                  size="sm"
+                  className="px-0 group"
+                >
+                  See how it works
+                  <AppIcon icon={ArrowRight} className="ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </div>
             </Surface>
           ))}
         </div>
       </Section>
 
+      {/* PATTERN BREAK: BLUEPRINT PANEL */}
       <Section variant="plain">
+        <Surface variant="glow" className="relative overflow-hidden p-8 md:p-12">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
+             <BlueprintGrid className="h-full w-full" />
+          </div>
+          
+          <div className="relative z-10 max-w-2xl">
+            <SectionHeading
+              eyebrow="The Engagement Model"
+              title="Start with a Blueprint"
+              subtitle="Before committing to build, we run a short, paid assessment. You get a system map, a risk register, and a sequenced delivery plan. I get to know the constraints before writing code."
+              size="lg"
+            />
+            
+            <div className="mt-8 flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <AppIcon icon={FileText} className="text-accent-electric" />
+                <span>Scoped Plan</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <AppIcon icon={Settings2} className="text-accent-electric" />
+                <span>Risk & Guardrails</span>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <MagneticButton href="/services">
+                Explore the Blueprint
+              </MagneticButton>
+            </div>
+          </div>
+        </Surface>
+      </Section>
+
+      {/* SELECTED WORK (TEASER) */}
+      <Section variant="tinted">
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Selected work"
             title="Examples with context"
-            subtitle="Each case study follows the same structure: context, constraint, intervention, measured outcome, and why it matters."
+            subtitle="Real projects described with constraints, tradeoffs, and outcomes."
             size="lg"
           />
         </div>
 
-        <OutcomeStrip
-          className="mt-10 max-w-4xl"
-          items={getProofMetrics(3).map((item) => ({
-            value: item.value,
-            metric: item.metric,
-            href: `/case-studies/${item.caseStudySlug}`,
-          }))}
-        />
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
           {caseStudies.map((caseStudy) => (
             <Surface
               key={caseStudy.slug}
               as={Link}
               href={`/case-studies/${caseStudy.slug}`}
               variant="raised"
-              className="p-6 transition-colors"
+              className="group p-6 transition-all hover:-translate-y-1"
             >
-              <p className="text-xs font-semibold text-gray-600">
-                {caseStudy.industry}
-                <span className="mx-2 text-gray-300">•</span>
-                {caseStudy.timeline}
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  {caseStudy.industry}
+                </p>
+                <Chip label={caseStudy.timeline} size="sm" tone="neutral" />
+              </div>
+              
+              <h3 className="mt-4 text-xl font-semibold text-gray-900 group-hover:text-accent-electric transition-colors">
+                {caseStudy.title}
+              </h3>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed line-clamp-3">
+                {caseStudy.description}
               </p>
-              <h3 className="mt-3 text-lg font-semibold text-gray-900">{caseStudy.title}</h3>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">{caseStudy.description}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {caseStudy.tags.slice(0, 3).map((tag) => (
-                  <Chip key={tag} label={tag} size="sm" />
+              
+              <div className="mt-6 flex flex-wrap gap-2">
+                {caseStudy.tags.slice(0, 2).map((tag) => (
+                  <Chip key={tag} label={tag} size="sm" tone="tinted" />
                 ))}
               </div>
             </Surface>
           ))}
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 text-center md:text-left">
           <Button href="/work" variant="secondary" size="lg">
-            View selected work
+            View all case studies
           </Button>
         </div>
       </Section>
 
-      <Section variant="tinted">
+      {/* PROCESS */}
+      <Section variant="plain">
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Process"
@@ -137,7 +181,7 @@ export default function Home() {
           />
         </div>
 
-        <Surface variant="raised" className="mt-10 p-6 md:p-8">
+        <Surface variant="inset" className="mt-10 p-6 md:p-10">
           <Stepper
             steps={[
               {
@@ -153,21 +197,24 @@ export default function Home() {
                 description: "Measure behaviour, tighten the system, and hand over runbooks and ownership.",
               },
             ]}
-            className="max-w-xl"
+            className="max-w-2xl"
           />
         </Surface>
       </Section>
 
-      <Section variant="framed">
-        <Surface variant="inset" className="p-8 md:p-10">
+      {/* CTA CONVERSION PANEL */}
+      <Section variant="framed" containerClassName="pt-0 pb-20">
+        <Surface variant="raised" className="p-8 md:p-12 text-center md:text-left">
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">Start with a Blueprint</h2>
-            <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed">
-              Share context, constraints, and what must change. I’ll reply with whether it’s a fit and what the Blueprint would cover.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+            <SectionHeading
+                title="Ready to modernize?"
+                subtitle="Share context, constraints, and what must change. I’ll reply with whether it’s a fit and what the Blueprint would cover."
+                size="lg"
+                align="left"
+            />
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-              <Button href="/work" variant="secondary" size="lg">
+              <Button href="/work" variant="secondary">
                 View selected work
               </Button>
             </div>

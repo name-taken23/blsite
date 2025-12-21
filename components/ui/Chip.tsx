@@ -21,19 +21,19 @@ interface ChipProps {
 
 const sizeClasses: Record<ChipSize, { container: string; text: string }> = {
   sm: {
-    container: "px-3 py-1",
+    container: "px-2.5 py-0.5",
     text: "text-xs",
   },
   md: {
-    container: "px-3.5 py-1.5",
+    container: "px-3 py-1",
     text: "text-sm",
   },
 };
 
 const toneClasses: Record<ChipTone, string> = {
-  neutral: "border-gray-200 bg-white text-gray-700",
-  tinted: "border-gray-200 bg-gray-50 text-gray-700",
-  outline: "border-gray-300 bg-transparent text-gray-700",
+  neutral: "border-gray-200 bg-white text-gray-600 font-medium",
+  tinted: "border-transparent bg-gray-100/50 text-gray-700 font-medium",
+  outline: "border-gray-300 bg-transparent text-gray-600 font-medium",
 };
 
 /**

@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type SectionHeadingAlign = "left" | "center";
@@ -23,7 +23,7 @@ const subtitleClassName: Record<SectionHeadingSize, string> = {
 export default function SectionHeading(props: {
   eyebrow?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   align?: SectionHeadingAlign;
   size?: SectionHeadingSize;
   as?: SectionHeadingAs;

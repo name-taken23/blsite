@@ -1,5 +1,22 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV !== "production";
+
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "img-src 'self' data: https:",
+  "font-src 'self' data:",
+  "style-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  "connect-src 'self'",
+  "manifest-src 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 const nextConfig: NextConfig = {
   // ============================================
   // SECURITY HEADERS
@@ -12,15 +29,7 @@ const nextConfig: NextConfig = {
           // Content Security Policy
           {
             key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https:",
-              "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self'",
-              "frame-ancestors 'none'",
-            ].join("; "),
+            value: contentSecurityPolicy,
           },
           // Strict Transport Security (HSTS)
           {
@@ -37,6 +46,16 @@ const nextConfig: NextConfig = {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
+          // Reduce DNS prefetching
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "off",
+          },
+          // Prevent Adobe cross-domain policy abuse
+          {
+            key: "X-Permitted-Cross-Domain-Policies",
+            value: "none",
+          },
           // Referrer Policy
           {
             key: "Referrer-Policy",
@@ -45,7 +64,16 @@ const nextConfig: NextConfig = {
           // Permissions Policy
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+          // Conservative cross-origin isolation defaults
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+          {
+            key: "Cross-Origin-Resource-Policy",
+            value: "same-origin",
           },
         ],
       },

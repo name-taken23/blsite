@@ -1,7 +1,7 @@
 "use client";
 
 import { CaseStudy } from "@/lib/case-studies";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock, Users, Building2 } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
@@ -72,7 +72,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
           <div>
             <div className="flex flex-wrap gap-2 mb-6">
               {caseStudy.tags.map((tag) => (
-                <Chip key={tag} label={tag} size="sm" />
+                <Chip key={tag} label={tag} size="sm" tone="tinted" />
               ))}
             </div>
 
@@ -86,46 +86,60 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
 
             <dl className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
               <div>
-                <dt className="text-gray-500">Industry</dt>
+                <dt className="text-gray-500 flex items-center gap-2">
+                   <AppIcon icon={Building2} size="sm" className="text-gray-400" />
+                   Industry
+                </dt>
                 <dd className="mt-1 font-semibold text-gray-900">{caseStudy.industry}</dd>
               </div>
               <div>
-                <dt className="text-gray-500">Timeline</dt>
+                <dt className="text-gray-500 flex items-center gap-2">
+                   <AppIcon icon={Clock} size="sm" className="text-gray-400" />
+                   Timeline
+                </dt>
                 <dd className="mt-1 font-semibold text-gray-900">{caseStudy.timeline}</dd>
               </div>
               <div>
-                <dt className="text-gray-500">Team size</dt>
-                <dd className="mt-1 font-semibold text-gray-900">{caseStudy.teamSize}</dd>
+                <dt className="text-gray-500 flex items-center gap-2">
+                    <AppIcon icon={Users} size="sm" className="text-gray-400" />
+                    Delivery Model
+                </dt>
+                <dd className="mt-1 font-semibold text-gray-900">Founder-led</dd>
               </div>
             </dl>
           </div>
 
-          <Surface variant="tinted" className="p-6">
-            <div className="relative h-56 rounded-xl bg-gray-100 overflow-hidden">
-              <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.08]">
-                <TopologyLines className="h-full w-full" />
-              </div>
-              <div aria-hidden="true" className="pointer-events-none absolute right-4 bottom-4 opacity-10">
-                <BrandMark variant="mark" size="md" />
-              </div>
-            </div>
-            <div className="mt-6 text-sm text-gray-600 leading-relaxed">
-              <div className="font-semibold text-gray-900">At a glance</div>
-              <div className="mt-2">
-                A real project described with constraints, tradeoffs, and what was delivered.
-              </div>
-            </div>
+          <Surface variant="raised" className="p-0 overflow-hidden border border-gray-200 shadow-sm">
+             <div className="bg-gray-50/50 p-4 border-b border-gray-100 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                   <BrandMark variant="mark" size="sm" />
+                   <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Project Artifact</span>
+                </div>
+                <div className="font-mono text-xs text-gray-400">REF-{caseStudy.slug.slice(0, 4).toUpperCase()}</div>
+             </div>
+             <div className="p-6 relative bg-white">
+                 <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.08]">
+                    <TopologyLines className="h-full w-full" />
+                 </div>
+                 <div className="relative z-10">
+                    <div className="text-sm font-semibold text-gray-900">At a glance</div>
+                    <div className="mt-2 text-sm text-gray-600 leading-relaxed">
+                      This case study describes a real engagement. 
+                      Constraints are prioritized over features. 
+                      Outcomes are measured in production signals, not ticket volume.
+                    </div>
+                 </div>
+             </div>
           </Surface>
         </div>
 
         {outcomeStrip.length ? (
-          <Surface variant="inset" className="mt-10 p-6">
-            <div className="flex items-baseline justify-between gap-6">
-              <h2 className="text-sm font-semibold text-gray-900">Executive skim</h2>
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Outcome strip</div>
-            </div>
-
-            <div className="mt-5 flex flex-wrap gap-3">
+          <Surface variant="raised" className="mt-12 p-1">
+             <div className="bg-gray-50/50 rounded-xl px-4 py-2 border-b border-gray-100 flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Executive Skim</span>
+                <span className="text-xs text-gray-400">Outcomes</span>
+             </div>
+            <div className="p-4 grid gap-4 sm:grid-cols-3">
               {outcomeStrip.map((result) => (
                 <OutcomeTile
                   key={result.metric}
@@ -134,7 +148,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
                   context={result.description ?? ""}
                   surfaceVariant="plain"
                   ornament="rail"
-                  className="p-5 w-full sm:flex-1 sm:min-w-[240px]"
+                  className="p-4"
                 />
               ))}
             </div>
@@ -143,18 +157,19 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10">
-          <aside className="hidden lg:block">
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
+          <aside className="hidden lg:block h-full">
             <div className="sticky top-28">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">On this page</div>
-              <nav className="mt-4">
-                <ul className="space-y-2">
+              <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-4 pl-3">On this page</div>
+              <nav className="relative">
+                 <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-100" />
+                 <ul className="space-y-4">
                   {sections.map((section) => (
-                    <li key={section.id}>
+                    <li key={section.id} className="relative pl-3">
                       <button
                         type="button"
                         onClick={() => scrollToSection(section.id)}
-                        className="w-full text-left text-sm font-semibold text-gray-700 hover:text-accent-electric transition-colors"
+                        className="text-sm font-medium text-gray-600 hover:text-accent-electric transition-colors text-left"
                       >
                         {section.label}
                       </button>
@@ -162,15 +177,11 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
                   ))}
                 </ul>
               </nav>
-
-              <div className="mt-6 h-10 w-full opacity-[0.18]">
-                <TopologyLines className="h-full w-full" />
-              </div>
             </div>
           </aside>
 
           <div className="max-w-3xl">
-            <div className="space-y-10">
+            <div className="space-y-12">
               <ReportSection id="context" title="Context">
                 <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.context}</p>
               </ReportSection>
@@ -203,7 +214,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
 
                 <div className="mt-6 flex flex-wrap gap-2">
                   {caseStudy.technologies.map((tech) => (
-                    <Chip key={tech} label={tech} size="sm" />
+                    <Chip key={tech} label={tech} size="sm" tone="neutral" />
                   ))}
                 </div>
               </ReportSection>

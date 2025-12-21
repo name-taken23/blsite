@@ -65,6 +65,12 @@ export default function Header() {
         isScrolled ? "shadow-sm" : ""
       }`}
     >
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+      >
+        Skip to content
+      </a>
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Brand */}
         <Link
@@ -72,6 +78,7 @@ export default function Header() {
           aria-label="BlackLake"
           className={[
             "flex items-center",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-lg",
             "transition-transform duration-300",
             isScrolled ? "scale-95" : "scale-100",
           ].join(" ")}
@@ -96,7 +103,7 @@ export default function Header() {
                 key={href}
                 href={String(href)}
                 aria-current={isActive ? "page" : undefined}
-                className={`transition-colors ${
+                className={`rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                   isActive
                     ? "text-gray-900"
                     : "text-gray-600 hover:text-gray-900"
@@ -113,7 +120,7 @@ export default function Header() {
           <button
             type="button"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors"
+            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             onClick={() => setIsMobileMenuOpen((v) => !v)}
           >
             {isMobileMenuOpen ? <AppIcon icon={X} size="md" /> : <AppIcon icon={Menu} size="md" />}
@@ -150,7 +157,7 @@ export default function Header() {
             <button
               type="button"
               aria-label="Close menu"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               onClick={closeMobileMenu}
             >
               <AppIcon icon={X} size="md" />
@@ -167,7 +174,7 @@ export default function Header() {
                     href={String(href)}
                     aria-current={isActive ? "page" : undefined}
                     onClick={closeMobileMenu}
-                    className={`flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-semibold transition-colors ${
+                    className={`flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                       isActive
                         ? "border-gray-300 bg-gray-50 text-gray-900"
                         : "border-gray-200 bg-white text-gray-900 hover:border-gray-300"

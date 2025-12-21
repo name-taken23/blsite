@@ -1,5 +1,3 @@
-"use client";
-
 import MagneticButton from "@/components/ui/MagneticButton";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";

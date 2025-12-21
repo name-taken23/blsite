@@ -24,21 +24,18 @@ const base = cn(
 );
 
 const variantClassName: Record<SurfaceVariant, string> = {
-  plain: "bg-white",
-  tinted: "bg-gray-50",
-  inset: cn("bg-gray-50", "ring-1 ring-white/60"),
+  plain: "bg-white border-transparent",
+  tinted: "bg-gray-50 border-transparent",
+  inset: cn("bg-gray-50/50 shadow-inner border-gray-200/50"),
   raised: cn(
-    "bg-white shadow-card",
-    "transition-shadow duration-fast",
-    "hover:shadow-card-hover",
-    "hover:border-gray-300"
+    "bg-white shadow-card border-gray-200",
+    "transition-all duration-fast",
+    "hover:shadow-card-hover hover:border-gray-300"
   ),
   glow: cn(
-    "bg-white shadow-card ring-1 ring-accent-electric/10",
-    "transition-shadow duration-fast",
-    "hover:shadow-card-hover",
-    "hover:border-gray-300",
-    "hover:ring-accent-electric/20"
+    "bg-white shadow-glow-sm border-accent-electric/20",
+    "transition-all duration-fast",
+    "hover:shadow-glow-md hover:border-accent-electric/40"
   ),
 };
 

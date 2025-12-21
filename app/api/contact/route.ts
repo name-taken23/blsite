@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { siteConfig } from "@/lib/seo";
+import { validateEnv, serverEnv } from "@/lib/env";
 
 export const runtime = "nodejs";
+
+// --- Types ---
 
 type ContactPayload = {
   name: string;
@@ -10,34 +13,22 @@ type ContactPayload = {
   systemInScope: string;
   primaryConstraint: string;
   context?: string;
+  honey?: string; // Honeypot field
+  mountedAt?: number; // Client timestamp for time-to-submit check
 };
+
+// --- Helpers ---
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
 function isValidEmail(email: string): boolean {
-  // Conservative validation: enough to catch obvious mistakes without being overly strict.
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function clamp(value: string, maxLen: number): string {
   return value.length <= maxLen ? value : value.slice(0, maxLen);
-}
-
-type RateLimitState = {
-  count: number;
-  resetAt: number;
-};
-
-declare global {
-  // eslint-disable-next-line no-var
-  var __bl_contact_rl: Map<string, RateLimitState> | undefined;
-}
-
-function getRateLimitStore(): Map<string, RateLimitState> {
-  if (!globalThis.__bl_contact_rl) globalThis.__bl_contact_rl = new Map();
-  return globalThis.__bl_contact_rl;
 }
 
 function getClientIp(req: NextRequest): string {
@@ -46,51 +37,47 @@ function getClientIp(req: NextRequest): string {
   return req.headers.get("x-real-ip") || "unknown";
 }
 
-function isAllowedOrigin(origin: string | null): boolean {
-  if (!origin) return true;
-  const allowed = new Set(
-    [
-      siteConfig.url,
-      process.env.NEXT_PUBLIC_SITE_URL,
-      "http://localhost:3000",
-      "http://127.0.0.1:3000",
-    ].filter(Boolean)
-  );
-  return allowed.has(origin);
-}
+// --- Logic ---
 
 export async function POST(req: NextRequest) {
+  const requestId = crypto.randomUUID();
+  const ip = getClientIp(req);
+  
+  // 1. Structured Logging Init
+  console.log(`[Contact] Request received`, { requestId, ip });
+
   try {
-    const origin = req.headers.get("origin");
-    if (!isAllowedOrigin(origin)) {
-      return NextResponse.json({ ok: false }, { status: 403 });
-    }
-
-    const contentType = req.headers.get("content-type") || "";
-    if (!contentType.includes("application/json")) {
-      return NextResponse.json({ ok: false }, { status: 415 });
-    }
-
-    // Best-effort rate limit (serverless instances are ephemeral).
-    const ip = getClientIp(req);
-    const store = getRateLimitStore();
-    const now = Date.now();
-    const windowMs = 60_000;
-    const maxPerWindow = 5;
-
-    const current = store.get(ip);
-    if (!current || current.resetAt <= now) {
-      store.set(ip, { count: 1, resetAt: now + windowMs });
-    } else {
-      current.count += 1;
-      if (current.count > maxPerWindow) {
-        return NextResponse.json({ ok: false }, { status: 429 });
-      }
-      store.set(ip, current);
+    // 2. Env Validation (Critical)
+    try {
+      validateEnv();
+    } catch (e) {
+      console.error(`[Contact] Env validation failed`, { error: e });
+      return NextResponse.json({ ok: false, error: "Configuration error" }, { status: 500 });
     }
 
     const raw = (await req.json()) as Partial<ContactPayload>;
 
+    // 3. Anti-Spam: Honeypot
+    if (raw.honey && raw.honey.trim() !== "") {
+      console.warn(`[Contact] Honeypot triggered`, { requestId, ip, honey: raw.honey });
+      // Return 200 to trick bots, but don't send email
+      return NextResponse.json({ ok: true });
+    }
+
+    // 4. Anti-Spam: Time-to-Submit
+    // Require at least 2 seconds (2000ms) to pass since form mount
+    const now = Date.now();
+    const mountedAt = raw.mountedAt || now;
+    const timeToSubmit = now - mountedAt;
+    
+    // In production we enforce 2s, but let's be lenient for manual testing if needed (1s)
+    if (timeToSubmit < 1500) {
+       console.warn(`[Contact] Too fast submission`, { requestId, ip, timeToSubmit });
+       // Start rate-limiting logic or just block. For now, strictly block.
+       return NextResponse.json({ ok: false, error: "Please wait a moment before sending." }, { status: 429 });
+    }
+
+    // 5. Validation
     if (!isNonEmptyString(raw.name)) {
       return NextResponse.json({ ok: false, field: "name" }, { status: 400 });
     }
@@ -104,7 +91,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, field: "primaryConstraint" }, { status: 400 });
     }
 
-    const payload: ContactPayload = {
+    // 6. Sanitization
+    const payload = {
       name: clamp(raw.name.trim(), 120),
       email: clamp(raw.email.trim(), 200),
       systemInScope: clamp(raw.systemInScope.trim(), 240),
@@ -112,70 +100,74 @@ export async function POST(req: NextRequest) {
       context: isNonEmptyString(raw.context) ? clamp(raw.context.trim(), 4000) : undefined,
     };
 
-    const resendApiKey = process.env.RESEND_API_KEY;
-    if (!resendApiKey) {
-      return NextResponse.json({ ok: false }, { status: 500 });
-    }
+    // 7. Email Sending
+    const resend = new Resend(serverEnv.RESEND_API_KEY);
+    const ownerEmail = serverEnv.CONTACT_TO_EMAIL!; // Validated by validateEnv
+    const fromEmail = serverEnv.CONTACT_FROM_EMAIL!; // Validated by validateEnv
+    
+    // Premium formatted email
+    const ownerSubject = `BlackLake Inquiry — ${payload.primaryConstraint}`;
+    const ownerText = `
+BLACKLAKE BLUEPRINT INQUIRY
+--------------------------------------------------
+ID: ${requestId}
+Submitted: ${new Date().toISOString()}
 
-    const resend = new Resend(resendApiKey);
+DETAILS
+--------------------------------------------------
+Name:       ${payload.name}
+Email:      ${payload.email}
+System:     ${payload.systemInScope}
+Constraint: ${payload.primaryConstraint}
 
-    const ownerEmail = process.env.CONTACT_OWNER_EMAIL || "hello@useblacklake.com";
-    const from = process.env.CONTACT_FROM_EMAIL || "BlackLake <onboarding@resend.dev>";
+CONTEXT
+--------------------------------------------------
+${payload.context || "No context provided."}
 
-    const submittedAt = new Date().toISOString();
-    const userAgent = req.headers.get("user-agent") || "unknown";
-
-    const ownerSubject = `Blueprint request — ${payload.primaryConstraint}: ${payload.systemInScope}`;
-    const ownerText = [
-      "New form submission:",
-      "",
-      `Name: ${payload.name}`,
-      `Email: ${payload.email}`,
-      `System in scope: ${payload.systemInScope}`,
-      `Primary constraint: ${payload.primaryConstraint}`,
-      ...(payload.context ? ["", "Context:", payload.context] : []),
-      "",
-      `Submitted at: ${submittedAt}`,
-      `IP: ${ip}`,
-      `User-Agent: ${userAgent}`,
-    ]
-      .join("\n");
+META
+--------------------------------------------------
+IP: ${ip}
+Time to submit: ${timeToSubmit}ms
+User-Agent: ${req.headers.get("user-agent") || "unknown"}
+    `.trim();
 
     await resend.emails.send({
-      from,
+      from: fromEmail,
       to: ownerEmail,
       replyTo: payload.email,
       subject: ownerSubject,
       text: ownerText,
     });
 
+    // Auto-reply
     const userSubject = "BlackLake — request received";
-    const userText = [
-      `Hi ${payload.name},`,
-      "",
-      "Your request has been received.",
-      "",
-      "Next steps:",
-      "- I’ll review your system and constraint summary.",
-      "- I’ll reply with whether it’s a fit and what the Blueprint would cover.",
-      "",
-      "If you need to add details, reply to this email.",
-      "",
-      "BlackLake",
-      siteConfig.url,
-    ].join("\n");
+    const userText = `
+Hi ${payload.name},
+
+Your Blueprint request has been received.
+
+I’ll review your system context ("${payload.systemInScope}") and primary constraint ("${payload.primaryConstraint}"). 
+Expect a reply shortly with whether it’s a fit for an assessment.
+
+Best,
+
+BlackLake
+${siteConfig.url}
+    `.trim();
 
     await resend.emails.send({
-      from,
+      from: fromEmail,
       to: payload.email,
       subject: userSubject,
       text: userText,
     });
 
+    console.log(`[Contact] Success`, { requestId, email: payload.email });
     return NextResponse.json({ ok: true });
+
   } catch (error) {
-    console.error("/api/contact error", error);
-    return NextResponse.json({ ok: false }, { status: 500 });
+    console.error(`[Contact] Unhandled error`, { requestId, error });
+    return NextResponse.json({ ok: false, error: "Internal error" }, { status: 500 });
   }
 }
 

@@ -13,7 +13,7 @@ export default function Stepper(props: {
   const { steps, className } = props;
 
   return (
-    <ol className={cn("space-y-5", className)}>
+    <ol className={cn("space-y-5 list-none p-0 m-0", className)}>
       {steps.map((step, index) => {
         const isLast = index === steps.length - 1;
 

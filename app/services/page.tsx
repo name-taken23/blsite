@@ -9,13 +9,16 @@ import Chip from "@/components/ui/Chip";
 import List from "@/components/ui/List";
 import FeatureIcon from "@/components/ui/FeatureIcon";
 import AppIcon from "@/components/ui/AppIcon";
+import { getServiceSchema } from "@/lib/seo";
 import BlueprintGrid from "@/components/graphics/BlueprintGrid";
 import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
 import IconBadge from "@/components/ui/IconBadge";
+import Stepper from "@/components/ui/Stepper";
+import Link from "next/link";
 import { services } from "./data";
-import { Clock, FileText, Shield, Map as MapIcon, Wrench, Gauge } from "lucide-react";
+import { Clock, FileText, Shield, Map as MapIcon, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = pageMetadata.services;
 
@@ -46,39 +49,6 @@ export default function ServicesPage() {
       { "@type": "Place", name: "Remote" },
     ],
     serviceType: ["Blueprint", "Build", "Calibrate"],
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "How work runs",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Blueprint",
-            description:
-              "A paid assessment that produces scope, risks, a delivery sequence, and a plan you can operate.",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Build",
-            description:
-              "Implementation with baselines, guardrails, and rollout controls. No surprises in production.",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Calibrate",
-            description:
-              "Measure behaviour, tighten reliability and cost, and hand over runbooks and ownership.",
-          },
-        },
-      ],
-    },
   };
 
   const blueprintGroups = {
@@ -107,137 +77,150 @@ export default function ServicesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
 
-      <Section variant="plain">
+      {/* HEADER + BLUEPRINT PRODUCT PANEL */}
+      <Section variant="plain" containerClassName="pt-24 pb-0 md:pt-32">
         <div className="max-w-3xl">
-          <Chip label="Services" tone="neutral" />
-          <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
-            Production modernisation,
-            <span className="block text-gray-700">delivered with control.</span>
-          </h1>
-          <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
-            BlackLake takes ownership of modernisation across systems, intelligence, and product. Work starts with the BlackLake Blueprint: a paid, structured assessment that produces a scoped plan, risks, and a sequence of changes you can operate.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-3">
-            <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-            <Button href="/work" variant="secondary" size="lg">
-              View selected work
-            </Button>
-          </div>
+          <SectionHeading
+            eyebrow="The Product"
+            title="Production modernisation, delivered with control."
+            subtitle={
+              <>
+                BlackLake takes ownership of modernisation across systems, intelligence, and product.
+                Everything starts with <span className="font-semibold text-gray-900">The Blueprint</span>.
+              </>
+            }
+            size="lg"
+            as="h1"
+          />
         </div>
       </Section>
 
-      <Section variant="plain" containerClassName="pt-0">
-        <Surface variant="raised" className="relative overflow-hidden p-6 md:p-8">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.18]">
+      <Section variant="plain">
+        <Surface variant="raised" className="relative overflow-hidden p-8 md:p-12">
+          {/* Subtle Grid Background */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.12]">
             <BlueprintGrid className="h-full w-full" />
           </div>
 
-          <div className="relative">
-            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-              <div className="max-w-xl">
-                <SectionHeading
-                  eyebrow="Blueprint"
-                  title="A scoped plan you can execute."
-                  subtitle="A paid, structured assessment that produces scope, risks, success measures, and a delivery sequence your team can operate."
-                  size="lg"
-                />
+          <div className="relative grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="max-w-xl">
+              <Chip label="Step 1" tone="tinted" size="sm" className="mb-4" />
+              <SectionHeading
+                title="The Blueprint"
+                subtitle="A paid, formatted assessment that produces scope, risks, and a delivery sequence. Before we write code, we agree on the constraints."
+                size="md"
+                as="h2"
+              />
 
-                <div className="mt-8 flex flex-wrap items-center gap-2">
-                  <IconBadge icon={Clock} label="Typically 1-2 weeks" />
-                  <IconBadge label="System map" />
-                  <IconBadge label="Risk register" />
-                  <IconBadge label="Guardrails" />
-                  <IconBadge label="Sequenced plan" />
-                </div>
+              <div className="mt-8 flex flex-wrap gap-2">
+                <IconBadge icon={Clock} label="Fixed price, 1-2 weeks" />
+                <IconBadge icon={Shield} label="Fully indemnified" />
               </div>
 
-              <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-1">
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <AppIcon icon={MapIcon} size="sm" />
-                    Map
-                  </div>
-                  <List items={blueprintGroups.map} variant="dot" className="mt-3" />
-                </div>
-
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <AppIcon icon={Shield} size="sm" />
-                    Risk
-                  </div>
-                  <List items={blueprintGroups.risk} variant="dot" className="mt-3" />
-                </div>
-
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <AppIcon icon={FileText} size="sm" />
-                    Plan
-                  </div>
-                  <List items={blueprintGroups.plan} variant="dot" className="mt-3" />
-                </div>
+              <div className="mt-10">
+                <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
               </div>
+            </div>
+
+            {/* CONSOLIDATED DELIVERABLES */}
+            <div className="space-y-4">
+              <Surface variant="inset" className="p-6">
+                <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-wide text-gray-900">
+                  <AppIcon icon={MapIcon} size="sm" className="text-accent-electric" />
+                  Map & Baseline
+                </div>
+                <List items={blueprintGroups.map} variant="dot" className="mt-4 text-sm" />
+              </Surface>
+
+              <Surface variant="inset" className="p-6">
+                <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-wide text-gray-900">
+                  <AppIcon icon={Shield} size="sm" className="text-accent-electric" />
+                  Risk & Guardrails
+                </div>
+                <List items={blueprintGroups.risk} variant="dot" className="mt-4 text-sm" />
+              </Surface>
+
+              <Surface variant="inset" className="p-6">
+                <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-wide text-gray-900">
+                  <AppIcon icon={FileText} size="sm" className="text-accent-electric" />
+                  Plan & Model
+                </div>
+                <List items={blueprintGroups.plan} variant="dot" className="mt-4 text-sm" />
+              </Surface>
             </div>
           </div>
         </Surface>
       </Section>
 
+      {/* HOW WORK RUNS (STEPPER) */}
       <Section variant="tinted">
         <div className="max-w-3xl">
           <SectionHeading
-            eyebrow="Deliverables"
-            title="Blueprint outputs, grouped for speed."
-            subtitle="Each Blueprint ends with artifacts you can share internally: a system map, a risk view with guardrails, and a delivery plan with a clear operating model."
+            title="The Blueprint"
+            subtitle={
+              <>
+                A fixed-price technical assessment that delivers a system map, risk register, and sequenced modernisation plan.
+                See it in action: <Link href="/case-studies/v2x-network-system" className="underline hover:text-accent-electric">V2X Data System</Link>.
+              </>
+            }
             size="lg"
+            as="h2"
           />
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          <Surface variant="inset" className="p-6">
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">System map</div>
-            <List items={blueprintGroups.map} variant="dot" className="mt-4" />
-          </Surface>
-
-          <Surface variant="inset" className="p-6">
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Risk & guardrails</div>
-            <List items={blueprintGroups.risk} variant="dot" className="mt-4" />
-          </Surface>
-
-          <Surface variant="inset" className="p-6">
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-              Delivery plan & operating model
-            </div>
-            <List items={blueprintGroups.plan} variant="dot" className="mt-4" />
-          </Surface>
-        </div>
+        <Surface variant="raised" className="mt-10 p-8 md:p-12">
+            <Stepper
+              steps={[
+                {
+                  title: "Blueprint",
+                  description: "Define constraints, map the system, and produce a scoped plan with risks and guardrails.",
+                },
+                {
+                  title: "Build",
+                  description: "Implement in controlled slices with baselines, rollout controls, and clear ownership.",
+                },
+                {
+                  title: "Calibrate",
+                  description: "Measure behaviour, tighten cost and reliability, and hand over runbooks.",
+                },
+              ]}
+              className="max-w-3xl"
+            />
+        </Surface>
       </Section>
 
-      <Section variant="tinted">
+      {/* SERVICES GRID */}
+      <Section variant="plain">
         <div className="max-w-3xl">
-          <SectionHeading eyebrow="Pillars" title="What I deliver" size="lg" />
+          <SectionHeading 
+            eyebrow="Capabilities" 
+            title="Systems. Intelligence. Product." 
+            subtitle="I intervene where the stack meets the business logic."
+            size="lg" 
+          />
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {services.map((service) => (
-            <Surface key={service.title} variant="raised" className="p-6">
+            <Surface key={service.title} variant="raised" className="p-8 flex flex-col h-full">
               <FeatureIcon icon={service.icon} tone="neutral" />
-              <h3 className="mt-5 text-lg font-semibold text-gray-900">{service.title}</h3>
-              <p className="mt-3 text-sm font-semibold text-gray-700">{service.problem}</p>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">{service.description}</p>
-
-              <div className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Focus</p>
-                <List items={service.features} variant="dot" className="mt-3" />
-              </div>
-
-              <Surface variant="inset" className="mt-6 rounded-xl p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Outcome</p>
-                <p className="mt-2 text-sm font-semibold text-gray-900">{service.outcome}</p>
-                <p className="mt-2 text-sm text-gray-600">{service.why}</p>
-              </Surface>
+              <h3 className="mt-6 text-xl font-semibold text-gray-900">{service.title}</h3>
+              <p className="mt-3 text-sm font-medium text-gray-900">{service.problem}</p>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed flex-grow">{service.description}</p>
 
               <div className="mt-6">
-                <Button href={service.caseStudy} variant="secondary" size="md">
-                  View related case study
+                <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Focus Areas</div>
+                <div className="flex flex-wrap gap-2">
+                   {service.features.slice(0,4).map(f => (
+                     <Chip key={f} label={f} size="sm" tone="tinted" />
+                   ))}
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-gray-100">
+                <Button href={service.caseStudy} variant="tertiary" size="sm" className="px-0 group">
+                  Related case study
+                  <AppIcon icon={ArrowRight} className="ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>
             </Surface>
@@ -245,66 +228,30 @@ export default function ServicesPage() {
         </div>
       </Section>
 
-      <Section variant="plain">
-        <div className="max-w-3xl">
-          <SectionHeading
-            eyebrow="Process"
-            title="How work runs"
-            subtitle="A simple loop: define the constraints, ship controlled change, and keep the system measurable."
-            size="lg"
-          />
-        </div>
-
-        <Surface variant="raised" className="mt-10 p-6 md:p-8">
-          <div className="relative">
-            <div aria-hidden="true" className="hidden md:block absolute left-10 right-10 top-8 h-px bg-gray-200" />
-
-            <div className="grid gap-6 md:grid-cols-3">
-              <div className="relative">
-                <FeatureIcon icon={MapIcon} tone="accent" size="lg" className="relative z-10" />
-                <div className="mt-4 text-sm font-semibold text-gray-900">Blueprint</div>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  Define constraints, map the system, and produce a scoped plan with risks and guardrails.
-                </p>
-              </div>
-
-              <div className="relative">
-                <FeatureIcon icon={Wrench} tone="accent" size="lg" className="relative z-10" />
-                <div className="mt-4 text-sm font-semibold text-gray-900">Build</div>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  Implement in controlled slices with baselines, rollout controls, and clear ownership.
-                </p>
-              </div>
-
-              <div className="relative">
-                <FeatureIcon icon={Gauge} tone="accent" size="lg" className="relative z-10" />
-                <div className="mt-4 text-sm font-semibold text-gray-900">Calibrate</div>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  Measure behaviour, tighten cost and reliability, and hand over runbooks and guardrails.
-                </p>
-              </div>
-            </div>
+      {/* CALL TO ACTION */}
+      <Section variant="framed" containerClassName="pt-0 pb-20">
+        <Surface variant="inset" className="p-10 md:p-14 text-center">
+          <div className="max-w-2xl mx-auto">
+             <SectionHeading
+                title="Start with a Blueprint"
+                subtitle="Share context, constraints, and what must change. I’ll reply with whether it’s a fit."
+                align="center"
+                size="lg"
+             />
+             <div className="mt-8 flex justify-center gap-4">
+               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
+             </div>
           </div>
         </Surface>
       </Section>
-
-      <Section variant="framed">
-        <Surface variant="inset" className="p-8 md:p-10">
-          <div className="max-w-3xl">
-            <SectionHeading
-              title="Start with a Blueprint"
-              subtitle="Share context, constraints, and what must change. I’ll reply with whether it’s a fit and what the Blueprint would cover."
-              size="lg"
-            />
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-              <Button href="/work" variant="secondary" size="lg">
-                View selected work
-              </Button>
-            </div>
-          </div>
-        </Surface>
-      </Section>
+      
+      <Script
+        id="service-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getServiceSchema()),
+        }}
+      />
     </PageShell>
   );
 }
