@@ -97,6 +97,25 @@ const nextConfig: NextConfig = {
 
   // Power by header removal
   poweredByHeader: false,
+
+  // ============================================
+  // CANONICAL HOST REDIRECTS
+  // ============================================
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "blacklake.systems",
+          },
+        ],
+        destination: "https://www.blacklake.systems/:path*",
+        permanent: true, // 308 redirect
+      },
+    ];
+  },
 };
 
 export default nextConfig;

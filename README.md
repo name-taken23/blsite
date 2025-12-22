@@ -130,7 +130,19 @@ npm run build
 
 ## Deployment
 
-- Expected env var: `NEXT_PUBLIC_SITE_URL=https://useblacklake.com`
+### Environment Variables
+
+#### Canonical Site URL (Required for Production)
+
+- `NEXT_PUBLIC_SITE_URL=https://www.blacklake.systems`
+
+This must be set to the **canonical host** (with `www`) in production. All metadata, sitemaps, and Open Graph URLs will use this value.
+
+**Important**: The site enforces `https://www.blacklake.systems` as the canonical host. Any requests to `blacklake.systems` (without `www`) will be redirected with a 308 permanent redirect.
+
+For Vercel deployments:
+- **Production**: Set `NEXT_PUBLIC_SITE_URL=https://www.blacklake.systems`
+- **Preview/Development**: The system will automatically use the preview URL
 
 ### Contact Form (Resend)
 

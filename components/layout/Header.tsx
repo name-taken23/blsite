@@ -149,60 +149,62 @@ export default function Header() {
           if (e.target === mobileMenuRef.current) closeMobileMenu();
         }}
       >
-        <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white border-l border-gray-200 shadow-sm">
-          <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100">
-            <Link href="/" onClick={closeMobileMenu} aria-label="BlackLake" className="inline-flex items-center">
-              <BrandMark variant="lockup" size="sm" />
-            </Link>
-            <button
-              type="button"
-              aria-label="Close menu"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-              onClick={closeMobileMenu}
-            >
-              <AppIcon icon={X} size="md" />
-            </button>
-          </div>
-
-          <nav className="px-6 py-6">
-            <div className="space-y-2">
-              {navItems.map(([href, label]) => {
-                const isActive = pathname === href;
-                return (
-                  <Link
-                    key={href}
-                    href={String(href)}
-                    aria-current={isActive ? "page" : undefined}
-                    onClick={closeMobileMenu}
-                    className={`flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
-                      isActive
-                        ? "border-gray-300 bg-gray-50 text-gray-900"
-                        : "border-gray-200 bg-white text-gray-900 hover:border-gray-300"
-                    }`}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="mt-6">
-              <Button
-                href="/contact"
+        {isMobileMenuOpen && (
+          <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white border-l border-gray-200 shadow-sm">
+            <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100">
+              <Link href="/" onClick={closeMobileMenu} aria-label="BlackLake" className="inline-flex items-center">
+                <BrandMark variant="lockup" size="sm" />
+              </Link>
+              <button
+                type="button"
+                aria-label="Close menu"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 onClick={closeMobileMenu}
-                variant="primary"
-                size="lg"
-                className="w-full"
               >
-                Start with a Blueprint
-              </Button>
-
-              <p className="mt-4 text-xs text-gray-500 leading-relaxed">
-                A paid, structured first step that defines constraints, risks, and a delivery sequence.
-              </p>
+                <AppIcon icon={X} size="md" />
+              </button>
             </div>
-          </nav>
-        </div>
+
+            <nav className="px-6 py-6">
+              <div className="space-y-2">
+                {navItems.map(([href, label]) => {
+                  const isActive = pathname === href;
+                  return (
+                    <Link
+                      key={href}
+                      href={String(href)}
+                      aria-current={isActive ? "page" : undefined}
+                      onClick={closeMobileMenu}
+                      className={`flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                        isActive
+                          ? "border-gray-300 bg-gray-50 text-gray-900"
+                          : "border-gray-200 bg-white text-gray-900 hover:border-gray-300"
+                      }`}
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6">
+                <Button
+                  href="/contact"
+                  onClick={closeMobileMenu}
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                >
+                  Start with a Blueprint
+                </Button>
+
+                <p className="mt-4 text-xs text-gray-500 leading-relaxed">
+                  A paid, structured first step that defines constraints, risks, and a delivery sequence.
+                </p>
+              </div>
+            </nav>
+          </div>
+        )}
       </dialog>
     </header>
   );

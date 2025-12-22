@@ -11,7 +11,11 @@ import { Metadata } from "next";
 // SITE CONFIGURATION
 // ============================================
 
-const PRODUCTION_DOMAIN = "https://blacklake.systems";
+/**
+ * Canonical host for production.
+ * All non-canonical hosts should redirect to this URL.
+ */
+const CANONICAL_HOST = "https://www.blacklake.systems";
 
 function normalizeSiteUrl(url: string): string {
   const trimmed = url.trim();
@@ -19,16 +23,21 @@ function normalizeSiteUrl(url: string): string {
 }
 
 function resolveSiteUrl(): string {
+  // Always use the canonical host for production.
+  // Non-canonical hosts will be redirected via next.config.ts.
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
   if (explicit) return normalizeSiteUrl(explicit);
 
-  // On Vercel, VERCEL_URL is the deployment hostname (no protocol).
-  // Prefer it for non-production deploys where canonical should match the preview URL.
-  const vercelUrl = process.env.VERCEL_URL;
-  if (vercelUrl) return normalizeSiteUrl(`https://${vercelUrl}`);
+  // On Vercel preview deployments, use the preview URL for testing.
+  // Production deployments should set NEXT_PUBLIC_SITE_URL to the canonical host.
+  const vercelEnv = process.env.VERCEL_ENV;
+  if (vercelEnv === "preview" || vercelEnv === "development") {
+    const vercelUrl = process.env.VERCEL_URL;
+    if (vercelUrl) return normalizeSiteUrl(`https://${vercelUrl}`);
+  }
 
-  // Safe default for local/dev and as a production fallback.
-  return normalizeSiteUrl(PRODUCTION_DOMAIN);
+  // Default to canonical host for production.
+  return normalizeSiteUrl(CANONICAL_HOST);
 }
 
 export const siteConfig = {
@@ -148,7 +157,7 @@ export const pageMetadata = {
   about: generateMetadata({
     title: "About",
     description:
-      "BlackLake is run by James Reed. I help engineering teams gain control over production systems through explicit constraints and sequenced delivery.",
+      "BlackLake is run by James Reed. We help engineering teams gain control over production systems through explicit constraints and sequenced delivery.",
     path: "/about",
   }),
 

@@ -37,7 +37,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Predictive analytics platform",
     description:
       "A production analytics pipeline was delaying downstream refresh cycles and driving unpredictable warehouse spend. Work focused on time-to-data and operational predictability without breaking data contracts.",
-    image: "/case-studies/bigquery.jpg",
+    image: "/og-image.png",
     gradient: "from-blue-600 to-cyan-400",
     tags: ["BigQuery", "GCP", "Data Engineering", "Python"],
     timeline: "3 months",
@@ -92,7 +92,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Telecommunications systems",
     description:
       "Designed and implemented the data processing layer for a V2X system on 5G infrastructure. The work focused on tight latency budgets and predictable behaviour under load.",
-    image: "/case-studies/v2x.jpg",
+    image: "/og-image.png",
     gradient: "from-emerald-500 to-teal-400",
     tags: ["5G", "Real-Time Systems", "V2X", "IoT"],
     timeline: "6 months",
@@ -147,7 +147,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Applied AI product",
     description:
       "Built an interactive generation product where outputs needed to be repeatable, constrained, and safe for defined rules. Work focused on reducing obvious failure modes while keeping interactive latency.",
-    image: "/case-studies/recipe.jpg",
+    image: "/og-image.png",
     gradient: "from-purple-600 to-pink-500",
     tags: ["RAG", "Vertex AI", "React Native", "Full-Stack"],
     timeline: "4 months",
@@ -218,33 +218,103 @@ export type ProofMetric = {
 };
 
 export function getProofMetrics(limit: number = 4): ProofMetric[] {
-  const bySlugAndMetric = new Set<string>();
+  const weakValues = new Set(
+    [
+      "reduced",
+      "improved",
+      "controlled",
+      "enforced",
+      "at scale",
+      "high throughput",
+      "in production",
+    ].map((v) => v.toLowerCase())
+  );
+
+  const normalize = (s: string) => s.trim().replace(/\s+/g, " ");
+
+  const isStrongValue = (value: string): boolean => {
+    const v = normalize(value).toLowerCase();
+    if (!v) return false;
+    if (weakValues.has(v)) return false;
+
+    // Prefer values that are quantifiable or bounded.
+    if (/[0-9]/.test(v)) return true;
+    if (v.includes("→") || v.includes("->") || v.includes(" to ")) return true;
+    if (v.includes("%") || v.includes("x")) return true;
+    if (/(ms|millisecond|s|sec|second|min|minute|hour|day|week|month)/.test(v)) return true;
+    if (v.includes("single-digit") || v.includes("seconds-level")) return true;
+
+    // Otherwise require a bit more specificity than a single adjective.
+    return v.length >= 12;
+  };
+
+  const scoreResult = (r: { metric: string; value: string }): number => {
+    const value = normalize(r.value);
+    if (!value) return -Infinity;
+    const v = value.toLowerCase();
+
+    let score = 0;
+    if (isStrongValue(value)) score += 10;
+
+    if (/[0-9]/.test(v)) score += 4;
+    if (v.includes("→") || v.includes("->")) score += 3;
+    if (v.includes("%") || /\b\d+(\.\d+)?x\b/.test(v)) score += 3;
+    if (/(latency|runtime|cost|failure|error|time-to-data|predictability)/i.test(r.metric)) score += 2;
+
+    if (weakValues.has(v)) score -= 10;
+
+    return score;
+  };
+
+  const preferredMetricsBySlug: Partial<Record<CaseStudy["slug"], string[]>> = {
+    "bigquery-optimization": ["Pipeline runtime", "Warehouse scan cost"],
+    "v2x-network-system": ["Critical-path latency budget"],
+    "ai-recipe-platform": ["Interactive latency", "Baseline failure rate"],
+  };
+
+  const pickBestResultForStudy = (study: CaseStudy) => {
+    const preferred = preferredMetricsBySlug[study.slug] ?? [];
+
+    for (const metricName of preferred) {
+      const candidate = study.results.find((r) => r.metric === metricName);
+      if (candidate && isStrongValue(candidate.value)) return candidate;
+    }
+
+    const strong = study.results
+      .filter((r) => isStrongValue(r.value))
+      .sort((a, b) => scoreResult(b) - scoreResult(a));
+
+    if (strong[0]) return strong[0];
+
+    // As a last resort, pick the best-scoring non-empty result.
+    return study.results
+      .filter((r) => normalize(r.value).length > 0)
+      .sort((a, b) => scoreResult(b) - scoreResult(a))[0];
+  };
+
   const picked: ProofMetric[] = [];
+  const usedSlugs = new Set<string>();
 
-  const curated: Array<{ slug: CaseStudy["slug"]; metric: string }> = [
-    { slug: "bigquery-optimization", metric: "Pipeline runtime" },
-    { slug: "bigquery-optimization", metric: "Warehouse scan cost" },
-    { slug: "v2x-network-system", metric: "Critical-path latency budget" },
-    { slug: "ai-recipe-platform", metric: "Interactive latency" },
-  ];
+  const max = Math.max(0, limit);
+  for (const study of getAllCaseStudies()) {
+    if (picked.length >= max) break;
+    if (usedSlugs.has(study.slug)) continue;
 
-  for (const target of curated) {
-    const study = getCaseStudy(target.slug);
-    const result = study?.results.find((r) => r.metric === target.metric);
-    if (!study || !result) continue;
+    const result = pickBestResultForStudy(study);
+    if (!result) continue;
 
-    const key = `${study.slug}::${result.metric}`;
-    if (bySlugAndMetric.has(key)) continue;
-    bySlugAndMetric.add(key);
+    const value = normalize(result.value);
+    const metric = normalize(result.metric);
+    if (!value || !metric) continue;
+    if (!isStrongValue(value)) continue;
 
+    usedSlugs.add(study.slug);
     picked.push({
-      value: result.value,
-      metric: result.metric,
-      context: `${study.industry} — ${study.title}`,
+      value,
+      metric,
+      context: normalize(result.description),
       caseStudySlug: study.slug,
     });
-
-    if (picked.length >= limit) break;
   }
 
   return picked;

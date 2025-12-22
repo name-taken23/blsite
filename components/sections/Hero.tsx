@@ -15,10 +15,7 @@ export default function Hero() {
   return (
     <Section variant="plain" containerClassName="relative py-16 md:py-24">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <HeroBackdrop className="absolute inset-0 h-full w-full opacity-[0.10]" />
-        <div className="absolute -right-24 -top-16 w-[44rem] opacity-[0.07] hidden sm:block">
-          <TopologyLines className="h-full w-full" />
-        </div>
+        <HeroBackdrop className="absolute inset-0 h-full w-full opacity-[0.04]" />
       </div>
 
       <div className="relative grid gap-12 lg:grid-cols-2 lg:items-start">
@@ -74,42 +71,30 @@ export default function Hero() {
           </div>
         </div>
 
-        <Surface
-          variant="tinted"
-          className="group p-6 lg:mt-2 transition-all duration-200 hover:border-gray-300 hover:shadow-sm"
-        >
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">System snapshot</div>
+        <div className="lg:mt-2">
+          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-5">System snapshot</div>
 
-          <div className="mt-5 grid gap-3">
+          <div className="grid gap-6">
             {/* Panel A */}
-            <Surface
-              variant="plain"
-              className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
-            >
+            <div className="bg-gray-50 rounded-xl p-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Signal</div>
-              <div className="mt-3 h-28">
+              <div className="mt-4 h-28">
                 <SignalWave className="h-full w-full" />
               </div>
-            </Surface>
+            </div>
 
             {/* Panel B */}
-            <Surface
-              variant="plain"
-              className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
-            >
+            <div className="bg-gray-50 rounded-xl p-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Constraints</div>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 <IconBadge icon={Gauge} label="Latency budget" tone="tinted" />
                 <IconBadge icon={Coins} label="Cost ceiling" tone="tinted" />
                 <IconBadge icon={Shield} label="Change risk" tone="tinted" />
               </div>
-            </Surface>
+            </div>
 
             {/* Panel C */}
-            <Surface
-              variant="plain"
-              className="rounded-xl p-4 transition-colors duration-200 group-hover:border-gray-300"
-            >
+            <div className="bg-gray-50 rounded-xl p-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deliverable</div>
               <List
                 items={[
@@ -118,11 +103,11 @@ export default function Hero() {
                 ]}
                 variant="none"
                 density="compact"
-                className="mt-3"
+                className="mt-4"
               />
-            </Surface>
+            </div>
           </div>
-        </Surface>
+        </div>
       </div>
     </Section>
   );

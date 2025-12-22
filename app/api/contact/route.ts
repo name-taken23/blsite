@@ -146,7 +146,7 @@ Hi ${payload.name},
 
 Your Blueprint request has been received.
 
-I’ll review your system context ("${payload.systemInScope}") and primary constraint ("${payload.primaryConstraint}"). 
+We'll review your system context ("${payload.systemInScope}") and primary constraint ("${payload.primaryConstraint}"). 
 Expect a reply shortly with whether it’s a fit for an assessment.
 
 Best,

@@ -77,24 +77,20 @@ export default function ServicesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
 
-      {/* HEADER + BLUEPRINT PRODUCT PANEL */}
+      {/* HEADER */}
       <Section variant="plain" containerClassName="pt-24 pb-0 md:pt-32">
         <div className="max-w-3xl">
           <SectionHeading
-            eyebrow="The Product"
+            eyebrow="Services"
             title="Production modernisation, delivered with control."
-            subtitle={
-              <>
-                BlackLake takes ownership of modernisation across systems, intelligence, and product.
-                Everything starts with <span className="font-semibold text-gray-900">The Blueprint</span>.
-              </>
-            }
+            subtitle="BlackLake takes ownership of modernisation across systems, intelligence, and product. Everything starts with The Blueprint."
             size="lg"
             as="h1"
           />
         </div>
       </Section>
 
+      {/* THE BLUEPRINT - UNIFIED SECTION */}
       <Section variant="plain">
         <Surface variant="raised" className="relative overflow-hidden p-8 md:p-12">
           {/* Subtle Grid Background */}
@@ -102,28 +98,30 @@ export default function ServicesPage() {
             <BlueprintGrid className="h-full w-full" />
           </div>
 
-          <div className="relative grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div className="max-w-xl">
+          <div className="relative">
+            {/* Blueprint Header */}
+            <div className="max-w-3xl">
               <Chip label="Step 1" tone="tinted" size="sm" className="mb-4" />
               <SectionHeading
                 title="The Blueprint"
-                subtitle="A paid, formatted assessment that produces scope, risks, and a delivery sequence. Before we write code, we agree on the constraints."
-                size="md"
+                subtitle={
+                  <>
+                    A fixed-price technical assessment that delivers a system map, risk register, and sequenced modernisation plan.
+                    See it in action: <Link href="/case-studies/v2x-network-system" className="underline hover:text-accent-electric">V2X Data System</Link>.
+                  </>
+                }
+                size="lg"
                 as="h2"
               />
 
-              <div className="mt-8 flex flex-wrap gap-2">
+              <div className="mt-6 flex flex-wrap gap-2">
                 <IconBadge icon={Clock} label="Fixed price, 1-2 weeks" />
                 <IconBadge icon={Shield} label="Fully indemnified" />
               </div>
-
-              <div className="mt-10">
-                <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-              </div>
             </div>
 
-            {/* CONSOLIDATED DELIVERABLES */}
-            <div className="space-y-4">
+            {/* Deliverables Grid */}
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
               <Surface variant="inset" className="p-6">
                 <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-wide text-gray-900">
                   <AppIcon icon={MapIcon} size="sm" className="text-accent-electric" />
@@ -148,6 +146,11 @@ export default function ServicesPage() {
                 <List items={blueprintGroups.plan} variant="dot" className="mt-4 text-sm" />
               </Surface>
             </div>
+
+            {/* CTA */}
+            <div className="mt-10 flex justify-center md:justify-start">
+              <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
+            </div>
           </div>
         </Surface>
       </Section>
@@ -156,13 +159,8 @@ export default function ServicesPage() {
       <Section variant="tinted">
         <div className="max-w-3xl">
           <SectionHeading
-            title="The Blueprint"
-            subtitle={
-              <>
-                A fixed-price technical assessment that delivers a system map, risk register, and sequenced modernisation plan.
-                See it in action: <Link href="/case-studies/v2x-network-system" className="underline hover:text-accent-electric">V2X Data System</Link>.
-              </>
-            }
+            title="How work runs"
+            subtitle="Blueprint → Build → Calibrate. Explicit constraints, controlled change, and clear ownership."
             size="lg"
             as="h2"
           />
@@ -226,23 +224,6 @@ export default function ServicesPage() {
             </Surface>
           ))}
         </div>
-      </Section>
-
-      {/* CALL TO ACTION */}
-      <Section variant="framed" containerClassName="pt-0 pb-20">
-        <Surface variant="inset" className="p-10 md:p-14 text-center">
-          <div className="max-w-2xl mx-auto">
-             <SectionHeading
-                title="Start with a Blueprint"
-                subtitle="Share context, constraints, and what must change. I’ll reply with whether it’s a fit."
-                align="center"
-                size="lg"
-             />
-             <div className="mt-8 flex justify-center gap-4">
-               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
-             </div>
-          </div>
-        </Surface>
       </Section>
       
       <Script

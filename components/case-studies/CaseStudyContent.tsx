@@ -7,11 +7,8 @@ import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
 import List from "@/components/ui/List";
 import AppIcon from "@/components/ui/AppIcon";
-import OutcomeTile from "@/components/ui/OutcomeTile";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
-import OutcomeDelta from "@/components/graphics/OutcomeDelta";
-import TopologyLines from "@/components/graphics/TopologyLines";
 import BrandMark from "@/components/brand/BrandMark";
 
 interface CaseStudyContentProps {
@@ -42,13 +39,9 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
     const { id, title, children } = props;
 
     return (
-      <div id={id} className="relative scroll-mt-28 pt-10">
-        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gray-200" />
-        <div aria-hidden="true" className="pointer-events-none absolute right-0 top-6 text-accent-electric opacity-[0.18]">
-          <OutcomeDelta />
-        </div>
+      <div id={id} className="relative scroll-mt-28">
         <SectionHeading title={title} size="md" />
-        <div className="mt-4">{children}</div>
+        <div className="mt-6">{children}</div>
       </div>
     );
   };
@@ -117,11 +110,8 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
                 </div>
                 <div className="font-mono text-xs text-gray-400">REF-{caseStudy.slug.slice(0, 4).toUpperCase()}</div>
              </div>
-             <div className="p-6 relative bg-white">
-                 <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.08]">
-                    <TopologyLines className="h-full w-full" />
-                 </div>
-                 <div className="relative z-10">
+          <div className="p-6 relative bg-white">
+                 <div className="relative">
                     <div className="text-sm font-semibold text-gray-900">At a glance</div>
                     <div className="mt-2 text-sm text-gray-600 leading-relaxed">
                       This case study describes a real engagement. 
@@ -134,25 +124,21 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
         </div>
 
         {outcomeStrip.length ? (
-          <Surface variant="raised" className="mt-12 p-1">
-             <div className="bg-gray-50/50 rounded-xl px-4 py-2 border-b border-gray-100 flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Executive Skim</span>
-                <span className="text-xs text-gray-400">Outcomes</span>
+          <div className="mt-16 pt-12 border-t border-gray-200">
+             <div className="mb-8">
+                <h2 className="text-2xl font-semibold text-gray-900">Executive Skim: Outcomes</h2>
+                <p className="mt-2 text-sm text-gray-600">Key results measured in production</p>
              </div>
-            <div className="p-4 grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-3">
               {outcomeStrip.map((result) => (
-                <OutcomeTile
-                  key={result.metric}
-                  value={result.value}
-                  metric={result.metric}
-                  context={result.description ?? ""}
-                  surfaceVariant="plain"
-                  ornament="rail"
-                  className="p-4"
-                />
+                <div key={result.metric} className="bg-gray-50 rounded-xl p-6">
+                  <div className="text-3xl font-semibold text-gray-900 leading-none">{result.value}</div>
+                  <div className="mt-3 text-sm font-semibold text-gray-900">{result.metric}</div>
+                  <div className="mt-2 text-sm text-gray-600 leading-relaxed">{result.description ?? ""}</div>
+                </div>
               ))}
             </div>
-          </Surface>
+          </div>
         ) : null}
       </section>
 
@@ -181,7 +167,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
           </aside>
 
           <div className="max-w-3xl">
-            <div className="space-y-12">
+            <div className="space-y-16">
               <ReportSection id="context" title="Context">
                 <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.context}</p>
               </ReportSection>
@@ -193,10 +179,10 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
               <ReportSection id="intervention" title="Intervention">
                 <p className="text-base md:text-lg leading-relaxed text-gray-600">{caseStudy.narrative.intervention}</p>
 
-                <Surface variant="inset" className="mt-8 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900">Key decisions</h3>
+                <div className="mt-8 bg-gray-50 rounded-xl p-6">
+                  <h3 className="text-base font-semibold text-gray-900">Key decisions</h3>
                   <List items={caseStudy.keyFeatures} variant="check" className="mt-4" itemClassName="text-gray-700" />
-                </Surface>
+                </div>
               </ReportSection>
 
               <ReportSection id="outcomes" title="Outcomes">
@@ -224,8 +210,8 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
       </section>
 
       {caseStudy.testimonial && (
-        <section className="max-w-3xl mx-auto px-6 py-12">
-          <div className="rounded-2xl border border-gray-200 bg-white p-8">
+        <section className="max-w-3xl mx-auto px-6 py-16">
+          <div className="rounded-xl bg-gray-50 p-8 md:p-10">
             <blockquote className="text-lg md:text-xl font-medium text-gray-900 leading-relaxed">
               &ldquo;{caseStudy.testimonial.quote}&rdquo;
             </blockquote>
@@ -237,8 +223,8 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
         </section>
       )}
 
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-10 text-center">
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <div className="rounded-xl bg-gray-50 p-10 md:p-12 text-center">
           <div className="max-w-2xl mx-auto">
             <SectionHeading
               title="Discuss a similar system"

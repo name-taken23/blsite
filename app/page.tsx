@@ -21,6 +21,8 @@ export default function Home() {
   const caseStudies = getAllCaseStudies().slice(0, 3);
   const proof = getProofMetrics(4);
 
+  const proofColsLg = proof.length >= 4 ? "lg:grid-cols-4" : proof.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2";
+
   return (
     <PageShell>
       <Hero />
@@ -36,7 +38,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className={`mt-10 grid gap-4 md:grid-cols-2 ${proofColsLg}`}>
           {proof.map((item) => (
             <OutcomeTile
               key={`${item.caseStudySlug}-${item.metric}`}
@@ -44,8 +46,8 @@ export default function Home() {
               value={item.value}
               metric={item.metric}
               context={item.context}
-              icon={<OutcomeDelta />}
-              surfaceVariant="raised" 
+              surfaceVariant="inset"
+              className="h-full"
             />
           ))}
         </div>
@@ -96,7 +98,7 @@ export default function Home() {
             <SectionHeading
               eyebrow="The Engagement Model"
               title="Start with a Blueprint"
-              subtitle="Before committing to build, we run a short, paid assessment. You get a system map, a risk register, and a sequenced delivery plan. I get to know the constraints before writing code."
+              subtitle="Before committing to build, we run a short, paid assessment. You get a system map, a risk register, and a sequenced delivery plan. We get to know the constraints before writing code."
               size="lg"
             />
             
@@ -207,8 +209,8 @@ export default function Home() {
         <Surface variant="raised" className="p-8 md:p-12 text-center md:text-left">
           <div className="max-w-3xl">
             <SectionHeading
-                title="Ready to modernize?"
-                subtitle="Share context, constraints, and what must change. I’ll reply with whether it’s a fit and what the Blueprint would cover."
+                title="Ready to modernise?"
+                subtitle="Share context, constraints, and what must change. We'll reply with whether it's a fit and what the Blueprint would cover."
                 size="lg"
                 align="left"
             />

@@ -19,23 +19,22 @@ type SurfaceProps<T extends ElementType> = SurfaceOwnProps<T> &
   Omit<ComponentPropsWithoutRef<T>, keyof SurfaceOwnProps<T>>;
 
 const base = cn(
-  "relative overflow-hidden border border-gray-200",
-  "focus-within:border-gray-300 focus-within:ring-1 focus-within:ring-accent-electric/15"
+  "relative overflow-hidden"
 );
 
 const variantClassName: Record<SurfaceVariant, string> = {
-  plain: "bg-white border-transparent",
-  tinted: "bg-gray-50 border-transparent",
-  inset: cn("bg-gray-50/50 shadow-inner border-gray-200/50"),
+  plain: "bg-white",
+  tinted: "bg-gray-50",
+  inset: cn("bg-gray-50/50 border border-gray-200/50"),
   raised: cn(
-    "bg-white shadow-card border-gray-200",
+    "bg-white border border-gray-200",
     "transition-all duration-fast",
-    "hover:shadow-card-hover hover:border-gray-300"
+    "hover:border-gray-300"
   ),
   glow: cn(
-    "bg-white shadow-glow-sm border-accent-electric/20",
+    "bg-white border border-accent-electric/20",
     "transition-all duration-fast",
-    "hover:shadow-glow-md hover:border-accent-electric/40"
+    "hover:border-accent-electric/30"
   ),
 };
 

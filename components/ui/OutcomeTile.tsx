@@ -24,7 +24,7 @@ export default function OutcomeTile(props: {
     href,
     icon = <OutcomeDelta />,
     surfaceVariant = "raised",
-    ornament = "rail",
+    ornament = "none",
     className,
   } = props;
 
@@ -32,12 +32,12 @@ export default function OutcomeTile(props: {
     <>
       {/* Accent rail - shown for rail and full */}
       {ornament !== "none" ? (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent-electric/30" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent-electric/20" />
       ) : null}
 
       {/* Corner icon - shown only for full ornament */}
       {ornament === "full" ? (
-        <div aria-hidden="true" className="pointer-events-none absolute right-4 top-4 text-accent-electric opacity-60">
+        <div aria-hidden="true" className="pointer-events-none absolute right-4 top-4 text-accent-electric/40 opacity-50">
           {icon}
         </div>
       ) : null}

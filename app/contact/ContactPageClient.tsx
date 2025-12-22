@@ -243,11 +243,14 @@ export default function ContactPageClient() {
                   <form className="space-y-6" onSubmit={submit}>
                     {/* Error Banner */}
                     {status === "error" && error ? (
-                        <div className="rounded-lg bg-red-50 p-4 border border-red-100 flex gap-3 text-red-900 text-sm items-start">
+                        <div className="rounded-lg bg-red-50 p-4 border border-red-200 flex gap-3 text-sm items-start">
                             <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
                             <div className="space-y-1">
-                                <p className="font-semibold">Unable to submit</p>
-                                <p>{error}</p>
+                                <p className="font-semibold text-red-900">Unable to submit</p>
+                                <p className="text-red-800">{error}</p>
+                                <p className="text-red-700 mt-2">
+                                  You can also email directly: <a href="mailto:james@blacklake.systems" className="underline hover:text-red-900">james@blacklake.systems</a>
+                                </p>
                             </div>
                         </div>
                     ) : null}
@@ -331,7 +334,7 @@ export default function ContactPageClient() {
                         disabled={status === "submitting"}
                         className="w-full h-12 px-4 border border-gray-200 rounded-lg bg-white text-gray-700 transition-all duration-200 appearance-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:border-gray-300"
                       >
-                        <option value="">Primary constraint</option>
+                        <option value="">Select constraint</option>
                         {primaryConstraints.map((c) => (
                           <option key={c.value} value={c.label}>
                             {c.label}
@@ -356,7 +359,7 @@ export default function ContactPageClient() {
                           />
                         </svg>
                       </div>
-                      <p className="mt-2 text-xs text-gray-500">Pick the constraint that dominates decisions.</p>
+                      <p className="mt-2 text-xs text-gray-500">The constraint that dominates decisions.</p>
                     </div>
 
                     <div>
@@ -366,27 +369,34 @@ export default function ContactPageClient() {
                       <TextArea
                         id="context"
                         name="context"
-                        placeholder="Optional context (what you run today, where the risk sits, what must change)"
+                        placeholder="Optional: What you run today, where the risk sits, what must change"
                         rows={6}
                         value={form.context}
                         onChange={(e) => setForm((s) => ({ ...s, context: e.target.value }))}
                         disabled={status === "submitting"}
                       />
-                      <p className="mt-2 text-xs text-gray-500">If you have it: scale, failure modes, cost sensitivity.</p>
+                      <p className="mt-2 text-xs text-gray-500">Include: scale, failure modes, or cost sensitivity if relevant.</p>
                     </div>
 
-                    <div className="pt-2">
+                    <div className="pt-2 space-y-3">
                       <MagneticButton
                         className="w-full justify-center disabled:opacity-50 disabled:cursor-wait"
                         aria-label="Submit contact form"
                         type="submit"
                         disabled={status === "submitting"}
                       >
-                        {status === "submitting" ? "Sending Request..." : "Send Request"}
+                        {status === "submitting" ? "Sending..." : "Send Request"}
                       </MagneticButton>
+
+                      <div className="flex items-start gap-2 text-xs text-gray-500 px-1">
+                        <svg className="w-4 h-4 shrink-0 mt-0.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <span>Confidential by default. Expect a reply within 24 hours.</span>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="pt-2">
                       <p className="text-xs text-gray-500 text-center">
                         Prefer email?{" "}
                         <a
