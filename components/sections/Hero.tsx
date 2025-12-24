@@ -6,9 +6,8 @@ import SignalWave from "@/components/graphics/SignalWave";
 import Section from "@/components/ui/Section";
 import BrandMark from "@/components/brand/BrandMark";
 import HeroBackdrop from "@/components/graphics/HeroBackdrop";
-import TopologyLines from "@/components/graphics/TopologyLines";
-import Surface from "@/components/ui/Surface";
 import IconBadge from "@/components/ui/IconBadge";
+import Surface from "@/components/ui/Surface";
 import { Coins, Gauge, Shield } from "lucide-react";
 
 export default function Hero() {
@@ -40,7 +39,8 @@ export default function Hero() {
 
             <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-gray-900">
               Modernise production systems.
-              <span className="block text-gray-700">Reduce risk and waste. Keep control.</span>
+              <br />
+              <span className="text-gray-700">Reduce risk and waste. Keep control.</span>
             </h1>
           </div>
 
@@ -53,7 +53,7 @@ export default function Hero() {
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
             <Button href="/work" variant="secondary" size="lg">
-              View selected work
+              View Work
             </Button>
           </div>
 
@@ -74,17 +74,15 @@ export default function Hero() {
         <div className="lg:mt-2">
           <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-5">System snapshot</div>
 
-          <div className="grid gap-6">
-            {/* Panel A */}
-            <div className="bg-gray-50 rounded-xl p-5">
+          <Surface variant="inset" className="p-5">
+            <div>
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Signal</div>
               <div className="mt-4 h-28">
                 <SignalWave className="h-full w-full" />
               </div>
             </div>
 
-            {/* Panel B */}
-            <div className="bg-gray-50 rounded-xl p-5">
+            <div className="mt-6 pt-6 border-t border-gray-200/60">
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Constraints</div>
               <div className="mt-4 flex flex-wrap gap-2">
                 <IconBadge icon={Gauge} label="Latency budget" tone="tinted" />
@@ -93,8 +91,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Panel C */}
-            <div className="bg-gray-50 rounded-xl p-5">
+            <div className="mt-6 pt-6 border-t border-gray-200/60">
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deliverable</div>
               <List
                 items={[
@@ -106,7 +103,7 @@ export default function Hero() {
                 className="mt-4"
               />
             </div>
-          </div>
+          </Surface>
         </div>
       </div>
     </Section>

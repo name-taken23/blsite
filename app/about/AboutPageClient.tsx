@@ -32,7 +32,7 @@ const principles = [
 ];
 
 const credibility = [
-  "Reduced a production analytics pipeline critical path from tens of minutes to low single-digit minutes, improving time-to-data predictability.",
+  "Reduced a production analytics pipeline critical path from hundreds of minutes to low-thousands of seconds, improving time-to-data predictability.",
   "Engineered event-processing paths around a single-digit millisecond latency budget with controlled degradation under load.",
   "Shipped an interactive constrained-generation product with seconds-level latency and fewer obvious baseline failures.",
   "Delivered changes that reduce operator load by making behaviour observable and diagnosable.",

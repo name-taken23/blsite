@@ -247,7 +247,7 @@ export function getServiceSchema() {
           itemOffered: {
             "@type": "Service",
             name: "Calibrate",
-            description: "Ongoing optimization and ownership handover.",
+            description: "Ongoing optimisation and ownership handover.",
           },
         },
       ],

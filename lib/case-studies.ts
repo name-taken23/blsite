@@ -4,6 +4,9 @@ export interface CaseStudy {
   title: string;
   industry: string;
   description: string;
+  summaryContext?: string;
+  summaryOutcome?: string;
+  whatChanged?: string[];
   image: string;
   tags: string[];
   timeline: string;
@@ -37,6 +40,13 @@ const caseStudies: CaseStudy[] = [
     industry: "Predictive analytics platform",
     description:
       "A production analytics pipeline was delaying downstream refresh cycles and driving unpredictable warehouse spend. Work focused on time-to-data and operational predictability without breaking data contracts.",
+    summaryContext: "Predictable time-to-data without higher scan cost or broken data contracts.",
+    summaryOutcome: "Critical path reduced from hundreds of minutes to low-thousands of seconds.",
+    whatChanged: [
+      "Reshaped transforms into staged, materialised steps",
+      "Introduced incremental processing with aligned partitioning/clustering",
+      "Added idempotent ingestion and observability for reliable runs",
+    ],
     image: "/og-image.png",
     gradient: "from-blue-600 to-cyan-400",
     tags: ["BigQuery", "GCP", "Data Engineering", "Python"],
@@ -50,29 +60,29 @@ const caseStudies: CaseStudy[] = [
       intervention:
         "Reshaped the pipeline into staged transforms with incremental processing, aligned partitioning/clustering to access patterns, and replaced deeply nested queries with materialised intermediate steps. Added idempotent ingestion and orchestration so runs were observable and diagnosable.",
       measuredOutcome:
-        "Runtime reduced from tens of minutes to low single-digit minutes on the critical path, with a corresponding reduction in unnecessary warehouse scan/compute.",
+        "Batch exports moved from a multi-hundred-minute window to low-thousands of seconds on the critical path. On-demand slices became seconds-level, and the system ran with fewer wasted scans through incremental processing and staged transforms.",
       whyItMatters:
         "Fresher model inputs, fewer missed refresh windows, and more predictable cloud spend—without increasing operator burden.",
     },
     results: [
       {
         metric: "Pipeline runtime",
-        value: "Tens of minutes → low single-digit minutes",
-        description: "Reduced end-to-end processing time on the critical path"
+        value: "Hundreds of minutes → low-thousands of seconds",
+        description: "Reduced the batch export critical path into a predictable window"
       },
       {
-        metric: "Data Volume",
-        value: "Daily ingestion",
-        description: "Stable processing of a daily market dataset"
+        metric: "Interactive pulls",
+        value: "Seconds-level",
+        description: "On-demand slices returned fast enough for interactive investigation"
       },
       {
         metric: "Warehouse scan cost",
-        value: "Reduced",
+        value: "Lower and more stable",
         description: "Less unnecessary scan/compute through incremental processing and query restructuring"
       },
       {
         metric: "Time-to-data predictability",
-        value: "Improved",
+        value: "More predictable",
         description: "More consistent refresh timing for downstream consumers"
       }
     ],
@@ -92,6 +102,13 @@ const caseStudies: CaseStudy[] = [
     industry: "Telecommunications systems",
     description:
       "Designed and implemented the data processing layer for a V2X system on 5G infrastructure. The work focused on tight latency budgets and predictable behaviour under load.",
+    summaryContext: "Single-digit millisecond budget with predictable behaviour under saturation.",
+    summaryOutcome: "Latency held to a hard budget with controlled degradation under load.",
+    whatChanged: [
+      "Split edge/cloud so time-critical decisions stayed close to ingress",
+      "Decoupled ingestion from processing via event streaming",
+      "Designed explicit overload behaviours to prevent cascading back-pressure",
+    ],
     image: "/og-image.png",
     gradient: "from-emerald-500 to-teal-400",
     tags: ["5G", "Real-Time Systems", "V2X", "IoT"],
@@ -147,6 +164,13 @@ const caseStudies: CaseStudy[] = [
     industry: "Applied AI product",
     description:
       "Built an interactive generation product where outputs needed to be repeatable, constrained, and safe for defined rules. Work focused on reducing obvious failure modes while keeping interactive latency.",
+    summaryContext: "Seconds-level UX with strict rule adherence and testable behaviour.",
+    summaryOutcome: "Maintained seconds-level generation while reducing baseline failure cases.",
+    whatChanged: [
+      "Added retrieval against a curated corpus to ground outputs",
+      "Enforced structured constraints for substitutions and restrictions",
+      "Built end-to-end flows so behaviour was testable in real journeys",
+    ],
     image: "/og-image.png",
     gradient: "from-purple-600 to-pink-500",
     tags: ["RAG", "Vertex AI", "React Native", "Full-Stack"],

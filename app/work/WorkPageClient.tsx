@@ -8,6 +8,7 @@ import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
+import List from "@/components/ui/List";
 import { Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getAllCaseStudies } from "@/lib/case-studies";
@@ -18,7 +19,7 @@ export default function WorkPageClient() {
   const caseStudies = getAllCaseStudies();
 
   const pickTopResults = (results: Array<{ metric: string; value: string; description: string }>) =>
-    results.slice(0, 2);
+    results.slice(0, 3);
 
   if (!caseStudies.length) {
     return (
@@ -33,10 +34,11 @@ export default function WorkPageClient() {
 
   const featured = caseStudies[0];
   const rest = caseStudies.slice(1);
+  const featuredWhatChanged = (featured.whatChanged?.length ? featured.whatChanged : featured.keyFeatures).slice(0, 3);
 
   return (
     <PageShell>
-      <Section variant="plain" containerClassName="pt-24 pb-8 md:pt-32">
+      <Section variant="plain" spacing="pageHeader" containerClassName="pb-8 md:pb-10">
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Selected work"
@@ -45,6 +47,9 @@ export default function WorkPageClient() {
             size="lg"
             as="h1"
           />
+          <p className="mt-4 text-sm text-gray-600">
+            Examples reflect founder-led production work across engagements; identifiers removed.
+          </p>
         </div>
       </Section>
 
@@ -78,6 +83,19 @@ export default function WorkPageClient() {
                 </Link>
               </h3>
               <p className="mt-4 text-lg text-gray-600 leading-relaxed flex-grow">{featured.description}</p>
+
+              {featuredWhatChanged.length ? (
+                <div className="mt-8">
+                  <div className="text-sm font-semibold text-gray-900">What changed</div>
+                  <List
+                    items={featuredWhatChanged}
+                    variant="dot"
+                    density="compact"
+                    className="mt-3"
+                    itemClassName="text-gray-700"
+                  />
+                </div>
+              ) : null}
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Chip label={featured.industry} />
@@ -118,45 +136,44 @@ export default function WorkPageClient() {
           <SectionHeading eyebrow="Archive" title="Additional work" size="md" />
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
           {rest.map((caseStudy) => (
-            <Surface key={caseStudy.slug} id={caseStudy.slug} variant="raised" className="p-8 flex flex-col group">
-              {caseStudy.results[0] ? (
-                <div className="mb-6 pb-6 border-b border-gray-100">
-                  <div className="text-3xl font-bold text-accent-electric tracking-tight">
-                    {caseStudy.results[0].value}
-                  </div>
-                  <div className="text-sm font-medium text-gray-900 mt-1">
-                    {caseStudy.results[0].metric}
-                  </div>
+            <Surface
+              key={caseStudy.slug}
+              id={caseStudy.slug}
+              variant="raised"
+              className="h-full p-8 flex flex-col group"
+            >
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+                  {caseStudy.industry}
                 </div>
-              ) : null}
-
-              <div className="mb-4">
-                 <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
-                    {caseStudy.industry}
-                 </div>
-                 <h3 className="text-xl font-semibold text-gray-900 group-hover:text-accent-electric transition-colors">
-                  <Link href={`/case-studies/${caseStudy.slug}`}>
-                    {caseStudy.title}
-                  </Link>
+                <h3 className="text-xl font-semibold text-gray-900 group-hover:text-accent-electric transition-colors">
+                  <Link href={`/case-studies/${caseStudy.slug}`}>{caseStudy.title}</Link>
                 </h3>
               </div>
 
-              <p className="text-sm text-gray-600 leading-relaxed flex-grow mb-6">{caseStudy.description}</p>
+              <p className="mt-4 text-sm text-gray-600 truncate">
+                {caseStudy.summaryContext ?? caseStudy.description}
+              </p>
 
-              <div className="flex flex-wrap gap-2 mt-auto">
+              <p className="mt-3 text-sm text-gray-700 truncate">
+                <span className="font-medium text-gray-900">Outcome:</span>{" "}
+                {caseStudy.summaryOutcome ?? caseStudy.results[0]?.value ?? ""}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
                 {caseStudy.tags.slice(0, 3).map((tag) => (
                   <Chip key={tag} label={tag} size="sm" tone="tinted" />
                 ))}
               </div>
-              
-              <div className="mt-8">
-                <Button 
-                   href={`/case-studies/${caseStudy.slug}`} 
-                   variant="tertiary" 
-                   size="sm" 
-                   className="px-0 group-hover:text-accent-electric"
+
+              <div className="mt-auto pt-8">
+                <Button
+                  href={`/case-studies/${caseStudy.slug}`}
+                  variant="tertiary"
+                  size="sm"
+                  className="px-0 group-hover:text-accent-electric"
                 >
                   Read case study <AppIcon icon={ArrowRight} className="ml-2 w-4 h-4" />
                 </Button>
@@ -174,8 +191,8 @@ export default function WorkPageClient() {
             </h2>
             <p className="mt-4 text-gray-600">
               BlackLake works best with teams tackling complex technical problems. 
-              <Link href="/services" className="underline hover:text-accent-electric">Read about the Blueprint</Link>, 
-              share your context, and I’ll suggest a practical next step.
+              <Link href="/services" className="underline hover:text-accent-electric">See how services run</Link>, 
+              share your context, and we’ll suggest a practical next step.
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>

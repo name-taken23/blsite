@@ -113,7 +113,7 @@ export default function ContactPageClient() {
 
   return (
     <PageShell>
-      <Section variant="plain" containerClassName="pt-24 pb-16 md:pt-32 md:pb-20">
+      <Section variant="plain" spacing="pageHeader">
         <div className="max-w-3xl">
           <SectionHeading
             title="Start with a Blueprint"
@@ -126,7 +126,7 @@ export default function ContactPageClient() {
 
       <div className="border-t border-gray-100" />
 
-      <Section variant="plain" containerClassName="pt-16 pb-16 md:pt-20 md:pb-20">
+      <Section variant="plain">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           
           {/* LEFT COLUMN: CONTEXT & NEXT STEPS */}
@@ -234,8 +234,8 @@ export default function ContactPageClient() {
                       If you don’t see it, check spam or email <a href="mailto:james@blacklake.systems" className="underline hover:text-gray-900">james@blacklake.systems</a>.
                     </p>
                     <div className="pt-4">
-                      <Button href="/work" variant="primary" size="lg" className="w-full">
-                        View selected work
+                      <Button href="/work" variant="secondary" size="lg" className="w-full">
+                        View Work
                       </Button>
                     </div>
                   </div>
@@ -385,7 +385,7 @@ export default function ContactPageClient() {
                         type="submit"
                         disabled={status === "submitting"}
                       >
-                        {status === "submitting" ? "Sending..." : "Send Request"}
+                        {status === "submitting" ? "Sending..." : "Send"}
                       </MagneticButton>
 
                       <div className="flex items-start gap-2 text-xs text-gray-500 px-1">

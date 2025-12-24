@@ -2,10 +2,12 @@ import { cn } from "@/lib/utils";
 import type { ElementType, HTMLAttributes, ReactNode } from "react";
 
 type SectionVariant = "plain" | "tinted" | "framed";
+type SectionSpacing = "default" | "tight" | "pageHeader" | "flush";
 
 type SectionProps<T extends ElementType> = {
   as?: T;
   variant?: SectionVariant;
+  spacing?: SectionSpacing;
   containerClassName?: string;
   cornerGraphic?: ReactNode;
   cornerGraphicClassName?: string;
@@ -14,6 +16,7 @@ type SectionProps<T extends ElementType> = {
 export default function Section<T extends ElementType = "section">({
   as,
   variant = "plain",
+  spacing = "default",
   className,
   containerClassName,
   cornerGraphic,
@@ -27,6 +30,13 @@ export default function Section<T extends ElementType = "section">({
     variant === "tinted" ? "bg-gray-50" : "bg-white";
 
   const hasSeparator = variant === "tinted";
+
+  const spacingClassName: Record<SectionSpacing, string> = {
+    default: "py-16 md:py-20",
+    tight: "py-12 md:py-16",
+    pageHeader: "pt-12 pb-10 md:pt-16 md:pb-12",
+    flush: "py-0",
+  };
 
   return (
     <Component
@@ -54,7 +64,8 @@ export default function Section<T extends ElementType = "section">({
 
       <div
         className={cn(
-          "max-w-7xl mx-auto px-6 py-16 md:py-20",
+          "max-w-7xl mx-auto px-6",
+          spacingClassName[spacing],
           containerClassName
         )}
       >

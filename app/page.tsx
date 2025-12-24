@@ -112,12 +112,6 @@ export default function Home() {
                 <span>Risk & Guardrails</span>
               </div>
             </div>
-
-            <div className="mt-10">
-              <MagneticButton href="/services">
-                Explore the Blueprint
-              </MagneticButton>
-            </div>
           </div>
         </Surface>
       </Section>
@@ -165,11 +159,6 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-10 text-center md:text-left">
-          <Button href="/work" variant="secondary" size="lg">
-            View all case studies
-          </Button>
-        </div>
       </Section>
 
       {/* PROCESS */}
@@ -205,7 +194,7 @@ export default function Home() {
       </Section>
 
       {/* CTA CONVERSION PANEL */}
-      <Section variant="framed" containerClassName="pt-0 pb-20">
+      <Section variant="framed" spacing="tight">
         <Surface variant="raised" className="p-8 md:p-12 text-center md:text-left">
           <div className="max-w-3xl">
             <SectionHeading
@@ -217,7 +206,7 @@ export default function Home() {
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <MagneticButton href="/contact">Start with a Blueprint</MagneticButton>
               <Button href="/work" variant="secondary">
-                View selected work
+                View Work
               </Button>
             </div>
           </div>
