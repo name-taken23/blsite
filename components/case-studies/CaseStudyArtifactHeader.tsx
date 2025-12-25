@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Surface from "@/components/ui/Surface";
 import Chip from "@/components/ui/Chip";
 import ConstraintBadge from "@/components/ui/ConstraintBadge";
-import { SystemMapMotif } from "@/components/visual/SystemMapMotif";
+import { CaseStudyDiagram } from "@/components/visual/CaseStudyDiagram";
 import {
   getConstraintBadgesForStudy,
   makeRefIdFromSlug,
@@ -56,7 +56,7 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
               </div>
 
               <div className="hidden md:block w-40">
-                <SystemMapMotif className="h-auto w-full" framed={true} grid={false} />
+                <CaseStudyDiagram slug={caseStudy.slug} className="h-auto w-full" framed={true} />
               </div>
             </div>
 
@@ -132,10 +132,10 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
                 System sketch
               </div>
               <div className="mt-3 md:hidden">
-                <SystemMapMotif className="h-20 w-full" framed={true} grid={false} />
+                <CaseStudyDiagram slug={caseStudy.slug} className="h-20 w-full" framed={true} />
               </div>
               <div className="mt-3 hidden md:block">
-                <SystemMapMotif className="h-24 w-full" framed={true} grid={false} />
+                <CaseStudyDiagram slug={caseStudy.slug} className="h-24 w-full" framed={true} />
               </div>
             </div>
           </div>

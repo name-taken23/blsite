@@ -13,9 +13,8 @@ import SectionShell from "@/components/ui/SectionShell";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { ArrowRight, FileText, Settings2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import AppIcon from "@/components/ui/AppIcon";
-import BlueprintGrid from "@/components/graphics/BlueprintGrid";
 import { ArtifactTileBackground } from "@/components/visual/ArtifactTileBackground";
 import { BlueprintTimelineMotif } from "@/components/visual/BlueprintTimelineMotif";
 import type { OutcomeStripProps } from "@/components/ui/OutcomeStrip";
@@ -158,41 +157,6 @@ export default function Home() {
             </Surface>
           ))}
         </div>
-      </SectionShell>
-
-      {/* PATTERN BREAK: BLUEPRINT PANEL */}
-      <SectionShell
-        variant="plain"
-        separatorText="constraint-first delivery"
-        separatorAlign="center"
-        backplate="radial"
-        backplateOpacity={0.035}
-      >
-        <Surface variant="glow" className="relative overflow-hidden p-8 md:p-12">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-5">
-             <BlueprintGrid className="h-full w-full" />
-          </div>
-          
-          <div className="relative z-10 max-w-2xl">
-            <SectionHeading
-              eyebrow="The Engagement Model"
-              title="Start with a Blueprint"
-              subtitle="Before committing to build, we run a short, paid assessment. You get a system map, a risk register, and a sequenced delivery plan. We get to know the constraints before writing code."
-              size="lg"
-            />
-            
-            <div className="mt-8 flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                <AppIcon icon={FileText} className="text-accent-electric" />
-                <span>Scoped Plan</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                <AppIcon icon={Settings2} className="text-accent-electric" />
-                <span>Risk & Guardrails</span>
-              </div>
-            </div>
-          </div>
-        </Surface>
       </SectionShell>
 
       {/* SELECTED WORK (TEASER) */}
