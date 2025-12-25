@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import OutcomeDelta from "@/components/graphics/OutcomeDelta";
 import Surface, { type SurfaceVariant } from "@/components/ui/Surface";
 import { cn } from "@/lib/utils";
+import OutcomeStrip, { type OutcomeStripProps } from "@/components/ui/OutcomeStrip";
+import { motionClasses } from "@/lib/motion";
 
 type OutcomeTileOrnament = "none" | "rail" | "full";
 
@@ -15,6 +17,8 @@ export default function OutcomeTile(props: {
   surfaceVariant?: SurfaceVariant;
   /** Ornamentation level: none, rail (accent line only), or full (rail + corner icon) */
   ornament?: OutcomeTileOrnament;
+  /** Optional measured-outcome strip (supports scanning without overpowering copy). */
+  strip?: OutcomeStripProps;
   className?: string;
 }) {
   const {
@@ -25,6 +29,7 @@ export default function OutcomeTile(props: {
     icon = <OutcomeDelta />,
     surfaceVariant = "raised",
     ornament = "none",
+    strip,
     className,
   } = props;
 
@@ -42,6 +47,12 @@ export default function OutcomeTile(props: {
         </div>
       ) : null}
 
+      {strip ? (
+        <div className="mb-4">
+          <OutcomeStrip {...strip} />
+        </div>
+      ) : null}
+
       <div className="text-2xl md:text-3xl font-semibold text-gray-900 leading-none">{value}</div>
       <div className="mt-2 text-sm font-semibold text-gray-900">{metric}</div>
       <div className="mt-2 text-sm text-gray-600 leading-relaxed">{context}</div>
@@ -55,7 +66,9 @@ export default function OutcomeTile(props: {
         href={href}
         variant={surfaceVariant}
         className={cn(
-          "group p-6 transition-colors",
+          "group p-6",
+          motionClasses.interactiveCard,
+          motionClasses.focusRing,
           "hover:border-gray-300",
           className
         )}

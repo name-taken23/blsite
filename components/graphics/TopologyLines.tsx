@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 
 type TopologyLinesProps = {
@@ -5,6 +7,11 @@ type TopologyLinesProps = {
 };
 
 export default function TopologyLines({ className }: TopologyLinesProps) {
+  /**
+   * Performance checklist:
+   * - Keep SVG DOM small (no filters/masks).
+   * - Decorative only; safe to lazy-mount below the fold.
+   */
   return (
     <svg
       aria-hidden="true"

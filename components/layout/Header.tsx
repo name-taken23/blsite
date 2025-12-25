@@ -14,6 +14,7 @@ export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDialogElement | null>(null);
+  const mobileMenuCloseRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -37,6 +38,11 @@ export default function Header() {
 
     if (isMobileMenuOpen) {
       if (!dialog.open) dialog.showModal();
+
+      // Ensure keyboard users land inside the menu.
+      requestAnimationFrame(() => {
+        mobileMenuCloseRef.current?.focus();
+      });
     } else {
       if (dialog.open) dialog.close();
     }
@@ -140,6 +146,7 @@ export default function Header() {
       <dialog
         ref={mobileMenuRef}
         className="bl-mobile-menu m-0 max-w-none w-full h-full bg-transparent p-0 md:hidden"
+        aria-label="Mobile menu"
         onCancel={(e) => {
           e.preventDefault();
           closeMobileMenu();
@@ -152,12 +159,19 @@ export default function Header() {
         {isMobileMenuOpen && (
           <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white border-l border-gray-200 shadow-sm">
             <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100">
-              <Link href="/" onClick={closeMobileMenu} aria-label="BlackLake" className="inline-flex items-center">
+              <Link
+                href="/"
+                onClick={closeMobileMenu}
+                aria-label="BlackLake"
+                className="inline-flex items-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
                 <BrandMark variant="lockup" size="sm" />
               </Link>
               <button
                 type="button"
                 aria-label="Close menu"
+                ref={mobileMenuCloseRef}
+                autoFocus
                 className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 hover:border-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 onClick={closeMobileMenu}
               >

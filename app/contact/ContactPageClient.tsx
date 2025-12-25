@@ -15,6 +15,7 @@ import FeatureIcon from "@/components/ui/FeatureIcon";
 import { Mail, MapPin, AlertCircle } from "lucide-react";
 import { FormEvent, useMemo, useState, useEffect } from "react";
 import AppIcon from "@/components/ui/AppIcon";
+import ConstraintSet from "@/components/ui/ConstraintSet";
 
 type ContactFormState = {
   name: string;
@@ -25,14 +26,13 @@ type ContactFormState = {
   honey: string; // Anti-spam
 };
 
-const primaryConstraints = [
-  { value: "latency", label: "Latency" },
-  { value: "cost", label: "Cost" },
-  { value: "risk", label: "Risk" },
-  { value: "reliability", label: "Reliability" },
-  { value: "security", label: "Security" },
-  { value: "compliance", label: "Compliance" },
-  { value: "other", label: "Other" },
+const primaryConstraintItems = [
+  { kind: "latency" as const, label: "Latency", intensity: 70 },
+  { kind: "cost" as const, label: "Cost", intensity: 60 },
+  { kind: "risk" as const, label: "Risk", intensity: 85 },
+  { kind: "reliability" as const, label: "Reliability", intensity: 80 },
+  { kind: "security" as const, label: "Security", intensity: 65 },
+  { kind: "compliance" as const, label: "Compliance", intensity: 55 },
 ] as const;
 
 export default function ContactPageClient() {
@@ -58,6 +58,12 @@ export default function ContactPageClient() {
     e.preventDefault();
 
     if (status === "submitting") return;
+
+    if (!form.primaryConstraint || form.primaryConstraint.trim().length === 0) {
+      setStatus("error");
+      setError("Select a primary constraint before sending.");
+      return;
+    }
 
     setStatus("submitting");
     setError("");
@@ -322,44 +328,22 @@ export default function ContactPageClient() {
                     </div>
 
                     <div className="relative">
-                      <label htmlFor="primaryConstraint" className="sr-only">
-                        Primary constraint
-                      </label>
-                      <select
-                        id="primaryConstraint"
-                        name="primaryConstraint"
-                        value={form.primaryConstraint}
-                        onChange={(e) => setForm((s) => ({ ...s, primaryConstraint: e.target.value }))}
-                        required
-                        disabled={status === "submitting"}
-                        className="w-full h-12 px-4 border border-gray-200 rounded-lg bg-white text-gray-700 transition-all duration-200 appearance-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:border-gray-300"
-                      >
-                        <option value="">Select constraint</option>
-                        {primaryConstraints.map((c) => (
-                          <option key={c.value} value={c.label}>
-                            {c.label}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M2 4L6 8L10 4"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
+                      <div className="text-sm font-semibold text-gray-900">Primary constraint</div>
                       <p className="mt-2 text-xs text-gray-500">The constraint that dominates decisions.</p>
+
+                      <div className="mt-3">
+                        <ConstraintSet
+                          ariaLabel="Primary constraint selector"
+                          items={[...primaryConstraintItems]}
+                          selectedValue={form.primaryConstraint}
+                          onChange={(value) => setForm((s) => ({ ...s, primaryConstraint: value }))}
+                          meter="bar"
+                          size="sm"
+                        />
+                      </div>
+
+                      {/* Hidden input keeps form payload shape stable */}
+                      <input type="hidden" name="primaryConstraint" value={form.primaryConstraint} />
                     </div>
 
                     <div>

@@ -9,13 +9,78 @@ import Stepper from "@/components/ui/Stepper";
 import { services } from "./services/data";
 import { getAllCaseStudies, getProofMetrics } from "@/lib/case-studies";
 import OutcomeDelta from "@/components/graphics/OutcomeDelta";
-import Section from "@/components/ui/Section";
+import SectionShell from "@/components/ui/SectionShell";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { ArrowRight, FileText, Settings2 } from "lucide-react";
 import AppIcon from "@/components/ui/AppIcon";
 import BlueprintGrid from "@/components/graphics/BlueprintGrid";
+import { ArtifactTileBackground } from "@/components/visual/ArtifactTileBackground";
+import { BlueprintTimelineMotif } from "@/components/visual/BlueprintTimelineMotif";
+import type { OutcomeStripProps } from "@/components/ui/OutcomeStrip";
+
+function splitBeforeAfter(value: string): { before?: string; after?: string } {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  const arrow = normalized.includes("→") ? "→" : normalized.includes("->") ? "->" : null;
+  if (!arrow) return { after: normalized };
+  const [left, right] = normalized.split(arrow).map((part) => part.trim()).filter(Boolean);
+  if (!left || !right) return { after: normalized };
+  return { before: left, after: right };
+}
+
+function proofStrip(metric: string, value: string): OutcomeStripProps {
+  const m = metric.toLowerCase();
+  const { before, after } = splitBeforeAfter(value);
+
+  if (m.includes("latency")) {
+    return {
+      label: "latency budget held",
+      pillar: "control",
+      before,
+      after,
+      sparkline: "flat",
+    };
+  }
+
+  if (m.includes("runtime") || m.includes("time")) {
+    return {
+      label: "runtime window tightened",
+      pillar: "speed",
+      before,
+      after,
+      sparkline: "down",
+    };
+  }
+
+  if (m.includes("cost") || m.includes("scan")) {
+    return {
+      label: "cost variance reduced",
+      pillar: "clarity",
+      before,
+      after,
+      sparkline: "down",
+    };
+  }
+
+  if (m.includes("failure") || m.includes("error") || m.includes("degradation")) {
+    return {
+      label: "failure modes constrained",
+      pillar: "control",
+      before,
+      after,
+      sparkline: "down",
+    };
+  }
+
+  return {
+    label: "measured outcome",
+    pillar: "clarity",
+    before,
+    after,
+    sparkline: "flat",
+  };
+}
 
 export default function Home() {
   const caseStudies = getAllCaseStudies().slice(0, 3);
@@ -28,7 +93,14 @@ export default function Home() {
       <Hero />
 
       {/* PROOF SECTION */}
-      <Section variant="framed" cornerGraphic={<OutcomeDelta />}>
+      <SectionShell
+        variant="framed"
+        cornerGraphic={<OutcomeDelta />}
+        backplate="radial"
+        backplateOpacity={0.05}
+        separatorText="measured change"
+        separatorAlign="start"
+      >
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Proof"
@@ -46,15 +118,16 @@ export default function Home() {
               value={item.value}
               metric={item.metric}
               context={item.context}
+              strip={proofStrip(item.metric, item.value)}
               surfaceVariant="inset"
               className="h-full"
             />
           ))}
         </div>
-      </Section>
+      </SectionShell>
 
       {/* PILLARS SECTION */}
-      <Section variant="tinted">
+      <SectionShell variant="tinted" backplate="noise" backplateOpacity={0.04}>
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Pillars"
@@ -85,12 +158,18 @@ export default function Home() {
             </Surface>
           ))}
         </div>
-      </Section>
+      </SectionShell>
 
       {/* PATTERN BREAK: BLUEPRINT PANEL */}
-      <Section variant="plain">
+      <SectionShell
+        variant="plain"
+        separatorText="constraint-first delivery"
+        separatorAlign="center"
+        backplate="radial"
+        backplateOpacity={0.035}
+      >
         <Surface variant="glow" className="relative overflow-hidden p-8 md:p-12">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-5">
              <BlueprintGrid className="h-full w-full" />
           </div>
           
@@ -114,10 +193,10 @@ export default function Home() {
             </div>
           </div>
         </Surface>
-      </Section>
+      </SectionShell>
 
       {/* SELECTED WORK (TEASER) */}
-      <Section variant="tinted">
+      <SectionShell variant="tinted" backplate="grid" backplateOpacity={0.035}>
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Selected work"
@@ -134,8 +213,13 @@ export default function Home() {
               as={Link}
               href={`/case-studies/${caseStudy.slug}`}
               variant="raised"
-              className="group p-6 transition-all hover:-translate-y-1"
+              className="group relative overflow-hidden p-6 transition-all hover:-translate-y-1"
             >
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40">
+                <ArtifactTileBackground className="h-full w-full" density="subtle" />
+              </div>
+
+              <div className="relative">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
                   {caseStudy.industry}
@@ -155,14 +239,21 @@ export default function Home() {
                   <Chip key={tag} label={tag} size="sm" tone="tinted" />
                 ))}
               </div>
+              </div>
             </Surface>
           ))}
         </div>
 
-      </Section>
+      </SectionShell>
 
       {/* PROCESS */}
-      <Section variant="plain">
+      <SectionShell
+        variant="plain"
+        backplate="radial"
+        backplateOpacity={0.04}
+        separatorText="operational clarity"
+        separatorAlign="end"
+      >
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Process"
@@ -173,6 +264,9 @@ export default function Home() {
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-10">
+          <div aria-hidden="true" className="mb-6 h-10 w-full opacity-80">
+            <BlueprintTimelineMotif className="h-full w-full" showLabels={false} />
+          </div>
           <Stepper
             steps={[
               {
@@ -191,10 +285,10 @@ export default function Home() {
             className="max-w-2xl"
           />
         </Surface>
-      </Section>
+      </SectionShell>
 
       {/* CTA CONVERSION PANEL */}
-      <Section variant="framed" spacing="tight">
+      <SectionShell variant="framed" spacing="tight" backplate="grid" backplateOpacity={0.03}>
         <Surface variant="raised" className="p-8 md:p-12 text-center md:text-left">
           <div className="max-w-3xl">
             <SectionHeading
@@ -211,7 +305,7 @@ export default function Home() {
             </div>
           </div>
         </Surface>
-      </Section>
+      </SectionShell>
     </PageShell>
   );
 }

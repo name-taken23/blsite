@@ -2,13 +2,12 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
 import List from "@/components/ui/List";
-import SignalWave from "@/components/graphics/SignalWave";
 import Section from "@/components/ui/Section";
 import BrandMark from "@/components/brand/BrandMark";
 import HeroBackdrop from "@/components/graphics/HeroBackdrop";
-import IconBadge from "@/components/ui/IconBadge";
 import Surface from "@/components/ui/Surface";
-import { Coins, Gauge, Shield } from "lucide-react";
+import { SystemMapHero } from "@/components/visual/SystemMapHero";
+import ConstraintSet from "@/components/ui/ConstraintSet";
 
 export default function Hero() {
   return (
@@ -72,36 +71,36 @@ export default function Hero() {
         </div>
 
         <div className="lg:mt-2">
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-5">System snapshot</div>
+          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-5">System map</div>
 
           <Surface variant="inset" className="p-5">
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Signal</div>
-              <div className="mt-4 h-28">
-                <SignalWave className="h-full w-full" />
-              </div>
-            </div>
-
-            <div className="mt-6 pt-6 border-t border-gray-200/60">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Constraints</div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <IconBadge icon={Gauge} label="Latency budget" tone="tinted" />
-                <IconBadge icon={Coins} label="Cost ceiling" tone="tinted" />
-                <IconBadge icon={Shield} label="Change risk" tone="tinted" />
-              </div>
-            </div>
-
-            <div className="mt-6 pt-6 border-t border-gray-200/60">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deliverable</div>
-              <List
-                items={[
-                  "Scoped plan and delivery sequence",
-                  "Risks, guardrails, and rollback path",
-                ]}
-                variant="none"
-                density="compact"
-                className="mt-4"
+            <div className="h-64 sm:h-72 md:h-80">
+              <SystemMapHero
+                className="h-full w-full"
+                decorative={false}
+                title="System map diagram"
+                description="Schematic diagram encoding Signal, Constraints, and Deliverable as connected clusters."
               />
+            </div>
+
+            <div className="mt-5 pt-5 border-t border-gray-200/60">
+              <p className="text-sm text-gray-600 leading-relaxed">
+                A clean schematic view that encodes <span className="font-semibold text-gray-800">Signal</span>, <span className="font-semibold text-gray-800">Constraints</span>, and the <span className="font-semibold text-gray-800">Deliverable</span>.
+              </p>
+
+              <div className="mt-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Primary constraints</div>
+                <ConstraintSet
+                  className="mt-3"
+                  ariaLabel="Primary constraints"
+                  meter="bar"
+                  items={[
+                    { kind: "latency", label: "Latency", intensity: 70 },
+                    { kind: "risk", label: "Risk", intensity: 85 },
+                    { kind: "cost", label: "Cost", intensity: 60 },
+                  ]}
+                />
+              </div>
             </div>
           </Surface>
         </div>

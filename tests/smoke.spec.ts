@@ -5,6 +5,12 @@ test("home loads", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
+test("reduced motion disables hero animation", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.locator('[data-system-map-hero="reduced"]')).toHaveCount(1);
+});
+
 test("services loads", async ({ page }) => {
   await page.goto("/services");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -33,11 +39,16 @@ test("contact validates required fields", async ({ page, browserName }) => {
 
   await page.goto("/contact");
 
-  // The form uses native required attributes; submitting with empty fields should keep fields invalid.
+  // Native required fields should show invalid state when empty.
   await page.getByRole("button", { name: /submit contact form/i }).click();
-
   await expect(page.locator("#name:invalid")).toHaveCount(1);
   await expect(page.locator("#email:invalid")).toHaveCount(1);
   await expect(page.locator("#systemInScope:invalid")).toHaveCount(1);
-  await expect(page.locator("#primaryConstraint:invalid")).toHaveCount(1);
+
+  // Primary constraint is a custom `ConstraintSet` control (hidden input) and is validated in JS.
+  await page.fill("#name", "Test User");
+  await page.fill("#email", "test@example.com");
+  await page.fill("#systemInScope", "Test system");
+  await page.getByRole("button", { name: /submit contact form/i }).click();
+  await expect(page.getByText("Select a primary constraint before sending.")).toBeVisible();
 });

@@ -7,6 +7,7 @@ import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TopologyLines from "@/components/graphics/TopologyLines";
 import BrandMark from "@/components/brand/BrandMark";
+import LazyMount from "@/components/ui/LazyMount";
 
 const principles = [
   {
@@ -103,7 +104,9 @@ export default function AboutPageClient() {
         <Surface variant="raised" className="mt-10 max-w-3xl p-6 md:p-8 relative overflow-hidden">
           {/* Subtle motif */}
           <div aria-hidden="true" className="pointer-events-none absolute right-0 top-0 w-32 h-32 opacity-[0.06]">
-            <TopologyLines className="h-full w-full" />
+            <LazyMount className="h-full w-full" placeholder={<div className="h-full w-full" />}>
+              <TopologyLines className="h-full w-full" />
+            </LazyMount>
           </div>
           <List items={credibility} variant="check" className="relative" itemClassName="text-sm md:text-base text-gray-700 leading-relaxed" />
         </Surface>

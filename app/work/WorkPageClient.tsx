@@ -2,18 +2,14 @@
 
 import PageShell from "@/components/layout/PageShell";
 import MagneticButton from "@/components/ui/MagneticButton";
-import Button from "@/components/ui/Button";
-import Chip from "@/components/ui/Chip";
 import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import OutcomeTile from "@/components/ui/OutcomeTile";
 import SectionHeading from "@/components/ui/SectionHeading";
-import List from "@/components/ui/List";
-import { Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getAllCaseStudies } from "@/lib/case-studies";
 import TopologyLines from "@/components/graphics/TopologyLines";
-import AppIcon from "@/components/ui/AppIcon";
+import ArtifactTile from "@/components/case-studies/ArtifactTile";
 
 export default function WorkPageClient() {
   const caseStudies = getAllCaseStudies();
@@ -34,7 +30,7 @@ export default function WorkPageClient() {
 
   const featured = caseStudies[0];
   const rest = caseStudies.slice(1);
-  const featuredWhatChanged = (featured.whatChanged?.length ? featured.whatChanged : featured.keyFeatures).slice(0, 3);
+  const hasFeatured = Boolean(featured);
 
   return (
     <PageShell>
@@ -65,69 +61,35 @@ export default function WorkPageClient() {
           />
         </div>
 
-        <Surface id={featured.slug} variant="glow" className="mt-8 p-8 md:p-12 relative overflow-hidden">
-           <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
-              <TopologyLines className="h-full w-full" />
-           </div>
-
-          <div className="relative z-10 grid gap-10 lg:grid-cols-2 lg:items-start">
-            <div className="flex flex-col h-full">
-              <Chip label="Confidential case study" tone="tinted" className="self-start mb-6" />
-
-              <h3 className="text-3xl font-semibold tracking-tight text-gray-900">
-                <Link
-                  href={`/case-studies/${featured.slug}`}
-                  className="hover:text-accent-electric transition-colors"
-                >
-                  {featured.title}
-                </Link>
-              </h3>
-              <p className="mt-4 text-lg text-gray-600 leading-relaxed flex-grow">{featured.description}</p>
-
-              {featuredWhatChanged.length ? (
-                <div className="mt-8">
-                  <div className="text-sm font-semibold text-gray-900">What changed</div>
-                  <List
-                    items={featuredWhatChanged}
-                    variant="dot"
-                    density="compact"
-                    className="mt-3"
-                    itemClassName="text-gray-700"
-                  />
-                </div>
-              ) : null}
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Chip label={featured.industry} />
-                <Chip icon={Clock} label={featured.timeline} />
-              </div>
-
-              <div className="mt-8">
-                 <Button
-                    href={`/case-studies/${featured.slug}`}
-                    variant="primary"
-                    size="lg"
-                  >
-                    Read case study
-                  </Button>
-              </div>
-            </div>
-
-            <div className="grid gap-4 bg-gray-50/50 rounded-xl p-2 border border-blue-50/50">
-              {pickTopResults(featured.results).map((result) => (
-                <OutcomeTile
-                  key={`${featured.slug}::${result.metric}`}
-                  value={result.value}
-                  metric={result.metric}
-                  context={result.description}
-                  surfaceVariant="raised" // Popping out
-                  ornament="rail"
-                  className="p-6"
-                />
-              ))}
-            </div>
+        <div className="mt-8 relative">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-5">
+            <TopologyLines className="h-full w-full" />
           </div>
-        </Surface>
+
+          <div className="relative z-10">
+            {hasFeatured ? (
+              <ArtifactTile
+                caseStudy={featured}
+                variant="spotlight"
+                rightSlot={
+                  <div className="grid gap-4 bg-gray-50/50 dark:bg-bg-dark rounded-xl p-2 border border-blue-50/50 dark:border-gray-800">
+                    {pickTopResults(featured.results).map((result) => (
+                      <OutcomeTile
+                        key={`${featured.slug}::${result.metric}`}
+                        value={result.value}
+                        metric={result.metric}
+                        context={result.description}
+                        surfaceVariant="raised"
+                        ornament="rail"
+                        className="p-6"
+                      />
+                    ))}
+                  </div>
+                }
+              />
+            ) : null}
+          </div>
+        </div>
       </Section>
 
       {/* MORE PROJECTS */}
@@ -138,47 +100,7 @@ export default function WorkPageClient() {
 
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
           {rest.map((caseStudy) => (
-            <Surface
-              key={caseStudy.slug}
-              id={caseStudy.slug}
-              variant="raised"
-              className="h-full p-8 flex flex-col group"
-            >
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
-                  {caseStudy.industry}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 group-hover:text-accent-electric transition-colors">
-                  <Link href={`/case-studies/${caseStudy.slug}`}>{caseStudy.title}</Link>
-                </h3>
-              </div>
-
-              <p className="mt-4 text-sm text-gray-600 truncate">
-                {caseStudy.summaryContext ?? caseStudy.description}
-              </p>
-
-              <p className="mt-3 text-sm text-gray-700 truncate">
-                <span className="font-medium text-gray-900">Outcome:</span>{" "}
-                {caseStudy.summaryOutcome ?? caseStudy.results[0]?.value ?? ""}
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {caseStudy.tags.slice(0, 3).map((tag) => (
-                  <Chip key={tag} label={tag} size="sm" tone="tinted" />
-                ))}
-              </div>
-
-              <div className="mt-auto pt-8">
-                <Button
-                  href={`/case-studies/${caseStudy.slug}`}
-                  variant="tertiary"
-                  size="sm"
-                  className="px-0 group-hover:text-accent-electric"
-                >
-                  Read case study <AppIcon icon={ArrowRight} className="ml-2 w-4 h-4" />
-                </Button>
-              </div>
-            </Surface>
+            <ArtifactTile key={caseStudy.slug} caseStudy={caseStudy} />
           ))}
         </div>
       </Section>

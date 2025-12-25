@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import PageShell from "@/components/layout/PageShell";
+import CaseStudyArtifactHeader from "@/components/case-studies/CaseStudyArtifactHeader";
 import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
 import { getCaseStudy, getAllCaseStudies } from "@/lib/case-studies";
 import { siteConfig, getArticleSchema, getBreadcrumbSchema } from "@/lib/seo";
@@ -83,6 +84,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <CaseStudyArtifactHeader caseStudy={caseStudy} />
       <CaseStudyContent caseStudy={caseStudy} />
     </PageShell>
   );

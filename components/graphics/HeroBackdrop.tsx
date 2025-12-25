@@ -1,3 +1,22 @@
+const GRID_V_X = Array.from({ length: 13 }, (_, i) => i * 100);
+const GRID_H_Y = Array.from({ length: 7 }, (_, i) => i * 100);
+const NODE_POINTS: Array<[number, number]> = [
+  [120, 140],
+  [260, 320],
+  [420, 210],
+  [640, 360],
+  [820, 160],
+  [980, 280],
+  [1080, 420],
+];
+
+/**
+ * HeroBackdrop
+ * Performance checklist:
+ * - No SVG filters/masks/blurs.
+ * - Precomputed coordinates (avoid per-render allocations).
+ * - Preserve aspect ratio behavior (no layout coupling).
+ */
 export default function HeroBackdrop(props: { className?: string }) {
   const { className } = props;
 
@@ -12,14 +31,12 @@ export default function HeroBackdrop(props: { className?: string }) {
     >
       {/* Subtle grid */}
       <g className="text-gray-200" stroke="currentColor" opacity="0.55" strokeWidth="1">
-        {Array.from({ length: 13 }).map((_, i) => {
-          const x = i * 100;
-          return <path key={`v-${i}`} d={`M ${x} 0 V 600`} />;
-        })}
-        {Array.from({ length: 7 }).map((_, i) => {
-          const y = i * 100;
-          return <path key={`h-${i}`} d={`M 0 ${y} H 1200`} />;
-        })}
+        {GRID_V_X.map((x, i) => (
+          <path key={`v-${i}`} d={`M ${x} 0 V 600`} />
+        ))}
+        {GRID_H_Y.map((y, i) => (
+          <path key={`h-${i}`} d={`M 0 ${y} H 1200`} />
+        ))}
       </g>
 
       {/* Deterministic diagonals (very faint) */}
@@ -32,15 +49,7 @@ export default function HeroBackdrop(props: { className?: string }) {
 
       {/* Small nodes */}
       <g className="fill-accent-electric" opacity="0.12">
-        {[
-          [120, 140],
-          [260, 320],
-          [420, 210],
-          [640, 360],
-          [820, 160],
-          [980, 280],
-          [1080, 420],
-        ].map(([cx, cy]) => (
+        {NODE_POINTS.map(([cx, cy]) => (
           <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3" />
         ))}
       </g>

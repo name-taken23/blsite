@@ -4,7 +4,15 @@ type BlueprintGridProps = {
   className?: string;
 };
 
+const GRID_V_X = Array.from({ length: 11 }, (_, i) => 20 + i * 36);
+const GRID_H_Y = Array.from({ length: 6 }, (_, i) => 20 + i * 36);
+
 export default function BlueprintGrid({ className }: BlueprintGridProps) {
+  /**
+   * Performance checklist:
+   * - Static SVG (no filters/masks).
+   * - Precomputed coordinates (avoid per-render allocations).
+   */
   return (
     <svg
       aria-hidden="true"
@@ -13,11 +21,11 @@ export default function BlueprintGrid({ className }: BlueprintGridProps) {
       className={cn("w-full h-full", className)}
     >
       <g className="stroke-gray-200 opacity-70" strokeWidth="1">
-        {Array.from({ length: 11 }).map((_, i) => (
-          <line key={`v-${i}`} x1={20 + i * 36} y1={16} x2={20 + i * 36} y2={224} />
+        {GRID_V_X.map((x, i) => (
+          <line key={`v-${i}`} x1={x} y1={16} x2={x} y2={224} />
         ))}
-        {Array.from({ length: 6 }).map((_, i) => (
-          <line key={`h-${i}`} x1={16} y1={20 + i * 36} x2={384} y2={20 + i * 36} />
+        {GRID_H_Y.map((y, i) => (
+          <line key={`h-${i}`} x1={16} y1={y} x2={384} y2={y} />
         ))}
       </g>
 

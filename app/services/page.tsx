@@ -7,10 +7,11 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import Button from "@/components/ui/Button";
 import List from "@/components/ui/List";
 import { getServiceSchema } from "@/lib/seo";
-import Section from "@/components/ui/Section";
+import SectionShell from "@/components/ui/SectionShell";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
 import IconBadge from "@/components/ui/IconBadge";
+import ConstraintSet from "@/components/ui/ConstraintSet";
 import { Clock, FileText, Shield } from "lucide-react";
 
 export const metadata: Metadata = pageMetadata.services;
@@ -77,7 +78,13 @@ export default function ServicesPage() {
       />
 
       {/* HEADER */}
-      <Section variant="plain" spacing="pageHeader" containerClassName="pb-0">
+      <SectionShell
+        variant="plain"
+        spacing="pageHeader"
+        containerClassName="pb-0"
+        backplate="radial"
+        backplateOpacity={0.035}
+      >
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Services"
@@ -87,10 +94,16 @@ export default function ServicesPage() {
             as="h1"
           />
         </div>
-      </Section>
+      </SectionShell>
 
       {/* BLUEPRINT */}
-      <Section variant="tinted">
+      <SectionShell
+        variant="tinted"
+        backplate="grid"
+        backplateOpacity={0.04}
+        separatorText="constraint-first delivery"
+        separatorAlign="start"
+      >
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Blueprint"
@@ -105,16 +118,36 @@ export default function ServicesPage() {
             <IconBadge icon={FileText} label="Written outputs" />
             <IconBadge icon={Shield} label="Guardrails + rollback" />
           </div>
+
+          <div className="mt-6">
+            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Typical constraints</div>
+            <ConstraintSet
+              className="mt-3"
+              ariaLabel="Typical constraints for Blueprint"
+              meter="bar"
+              items={[
+                { kind: "risk", label: "Risk", intensity: 85 },
+                { kind: "reliability", label: "Reliability", intensity: 70 },
+                { kind: "compliance", label: "Compliance", intensity: 55 },
+              ]}
+            />
+          </div>
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-8">
           <div className="text-sm font-semibold text-gray-900">Deliverables</div>
           <List items={blueprintDeliverables} variant="dot" className="mt-4 text-sm" />
         </Surface>
-      </Section>
+      </SectionShell>
 
       {/* BUILD */}
-      <Section variant="plain">
+      <SectionShell
+        variant="plain"
+        backplate="radial"
+        backplateOpacity={0.04}
+        separatorText="measured change"
+        separatorAlign="center"
+      >
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Build"
@@ -123,16 +156,36 @@ export default function ServicesPage() {
             size="lg"
             as="h2"
           />
+
+          <div className="mt-6">
+            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Typical constraints</div>
+            <ConstraintSet
+              className="mt-3"
+              ariaLabel="Typical constraints for Build"
+              meter="bar"
+              items={[
+                { kind: "reliability", label: "Reliability", intensity: 85 },
+                { kind: "security", label: "Security", intensity: 70 },
+                { kind: "latency", label: "Latency", intensity: 65 },
+              ]}
+            />
+          </div>
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-8">
           <div className="text-sm font-semibold text-gray-900">What it includes</div>
           <List items={buildDeliverables} variant="dot" className="mt-4 text-sm" />
         </Surface>
-      </Section>
+      </SectionShell>
 
       {/* CALIBRATE */}
-      <Section variant="tinted">
+      <SectionShell
+        variant="tinted"
+        backplate="grid"
+        backplateOpacity={0.035}
+        separatorText="operational clarity"
+        separatorAlign="end"
+      >
         <div className="max-w-3xl">
           <SectionHeading
             eyebrow="Calibrate"
@@ -141,16 +194,30 @@ export default function ServicesPage() {
             size="lg"
             as="h2"
           />
+
+          <div className="mt-6">
+            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Typical constraints</div>
+            <ConstraintSet
+              className="mt-3"
+              ariaLabel="Typical constraints for Calibrate"
+              meter="bar"
+              items={[
+                { kind: "cost", label: "Cost", intensity: 80 },
+                { kind: "reliability", label: "Reliability", intensity: 75 },
+                { kind: "latency", label: "Latency", intensity: 60 },
+              ]}
+            />
+          </div>
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-8">
           <div className="text-sm font-semibold text-gray-900">What it includes</div>
           <List items={calibrateDeliverables} variant="dot" className="mt-4 text-sm" />
         </Surface>
-      </Section>
+      </SectionShell>
 
       {/* ENGAGEMENT / HOW TO START */}
-      <Section variant="framed" spacing="tight">
+      <SectionShell variant="framed" spacing="tight" backplate="noise" backplateOpacity={0.03}>
         <Surface variant="raised" className="p-8 md:p-12">
           <div className="max-w-3xl">
             <SectionHeading
@@ -167,7 +234,7 @@ export default function ServicesPage() {
             </div>
           </div>
         </Surface>
-      </Section>
+      </SectionShell>
       
       <Script
         id="service-schema"
