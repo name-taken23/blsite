@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { cn } from "@/lib/utils";
-import { visualOpacity, visualRadius, visualStroke } from "./visualTokens";
+import { visualOpacity, visualRadius, visualStroke, visualStrokeColor } from "./visualTokens";
 
 export type ArtifactTileBackgroundProps = {
   className?: string;
@@ -29,7 +29,7 @@ export function ArtifactTileBackground({
   title = "Artifact tile background",
   density = "normal",
 }: ArtifactTileBackgroundProps): ReactElement {
-  const gridOpacity = density === "subtle" ? 0.35 : 0.55;
+  const gridOpacity = density === "subtle" ? 0.25 : visualOpacity.grid;
 
   return (
     <svg
@@ -42,8 +42,9 @@ export function ArtifactTileBackground({
     >
       {decorative ? null : <title>{title}</title>}
 
+      {/* Decorative grid - muted stroke, low opacity */}
       <g
-        className="stroke-gray-200 dark:stroke-gray-700"
+        className={visualStrokeColor.muted}
         strokeWidth={visualStroke.hairline}
         opacity={gridOpacity}
         vectorEffect="non-scaling-stroke"
@@ -56,8 +57,9 @@ export function ArtifactTileBackground({
         ))}
       </g>
 
+      {/* Frame border */}
       <g
-        className="stroke-gray-300 dark:stroke-gray-600"
+        className={visualStrokeColor.frame}
         strokeWidth={visualStroke.hairline}
         opacity={visualOpacity.frame}
         vectorEffect="non-scaling-stroke"
@@ -78,7 +80,8 @@ export function ArtifactTileBackground({
         <path d="M 76 196 L 162 116 L 246 146 L 330 92" />
       </g>
 
-      <g className="fill-white dark:fill-bg-panel stroke-gray-300 dark:stroke-gray-600" strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
+      {/* Node circles */}
+      <g className={cn("fill-white dark:fill-bg-panel", visualStrokeColor.frame)} strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
         <circle cx="76" cy="196" r="6" />
         <circle cx="162" cy="116" r="6" />
         <circle cx="246" cy="146" r="6" />

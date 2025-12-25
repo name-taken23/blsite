@@ -10,7 +10,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm transition duration-200 hover:border-accent-electric hover:text-accent-electric focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric dark:border-gray-700 dark:bg-bg-panel dark:text-gray-100"
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-line-2 bg-surface-2 text-ink-1 shadow-sm transition duration-200 hover:border-accent-electric hover:text-accent-electric focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric dark:border-gray-700 dark:bg-bg-panel dark:text-gray-100"
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (

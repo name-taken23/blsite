@@ -53,9 +53,9 @@ export default function OutcomeTile(props: {
         </div>
       ) : null}
 
-      <div className="text-2xl md:text-3xl font-semibold text-gray-900 leading-none">{value}</div>
-      <div className="mt-2 text-sm font-semibold text-gray-900">{metric}</div>
-      <div className="mt-2 text-sm text-gray-600 leading-relaxed">{context}</div>
+      <div className="text-2xl md:text-3xl font-semibold text-ink-1 leading-none">{value}</div>
+      <div className="mt-2 text-sm font-semibold text-ink-1">{metric}</div>
+      <div className="mt-2 text-sm text-ink-2 leading-relaxed">{context}</div>
     </>
   );
 
@@ -69,7 +69,7 @@ export default function OutcomeTile(props: {
           "group p-6",
           motionClasses.interactiveCard,
           motionClasses.focusRing,
-          "hover:border-gray-300",
+          "hover:border-line-1",
           className
         )}
       >

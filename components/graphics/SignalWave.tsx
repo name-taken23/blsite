@@ -12,6 +12,7 @@ export default function SignalWave({ className }: SignalWaveProps) {
       viewBox="0 0 420 160"
       className={cn("w-full h-full", className)}
     >
+      {/* contrast-ok: decorative baseline grid, aria-hidden */}
       <g className="stroke-gray-200" strokeWidth="1" opacity="0.9">
         <path d="M 24 132 H 396" />
         <path d="M 24 36 H 396" opacity="0.55" />

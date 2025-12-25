@@ -20,6 +20,7 @@ export default function BlueprintGrid({ className }: BlueprintGridProps) {
       viewBox="0 0 400 240"
       className={cn("w-full h-full", className)}
     >
+      {/* contrast-ok: decorative background grid, aria-hidden */}
       <g className="stroke-gray-200 opacity-70" strokeWidth="1">
         {GRID_V_X.map((x, i) => (
           <line key={`v-${i}`} x1={x} y1={16} x2={x} y2={224} />
@@ -29,6 +30,7 @@ export default function BlueprintGrid({ className }: BlueprintGridProps) {
         ))}
       </g>
 
+      {/* contrast-ok: decorative frame, aria-hidden */}
       <g className="stroke-gray-300 opacity-60" strokeWidth="1">
         <rect x="16" y="16" width="368" height="208" rx="14" fill="none" />
       </g>

@@ -43,10 +43,10 @@ export function SectionSeparatorMotif({
     >
       {decorative ? null : <title>{title}</title>}
 
+      {/* Main rule - uses line-2 for decorative visibility */}
       <g
-        className="stroke-gray-200 dark:stroke-gray-700"
-        strokeWidth={visualStroke.hairline}
-        opacity={0.9}
+        className="stroke-line-2 dark:stroke-gray-700" // contrast-ok: line-2 token = gray-200
+        strokeWidth={visualStroke.thin}
         vectorEffect="non-scaling-stroke"
       >
         <path d="M 16 24 H 784" />
@@ -54,21 +54,23 @@ export function SectionSeparatorMotif({
         <path d="M 784 24 v 6" />
       </g>
 
-      <g className="fill-white dark:fill-bg-panel" opacity={0.95}>
+      {/* Annotation pill background - solid surface, no opacity */}
+      <g className="fill-white dark:fill-bg-panel">
         <rect x={textX - 92} y="12" width="184" height="24" rx="12" />
       </g>
 
+      {/* Annotation pill outline - uses line-1 equivalent for stronger visibility */}
       <g
         className="stroke-gray-300 dark:stroke-gray-600"
-        strokeWidth={visualStroke.hairline}
-        opacity={visualOpacity.frame}
+        strokeWidth={visualStroke.thin}
         vectorEffect="non-scaling-stroke"
         fill="none"
       >
         <rect x={textX - 92} y="12" width="184" height="24" rx="12" />
       </g>
 
-      <g className="fill-gray-600 dark:fill-gray-300" opacity={0.95}>
+      {/* Label text - use ink-2 equivalent for readability */}
+      <g className="fill-gray-600 dark:fill-gray-300">
         <text
           x={textX}
           y="28"
@@ -81,7 +83,7 @@ export function SectionSeparatorMotif({
         </text>
       </g>
 
-      <g className="text-accent-electric" opacity={0.35}>
+      <g className="text-accent-electric" opacity={visualOpacity.accent}>
         <circle cx={textX - 72} cy="24" r="2" fill="currentColor" />
         <circle cx={textX + 72} cy="24" r="2" fill="currentColor" />
       </g>

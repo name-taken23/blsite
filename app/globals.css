@@ -19,6 +19,41 @@
   --accent-dark: 0, 102, 204;
   --accent-light: 74, 166, 255;
   
+  /* ============================================
+     CONTRAST LADDER: INK (TEXT)
+     ============================================
+     ink-1: Primary text (headings, high-impact copy)
+     ink-2: Body text (paragraphs, descriptions)
+     ink-3: Microcopy (labels, captions, metadata)
+     ink-4: Disabled/subtle (placeholders, inactive states)
+  */
+  --ink-1: #111827; /* gray-900 - AAA compliant on white */
+  --ink-2: #4B5563; /* gray-600 - AA compliant on white */
+  --ink-3: #6B7280; /* gray-500 - Use only for non-critical text */
+  --ink-4: #9CA3AF; /* gray-400 - Disabled/placeholder only */
+  
+  /* ============================================
+     CONTRAST LADDER: LINE (BORDERS/STROKES)
+     ============================================
+     line-1: Meaningful borders (cards, inputs, diagram strokes)
+     line-2: Decorative dividers (subtle separators, rails)
+  */
+  --line-1: #D1D5DB; /* gray-300 - Visible structural borders */
+  --line-2: #E5E7EB; /* gray-200 - Subtle decorative dividers */
+  
+  /* ============================================
+     CONTRAST LADDER: SURFACE
+     ============================================
+     surface-1: Page background
+     surface-2: Cards, raised elements
+     surface-3: Panels, inset containers
+     surface-tint: Subtle callouts, highlighted regions
+  */
+  --surface-1: #FFFFFF; /* Pure white page background */
+  --surface-2: #FFFFFF; /* Card/elevated surfaces */
+  --surface-3: #F9FAFB; /* gray-50 - Inset panels */
+  --surface-tint: #FAFBFC; /* Solid subtle tint - between white and gray-50 */
+  
   /* Motion */
   --motion-instant: 100ms;
   --motion-fast: 200ms;
@@ -52,6 +87,22 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 12, 12, 13;
   --background-end-rgb: 12, 12, 13;
+  
+  /* Dark mode contrast ladder: INK */
+  --ink-1: #F9FAFB; /* gray-50 */
+  --ink-2: #D1D5DB; /* gray-300 */
+  --ink-3: #9CA3AF; /* gray-400 */
+  --ink-4: #6B7280; /* gray-500 */
+  
+  /* Dark mode contrast ladder: LINE */
+  --line-1: #4B5563; /* gray-600 */
+  --line-2: #374151; /* gray-700 */
+  
+  /* Dark mode contrast ladder: SURFACE */
+  --surface-1: #0C0C0D; /* bg-dark */
+  --surface-2: #1A1A1B; /* bg-panel */
+  --surface-3: #111827; /* gray-900 */
+  --surface-tint: #141415; /* Solid subtle tint - between bg-dark and bg-panel */
 
   --texture-grid-rgb: 255, 255, 255;
   --texture-grid-alpha: 0.018;

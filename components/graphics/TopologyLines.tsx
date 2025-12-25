@@ -19,6 +19,7 @@ export default function TopologyLines({ className }: TopologyLinesProps) {
       viewBox="0 0 420 120"
       className={cn("w-full h-full", className)}
     >
+      {/* contrast-ok: decorative topology background, aria-hidden */}
       <g className="stroke-gray-200" strokeWidth="1" fill="none" opacity="0.9">
         <path d="M 34 80 L 120 36 L 210 62 L 310 28 L 388 52" />
         <path d="M 120 36 L 168 100" />
@@ -31,6 +32,7 @@ export default function TopologyLines({ className }: TopologyLinesProps) {
         <path d="M 210 62 L 310 28" />
       </g>
 
+      {/* contrast-ok: decorative node outlines, aria-hidden */}
       <g className="fill-white stroke-gray-300" strokeWidth="1">
         <circle cx="34" cy="80" r="6" />
         <circle cx="120" cy="36" r="6" />

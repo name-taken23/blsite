@@ -23,16 +23,16 @@ const base = cn(
 );
 
 const variantClassName: Record<SurfaceVariant, string> = {
-  plain: "bg-white",
-  tinted: "bg-gray-50",
-  inset: cn("bg-gray-50/50 border border-gray-200/50"),
+  plain: "bg-surface-2",
+  tinted: "bg-surface-3",
+  inset: cn("bg-surface-tint border border-line-2"),
   raised: cn(
-    "bg-white border border-gray-200",
+    "bg-surface-2 border border-line-2",
     "transition-all duration-fast",
-    "hover:border-gray-300"
+    "hover:border-line-1"
   ),
   glow: cn(
-    "bg-white border border-accent-electric/20",
+    "bg-surface-2 border border-accent-electric/20",
     "transition-all duration-fast",
     "hover:border-accent-electric/30"
   ),

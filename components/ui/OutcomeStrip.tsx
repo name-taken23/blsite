@@ -29,26 +29,16 @@ function OutcomeSparklineSvg({ variant }: { variant: Exclude<OutcomeSparkline, "
 
   return (
     <svg aria-hidden="true" focusable="false" viewBox="0 0 36 16" className="h-4 w-9">
+      {/* Single visible accent path - no faint overlay */}
       <path
         d={dByVariant[variant]}
-        className="stroke-gray-300 dark:stroke-gray-600"
+        className="stroke-accent-electric"
         strokeWidth="1.5"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
-        opacity="0.95"
-      />
-      <path
-        d={dByVariant[variant]}
-        className="text-accent-electric"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        opacity="0.18"
+        opacity="0.7"
       />
     </svg>
   );
@@ -79,8 +69,8 @@ export default function OutcomeStrip({
       aria-label={a11y}
       role="group"
       className={cn(
-        "rounded-lg border border-gray-200 bg-white/60",
-        "dark:border-gray-700 dark:bg-bg-panel/60",
+        "rounded-lg border border-line-2 bg-surface-tint",
+        "dark:border-gray-700 dark:bg-surface-tint",
         "px-3 py-2",
         className
       )}
@@ -88,11 +78,11 @@ export default function OutcomeStrip({
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <div className="text-xs font-semibold tracking-wide text-gray-600 dark:text-gray-300 truncate">
+            <div className="text-xs font-semibold tracking-wide text-ink-2 dark:text-gray-300 truncate">
               {label}
             </div>
             {pillar ? (
-              <span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              <span className="text-sm font-semibold uppercase tracking-normal text-ink-3 dark:text-gray-500">
                 {pillar}
               </span>
             ) : null}
@@ -100,21 +90,21 @@ export default function OutcomeStrip({
 
           <div className="mt-2 flex items-center gap-3">
             <div className="min-w-0">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">Before</div>
-              <div className={cn("text-xs font-semibold", hasBefore ? "text-gray-800 dark:text-gray-100" : "text-gray-400 dark:text-gray-500")}>{hasBefore ? before : "—"}</div>
+              <div className="text-sm font-semibold uppercase tracking-normal text-ink-3 dark:text-gray-500">Before</div>
+              <div className={cn("text-sm font-semibold", hasBefore ? "text-ink-1 dark:text-gray-100" : "text-ink-4 dark:text-gray-500")}>{hasBefore ? before : "—"}</div>
             </div>
 
             <div className="flex items-center" aria-hidden="true">
-              <span className="relative h-1.5 w-16 sm:w-20 rounded-full bg-gray-200/70 dark:bg-gray-700/70">
-                <span className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-gray-400 dark:bg-gray-500" />
-                <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-accent-electric/60" />
+              <span className="relative h-1.5 w-16 sm:w-20 rounded-full bg-line-2 dark:bg-gray-700">
+                <span className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-ink-3 dark:bg-gray-500" />
+                <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-accent-electric" />
                 <span className="absolute inset-y-0 left-0 right-0 rounded-full bg-accent-electric/10" />
               </span>
             </div>
 
             <div className="min-w-0">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">After</div>
-              <div className={cn("text-xs font-semibold", hasAfter ? "text-gray-800 dark:text-gray-100" : "text-gray-400 dark:text-gray-500")}>{hasAfter ? after : "—"}</div>
+              <div className="text-sm font-semibold uppercase tracking-normal text-ink-3 dark:text-gray-500">After</div>
+              <div className={cn("text-sm font-semibold", hasAfter ? "text-ink-1 dark:text-gray-100" : "text-ink-4 dark:text-gray-500")}>{hasAfter ? after : "—"}</div>
             </div>
           </div>
         </div>

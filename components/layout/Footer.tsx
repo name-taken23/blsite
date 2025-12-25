@@ -11,7 +11,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative border-t border-gray-200 bg-white overflow-hidden">
+    <footer className="relative border-t border-line-2 bg-surface-1 overflow-hidden">
       <div aria-hidden="true" className="pointer-events-none absolute right-6 top-1/2 -translate-y-1/2 opacity-5">
         <BrandMark variant="mark" size="lg" />
       </div>
@@ -26,24 +26,24 @@ export default function Footer() {
             >
               <BrandMark variant="lockup" size="sm" />
             </Link>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <AppIcon icon={MapPin} size="sm" className="text-gray-400" />
+            <div className="flex items-center gap-2 text-sm text-ink-3">
+              <AppIcon icon={MapPin} size="sm" className="text-ink-3" />
               <span>Made in London</span>
             </div>
-            <div className="text-sm text-gray-500">© {currentYear} BlackLake. All rights reserved.</div>
+            <div className="text-sm text-ink-3">© {currentYear} BlackLake. All rights reserved.</div>
           </div>
 
           <div className="space-y-2 md:text-right">
-            <p className="text-sm text-gray-600">Send a short note with context and constraints.</p>
+            <p className="text-sm text-ink-2">Send a short note with context and constraints.</p>
             <Link href="/contact" className="rounded-md text-sm font-semibold text-accent-electric hover:text-accent-electricDark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">
               Start with a Blueprint
             </Link>
           </div>
 
           <div className="flex items-center gap-8 text-sm">
-            <Link href="/work" className="rounded-md text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">Work</Link>
-            <Link href="/services" className="rounded-md text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">Services</Link>
-            <Link href="/about" className="rounded-md text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">About</Link>
+            <Link href="/work" className="rounded-md text-ink-2 hover:text-ink-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">Work</Link>
+            <Link href="/services" className="rounded-md text-ink-2 hover:text-ink-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">Services</Link>
+            <Link href="/about" className="rounded-md text-ink-2 hover:text-ink-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white">About</Link>
           </div>
 
           <div className="flex items-center gap-3">
@@ -52,7 +52,7 @@ export default function Footer() {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="w-10 h-10 rounded-lg border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:text-gray-900 hover:border-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                className="w-10 h-10 rounded-lg border border-line-1 bg-surface-2 flex items-center justify-center text-ink-2 hover:text-ink-1 hover:border-line-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 <AppIcon icon={social.icon} size="sm" />
               </a>

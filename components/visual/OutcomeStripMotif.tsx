@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { cn } from "@/lib/utils";
-import { visualRadius, visualStroke } from "./visualTokens";
+import { visualRadius, visualStroke, visualStrokeColor, visualTextColor } from "./visualTokens";
 
 export type OutcomeStripMotifProps = {
   className?: string;
@@ -53,13 +53,15 @@ export function OutcomeStripMotif({
     >
       {decorative ? null : <title>{title}</title>}
 
-      <g className="fill-gray-600 dark:fill-gray-300" opacity={0.95}>
+      {/* Main label - use readable ink token */}
+      <g className={visualTextColor.label}>
         <text x="16" y="26" fontSize="12" fontWeight="700">
           {label}
         </text>
       </g>
 
-      <g className="fill-gray-500 dark:fill-gray-400" opacity={0.85}>
+      {/* Secondary labels */}
+      <g className={visualTextColor.secondary}>
         <text x="16" y="42" fontSize="11" fontWeight="600">
           {beforeLabel}
         </text>
@@ -68,16 +70,19 @@ export function OutcomeStripMotif({
         </text>
       </g>
 
-      <g className="stroke-gray-300 dark:stroke-gray-600" strokeWidth={visualStroke.hairline} opacity={0.8} vectorEffect="non-scaling-stroke">
+      {/* Track borders */}
+      <g className={visualStrokeColor.frame} strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
         <rect x={trackX} y={trackYBefore} width={trackW} height={trackH} rx={visualRadius.sm} fill="none" />
         <rect x={trackX} y={trackYAfter} width={trackW} height={trackH} rx={visualRadius.sm} fill="none" />
       </g>
 
-      <g className="fill-gray-300 dark:fill-gray-600" opacity={0.45}>
+      {/* Before bar - muted fill */}
+      <g className="fill-gray-300 dark:fill-gray-600" opacity={0.55}>
         <rect x={trackX} y={trackYBefore} width={trackW * beforeValue} height={trackH} rx={visualRadius.sm} />
       </g>
 
-      <g className="fill-accent-electric" opacity={0.55}>
+      {/* After bar - accent fill, higher visibility */}
+      <g className="fill-accent-electric" opacity={0.7}>
         <rect x={trackX} y={trackYAfter} width={trackW * afterValue} height={trackH} rx={visualRadius.sm} />
       </g>
     </svg>

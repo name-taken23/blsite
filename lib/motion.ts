@@ -41,8 +41,8 @@ export const motionClasses = {
 
   /** Focus ring treatment (no motion required, but kept consistent). */
   focusRing: cn(
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric/25",
-    "focus-visible:ring-offset-2 focus-visible:ring-offset-white",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric/40",
+    "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2",
     "dark:focus-visible:ring-offset-bg-panel"
   ),
 } as const;

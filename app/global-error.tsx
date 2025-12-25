@@ -29,9 +29,9 @@ export default function GlobalError({
 
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white flex items-center justify-center p-6">
+      <body className="min-h-screen bg-surface-1 flex items-center justify-center p-6">
         <div className="max-w-2xl w-full">
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
+          <div className="bg-surface-2 border border-line-2 rounded-2xl p-8 md:p-12 shadow-lg">
             {/* Error Icon */}
             <div className="flex justify-center mb-6">
               <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center">
@@ -40,22 +40,22 @@ export default function GlobalError({
             </div>
 
             {/* Error Message */}
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-ink-1 text-center mb-4">
               Something Went Wrong
             </h1>
             
-            <p className="text-lg text-gray-600 text-center mb-8">
+            <p className="text-lg text-ink-2 text-center mb-8">
               We encountered an unexpected error. Try again, or contact us if you need help.
             </p>
 
             {/* Error Details (Development Only) */}
             {process.env.NODE_ENV === "development" && (
-              <div className="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <p className="text-sm font-mono text-gray-700 break-all">
+              <div className="mb-8 p-4 bg-surface-3 border border-line-2 rounded-lg">
+                <p className="text-sm font-mono text-ink-2 break-all">
                   {error.message}
                 </p>
                 {error.digest && (
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs text-ink-3 mt-2">
                     Error ID: {error.digest}
                   </p>
                 )}
@@ -74,7 +74,7 @@ export default function GlobalError({
               
               <Link
                 href="/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-accent-electric hover:text-accent-electric transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-line-1 text-ink-2 font-semibold rounded-lg hover:border-accent-electric hover:text-accent-electric transition-colors"
               >
                 <Home className="w-4 h-4" />
                 Go Home
@@ -82,8 +82,8 @@ export default function GlobalError({
             </div>
 
             {/* Support Info */}
-            <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-              <p className="text-sm text-gray-500">
+            <div className="mt-8 pt-8 border-t border-line-2 text-center">
+              <p className="text-sm text-ink-3">
                 Need immediate help?{" "}
                 <a
                   href="/contact"

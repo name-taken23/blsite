@@ -48,7 +48,7 @@ export default function Section<T extends ElementType = "section">({
       {...props}
     >
       {hasSeparator ? (
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gray-200/50" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-line-2" />
       ) : null}
 
       {variant === "framed" && cornerGraphic ? (

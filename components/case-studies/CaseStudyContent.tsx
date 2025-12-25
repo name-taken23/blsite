@@ -45,18 +45,18 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <aside className="hidden lg:block h-full">
             <div className="sticky top-28">
-              <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-4 pl-3">
+              <div className="text-sm font-semibold uppercase tracking-normal text-ink-3 dark:text-gray-500 mb-4 pl-3">
                 On this page
               </div>
               <nav className="relative">
-                 <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-100 dark:bg-gray-800" />
+                 <div className="absolute left-0 top-0 bottom-0 w-px bg-line-2 dark:bg-gray-800" />
                  <ul className="space-y-4">
                   {sections.map((section) => (
                     <li key={section.id} className="relative pl-3">
                       <button
                         type="button"
                         onClick={() => scrollToSection(section.id)}
-                        className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-accent-electric transition-colors text-left"
+                        className="text-sm font-medium text-ink-2 dark:text-gray-300 hover:text-accent-electric transition-colors text-left"
                       >
                         {section.label}
                       </button>
@@ -70,37 +70,37 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
           <div className="max-w-3xl">
             <div className="space-y-16">
               <ReportSection id="context" title="Context">
-                <p className="text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-300">{caseStudy.narrative.context}</p>
+                <p className="text-base md:text-lg leading-relaxed text-ink-2 dark:text-gray-300">{caseStudy.narrative.context}</p>
               </ReportSection>
 
               <ReportSection id="constraint" title="Constraint">
-                <p className="text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-300">{caseStudy.narrative.constraint}</p>
+                <p className="text-base md:text-lg leading-relaxed text-ink-2 dark:text-gray-300">{caseStudy.narrative.constraint}</p>
               </ReportSection>
 
               <ReportSection id="intervention" title="Intervention">
-                <p className="text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-300">{caseStudy.narrative.intervention}</p>
+                <p className="text-base md:text-lg leading-relaxed text-ink-2 dark:text-gray-300">{caseStudy.narrative.intervention}</p>
 
-                <div className="mt-8 bg-gray-50 dark:bg-bg-panel rounded-xl p-6">
-                  <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Key decisions</h3>
+                <div className="mt-8 bg-surface-3 dark:bg-bg-panel rounded-xl p-6">
+                  <h3 className="text-base font-semibold text-ink-1 dark:text-gray-100">Key decisions</h3>
                   <List
                     items={caseStudy.keyFeatures}
                     variant="check"
                     className="mt-4"
-                    itemClassName="text-gray-700 dark:text-gray-200"
+                    itemClassName="text-ink-2 dark:text-gray-200"
                   />
                 </div>
               </ReportSection>
 
               <ReportSection id="outcomes" title="Outcomes">
-                <p className="text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-300">{caseStudy.narrative.measuredOutcome}</p>
+                <p className="text-base md:text-lg leading-relaxed text-ink-2 dark:text-gray-300">{caseStudy.narrative.measuredOutcome}</p>
               </ReportSection>
 
               <ReportSection id="why-it-matters" title="Why it matters">
-                <p className="text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-300">{caseStudy.narrative.whyItMatters}</p>
+                <p className="text-base md:text-lg leading-relaxed text-ink-2 dark:text-gray-300">{caseStudy.narrative.whyItMatters}</p>
               </ReportSection>
 
               <ReportSection id="implementation" title="Implementation">
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-ink-2 dark:text-gray-300 leading-relaxed">
                   Practical technology choices that matched the constraints.
                 </p>
 
@@ -117,12 +117,12 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
 
       {caseStudy.testimonial && (
         <section className="max-w-3xl mx-auto px-6 py-16">
-          <div className="rounded-xl bg-gray-50 dark:bg-bg-panel p-8 md:p-10">
-            <blockquote className="text-lg md:text-xl font-medium text-gray-900 dark:text-gray-100 leading-relaxed">
+          <div className="rounded-xl bg-surface-3 dark:bg-bg-panel p-8 md:p-10">
+            <blockquote className="text-lg md:text-xl font-medium text-ink-1 dark:text-gray-100 leading-relaxed">
               &ldquo;{caseStudy.testimonial.quote}&rdquo;
             </blockquote>
-            <div className="mt-6 text-sm text-gray-600 dark:text-gray-300">
-              <div className="font-semibold text-gray-900 dark:text-gray-100">{caseStudy.testimonial.author}</div>
+            <div className="mt-6 text-sm text-ink-2 dark:text-gray-300">
+              <div className="font-semibold text-ink-1 dark:text-gray-100">{caseStudy.testimonial.author}</div>
               <div>{caseStudy.testimonial.role}</div>
             </div>
           </div>
@@ -130,7 +130,7 @@ export default function CaseStudyContent({ caseStudy }: CaseStudyContentProps) {
       )}
 
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="rounded-xl bg-gray-50 dark:bg-bg-panel p-10 md:p-12 text-center">
+        <div className="rounded-xl bg-surface-3 dark:bg-bg-panel p-10 md:p-12 text-center">
           <div className="max-w-2xl mx-auto">
             <SectionHeading
               title="Discuss a similar system"

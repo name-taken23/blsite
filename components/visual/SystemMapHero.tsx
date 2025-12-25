@@ -5,7 +5,7 @@ import { useId } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { SystemMapMotif } from "./SystemMapMotif";
-import { visualOpacity, visualStroke } from "./visualTokens";
+import { visualOpacity, visualStroke, visualStrokeColor, visualTextColor } from "./visualTokens";
 import { pathDrawVariants, pulseVariants, useMotionSettings } from "@/lib/motion-framer";
 
 export type SystemMapHeroProps = {
@@ -70,13 +70,12 @@ export function SystemMapHero({
           )}
           {/* SIGNAL cluster */}
           <g
-            className="stroke-gray-300 dark:stroke-gray-600"
+            className={visualStrokeColor.strong}
             strokeWidth={visualStroke.thin}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            opacity={0.9}
           >
             <path d="M 46 96 C 60 84, 72 108, 86 96 S 112 108, 126 96 S 152 84, 166 96" />
             <path d="M 66 120 L 66 104" />
@@ -84,11 +83,10 @@ export function SystemMapHero({
 
           {/* CONSTRAINTS cluster */}
           <g
-            className="stroke-gray-300 dark:stroke-gray-600"
+            className={visualStrokeColor.strong}
             strokeWidth={visualStroke.hairline}
             fill="none"
             vectorEffect="non-scaling-stroke"
-            opacity={0.85}
           >
             <rect x="196" y="118" width="60" height="34" rx="10" />
             <path d="M 206 129 h 20" />
@@ -103,13 +101,12 @@ export function SystemMapHero({
 
           {/* DELIVERABLE cluster */}
           <g
-            className="stroke-gray-300 dark:stroke-gray-600"
+            className={visualStrokeColor.strong}
             strokeWidth={visualStroke.thin}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            opacity={0.9}
           >
             <path d="M 306 110 h 58 a 10 10 0 0 1 10 10 v 24 a 10 10 0 0 1 -10 10 h -58 a 10 10 0 0 1 -10 -10 v -24 a 10 10 0 0 1 10 -10 z" />
             <path d="M 312 128 h 34" />
@@ -123,8 +120,8 @@ export function SystemMapHero({
             <circle cx="314" cy="44" r="2.8" fill="currentColor" />
           </g>
 
-          {/* Labels */}
-          <g className="fill-gray-600 dark:fill-gray-300" opacity={0.95}>
+          {/* Labels - use readable ink tokens, no opacity reduction */}
+          <g className={visualTextColor.label}>
             <text x="46" y="150" fontSize="11" fontWeight="700" letterSpacing="0.1em">
               SIGNAL
             </text>
@@ -136,7 +133,7 @@ export function SystemMapHero({
             </text>
           </g>
 
-          <g className="text-accent-electric" opacity={0.3}>
+          <g className="text-accent-electric" opacity={visualOpacity.accent}>
             <circle cx="40" cy="146" r="2" fill="currentColor" />
             <circle cx="190" cy="162" r="2" fill="currentColor" />
             <circle cx="300" cy="96" r="2" fill="currentColor" />
@@ -163,13 +160,12 @@ export function SystemMapHero({
           )}
           {/* SIGNAL cluster */}
           <g
-            className="stroke-gray-300 dark:stroke-gray-600"
+            className={visualStrokeColor.strong}
             strokeWidth={visualStroke.thin}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            opacity={0.9}
           >
             <motion.path
               variants={draw}
@@ -181,11 +177,10 @@ export function SystemMapHero({
 
           {/* CONSTRAINTS cluster: a tight schematic block */}
           <g
-            className="stroke-gray-300 dark:stroke-gray-600"
+            className={visualStrokeColor.strong}
             strokeWidth={visualStroke.hairline}
             fill="none"
             vectorEffect="non-scaling-stroke"
-            opacity={0.85}
           >
             <motion.rect variants={draw} custom={0.1} x="196" y="118" width="60" height="34" rx="10" />
             <motion.path variants={draw} custom={0.12} d="M 206 129 h 20" />
@@ -200,13 +195,12 @@ export function SystemMapHero({
 
           {/* DELIVERABLE cluster: document + check */}
           <g
-            className="stroke-gray-300 dark:stroke-gray-600"
+            className={visualStrokeColor.strong}
             strokeWidth={visualStroke.thin}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            opacity={0.9}
           >
             <motion.path variants={draw} custom={0.3} d="M 306 110 h 58 a 10 10 0 0 1 10 10 v 24 a 10 10 0 0 1 -10 10 h -58 a 10 10 0 0 1 -10 -10 v -24 a 10 10 0 0 1 10 -10 z" />
             <motion.path variants={draw} custom={0.34} d="M 312 128 h 34" />
@@ -220,8 +214,8 @@ export function SystemMapHero({
             <motion.circle variants={pulse} custom={0.24} cx="314" cy="44" r="2.8" fill="currentColor" />
           </g>
 
-          {/* Labels */}
-          <g className="fill-gray-600 dark:fill-gray-300" opacity={0.95}>
+          {/* Labels - use readable ink tokens, no opacity reduction */}
+          <g className={visualTextColor.label}>
             <text x="46" y="150" fontSize="11" fontWeight="700" letterSpacing="0.1em">
               SIGNAL
             </text>
@@ -233,7 +227,7 @@ export function SystemMapHero({
             </text>
           </g>
 
-          <g className="text-accent-electric" opacity={0.3}>
+          <g className="text-accent-electric" opacity={visualOpacity.accent}>
             <circle cx="40" cy="146" r="2" fill="currentColor" />
             <circle cx="190" cy="162" r="2" fill="currentColor" />
             <circle cx="300" cy="96" r="2" fill="currentColor" />

@@ -31,9 +31,9 @@ const sizeClasses: Record<ChipSize, { container: string; text: string }> = {
 };
 
 const toneClasses: Record<ChipTone, string> = {
-  neutral: "border-gray-200 bg-white text-gray-600 font-medium",
-  tinted: "border-transparent bg-gray-100/50 text-gray-700 font-medium",
-  outline: "border-gray-300 bg-transparent text-gray-600 font-medium",
+  neutral: "border-line-2 bg-surface-2 text-ink-2 font-medium",
+  tinted: "border-transparent bg-surface-3 text-ink-2 font-medium",
+  outline: "border-line-1 bg-transparent text-ink-2 font-medium",
 };
 
 /**
@@ -72,7 +72,7 @@ export default function Chip({
       )}
     >
       {Icon ? (
-        <Icon className={cn(iconClass, "text-gray-500")} aria-hidden="true" />
+        <Icon className={cn(iconClass, "text-ink-3")} aria-hidden="true" />
       ) : null}
       <span>{label}</span>
     </span>

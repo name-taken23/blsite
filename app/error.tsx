@@ -26,7 +26,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6">
+    <div className="min-h-screen bg-surface-1 flex items-center justify-center p-6">
       <div className="max-w-lg w-full">
         <div className="text-center">
           {/* Error Icon */}
@@ -35,22 +35,22 @@ export default function Error({
           </div>
 
           {/* Error Message */}
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl md:text-3xl font-bold text-ink-1 mb-3">
             Oops! Something Broke
           </h1>
           
-          <p className="text-gray-600 mb-8">
+          <p className="text-ink-2 mb-8">
             Don&apos;t worry, this page had an issue but the rest of the site is working fine.
           </p>
 
           {/* Error Details (Development) */}
           {process.env.NODE_ENV === "development" && error.message && (
-            <div className="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-lg text-left">
-              <p className="text-sm font-mono text-gray-700 break-all">
+            <div className="mb-8 p-4 bg-surface-3 border border-line-2 rounded-lg text-left">
+              <p className="text-sm font-mono text-ink-2 break-all">
                 {error.message}
               </p>
               {error.digest && (
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-ink-3 mt-2">
                   Digest: {error.digest}
                 </p>
               )}
@@ -69,7 +69,7 @@ export default function Error({
             
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-accent-electric hover:text-accent-electric transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-line-1 text-ink-2 font-semibold rounded-lg hover:border-accent-electric hover:text-accent-electric transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Home

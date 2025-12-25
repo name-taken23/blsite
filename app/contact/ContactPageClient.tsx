@@ -130,7 +130,7 @@ export default function ContactPageClient() {
         </div>
       </Section>
 
-      <div className="border-t border-gray-100" />
+      <div className="border-t border-line-2" />
 
       <Section variant="plain">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -165,7 +165,7 @@ export default function ContactPageClient() {
 
             <div className="mt-12 max-w-xl">
                <Surface variant="inset" className="p-6">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Reassurance</div>
+                  <div className="text-sm font-semibold uppercase tracking-normal text-ink-3">Reassurance</div>
                   <List
                     items={[
                       "Confidential by default.",
@@ -180,26 +180,26 @@ export default function ContactPageClient() {
             </div>
 
             <div className="mt-8 max-w-xl grid gap-4 sm:grid-cols-2">
-              <Surface variant="plain" className="p-5 border border-gray-200">
+              <Surface variant="plain" className="p-5 border border-line-1">
                 <div className="flex items-start gap-3">
                   <FeatureIcon icon={Mail} tone="neutral" size="md" />
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Email</p>
+                    <p className="text-sm font-semibold uppercase tracking-normal text-ink-3">Email</p>
                     <a
                         href="mailto:james@blacklake.systems"
-                      className="mt-2 inline-block text-sm font-semibold text-gray-900 hover:text-accent-electric transition-colors"
+                      className="mt-2 inline-block text-sm font-semibold text-ink-1 hover:text-accent-electric transition-colors"
                     >
                         james@blacklake.systems
                     </a>
                   </div>
                 </div>
               </Surface>
-              <Surface variant="plain" className="p-5 border border-gray-200">
+              <Surface variant="plain" className="p-5 border border-line-1">
                 <div className="flex items-start gap-3">
                   <FeatureIcon icon={MapPin} tone="neutral" size="md" />
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Location</p>
-                    <p className="mt-2 text-sm text-gray-600">London, UK (remote-first)</p>
+                    <p className="text-sm font-semibold uppercase tracking-normal text-ink-3">Location</p>
+                    <p className="mt-2 text-sm text-ink-2">London, UK (remote-first)</p>
                   </div>
                 </div>
               </Surface>
@@ -233,11 +233,11 @@ export default function ContactPageClient() {
                           <AppIcon icon={Mail} size="md" />
                        </div>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900">Request received</h3>
-                    <p className="text-base text-gray-600 leading-relaxed max-w-sm mx-auto">
-                      A confirmation email has been sent to <span className="font-semibold text-gray-900">{form.email}</span>.
+                    <h3 className="text-xl font-semibold text-ink-1">Request received</h3>
+                    <p className="text-base text-ink-2 leading-relaxed max-w-sm mx-auto">
+                      A confirmation email has been sent to <span className="font-semibold text-ink-1">{form.email}</span>.
                       <br className="block my-2" />
-                      If you don’t see it, check spam or email <a href="mailto:james@blacklake.systems" className="underline hover:text-gray-900">james@blacklake.systems</a>.
+                      If you don&apos;t see it, check spam or email <a href="mailto:james@blacklake.systems" className="underline hover:text-ink-1">james@blacklake.systems</a>.
                     </p>
                     <div className="pt-4">
                       <Button href="/work" variant="secondary" size="lg" className="w-full">
@@ -324,12 +324,12 @@ export default function ContactPageClient() {
                         required
                         disabled={status === "submitting"}
                       />
-                      <p className="mt-2 text-xs text-gray-500">One sentence is enough.</p>
+                      <p className="mt-2 text-xs text-ink-3">One sentence is enough.</p>
                     </div>
 
                     <div className="relative">
-                      <div className="text-sm font-semibold text-gray-900">Primary constraint</div>
-                      <p className="mt-2 text-xs text-gray-500">The constraint that dominates decisions.</p>
+                      <div className="text-sm font-semibold text-ink-1">Primary constraint</div>
+                      <p className="mt-2 text-xs text-ink-3">The constraint that dominates decisions.</p>
 
                       <div className="mt-3">
                         <ConstraintSet
@@ -359,7 +359,7 @@ export default function ContactPageClient() {
                         onChange={(e) => setForm((s) => ({ ...s, context: e.target.value }))}
                         disabled={status === "submitting"}
                       />
-                      <p className="mt-2 text-xs text-gray-500">Include: scale, failure modes, or cost sensitivity if relevant.</p>
+                      <p className="mt-2 text-xs text-ink-3">Include: scale, failure modes, or cost sensitivity if relevant.</p>
                     </div>
 
                     <div className="pt-2 space-y-3">
@@ -372,8 +372,8 @@ export default function ContactPageClient() {
                         {status === "submitting" ? "Sending..." : "Send"}
                       </MagneticButton>
 
-                      <div className="flex items-start gap-2 text-xs text-gray-500 px-1">
-                        <svg className="w-4 h-4 shrink-0 mt-0.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="flex items-start gap-2 text-xs text-ink-3 px-1">
+                        <svg className="w-4 h-4 shrink-0 mt-0.5 text-ink-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                         <span>Confidential by default. Expect a reply within 24 hours.</span>
@@ -381,7 +381,7 @@ export default function ContactPageClient() {
                     </div>
 
                     <div className="pt-2">
-                      <p className="text-xs text-gray-500 text-center">
+                      <p className="text-xs text-ink-3 text-center">
                         Prefer email?{" "}
                         <a
                           className="rounded-sm underline hover:text-accent-electric focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"

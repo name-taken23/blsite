@@ -49,7 +49,7 @@ export default function WorkPageClient() {
         </div>
       </Section>
 
-      <div className="border-t border-gray-100" />
+      <div className="border-t border-line-2" />
 
       {/* FEATURED SPOTLIGHT */}
       <Section variant="framed" containerClassName="py-14 md:py-16">
@@ -72,7 +72,7 @@ export default function WorkPageClient() {
                 caseStudy={featured}
                 variant="spotlight"
                 rightSlot={
-                  <div className="grid gap-4 bg-gray-50/50 dark:bg-bg-dark rounded-xl p-2 border border-blue-50/50 dark:border-gray-800">
+                  <div className="grid gap-4 bg-surface-3 dark:bg-bg-dark rounded-xl p-2 border border-line-2 dark:border-gray-800">
                     {pickTopResults(featured.results).map((result) => (
                       <OutcomeTile
                         key={`${featured.slug}::${result.metric}`}

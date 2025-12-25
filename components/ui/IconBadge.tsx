@@ -10,18 +10,18 @@ const sizeClassName: Record<IconBadgeSize, { container: string; icon: string; te
   sm: {
     container: "px-3 py-1 text-xs",
     icon: ICON_SIZES.sm,
-    text: "text-gray-700",
+    text: "text-ink-2",
   },
   md: {
     container: "px-3.5 py-1.5 text-sm",
     icon: ICON_SIZES.md,
-    text: "text-gray-700",
+    text: "text-ink-2",
   },
 };
 
 const toneClassName: Record<IconBadgeTone, string> = {
-  neutral: "bg-white",
-  tinted: "bg-gray-50",
+  neutral: "bg-surface-2",
+  tinted: "bg-surface-3",
 };
 
 /**
@@ -53,7 +53,7 @@ export default function IconBadge(props: {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-gray-200 font-semibold",
+        "inline-flex items-center gap-2 rounded-full border border-line-2 font-semibold",
         "whitespace-nowrap",
         toneClassName[tone],
         sizeClassName[size].container,
@@ -65,7 +65,7 @@ export default function IconBadge(props: {
         <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent-electric/60" />
       ) : null}
       {Icon ? (
-        <Icon className={cn(sizeClassName[size].icon, "text-gray-600")} aria-hidden="true" />
+        <Icon className={cn(sizeClassName[size].icon, "text-ink-2")} aria-hidden="true" />
       ) : null}
       <span>{label}</span>
     </span>

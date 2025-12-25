@@ -34,15 +34,15 @@ const sizeClasses: Record<FeatureIconSize, { container: string; icon: string }> 
 
 const toneClasses: Record<FeatureIconTone, { container: string; icon: string }> = {
   neutral: {
-    container: "bg-gray-50 border border-gray-200",
-    icon: "text-gray-700",
+    container: "bg-surface-3 border border-line-2",
+    icon: "text-ink-2",
   },
   tinted: {
-    container: "bg-gray-100",
-    icon: "text-gray-700",
+    container: "bg-surface-3",
+    icon: "text-ink-2",
   },
   accent: {
-    container: "bg-white border border-gray-200",
+    container: "bg-surface-2 border border-line-2",
     icon: "text-accent-electric",
   },
 };

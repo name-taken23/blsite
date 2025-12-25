@@ -36,17 +36,17 @@ export default function Hero() {
               </div>
             </div>
 
-            <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-gray-900">
+            <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-1">
               Modernise production systems.
               <br />
-              <span className="text-gray-700">Reduce risk and waste. Keep control.</span>
+              <span className="text-ink-2">Reduce risk and waste. Keep control.</span>
             </h1>
           </div>
 
-          <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            <span className="font-semibold text-gray-800">For leaders accountable for production change.</span>{" "}
+          <p className="mt-6 text-lg text-ink-2 leading-relaxed">
+            <span className="font-semibold text-ink-1">For leaders accountable for production change.</span>{" "}
             BlackLake takes ownership of modernisation across software, data, and automation.
-            Work starts with the <span className="font-semibold text-gray-800">BlackLake Blueprint</span>: a paid, structured assessment that produces a scoped plan, risks, and a sequence of changes you can operate.
+            Work starts with the <span className="font-semibold text-ink-1">BlackLake Blueprint</span>: a paid, structured assessment that produces a scoped plan, risks, and a sequence of changes you can operate.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
@@ -83,13 +83,13 @@ export default function Hero() {
               />
             </div>
 
-            <div className="mt-5 pt-5 border-t border-gray-200/60">
-              <p className="text-sm text-gray-600 leading-relaxed">
+            <div className="mt-5 pt-5 border-t border-line-2">
+              <p className="text-sm text-ink-2 leading-relaxed">
                 A clean schematic view that encodes <span className="font-semibold text-gray-800">Signal</span>, <span className="font-semibold text-gray-800">Constraints</span>, and the <span className="font-semibold text-gray-800">Deliverable</span>.
               </p>
 
               <div className="mt-4">
-                <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Primary constraints</div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">Primary constraints</div>
                 <ConstraintSet
                   className="mt-3"
                   ariaLabel="Primary constraints"

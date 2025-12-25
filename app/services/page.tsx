@@ -135,7 +135,7 @@ export default function ServicesPage() {
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-8">
-          <div className="text-sm font-semibold text-gray-900">Deliverables</div>
+          <div className="text-sm font-semibold text-ink-1">Deliverables</div>
           <List items={blueprintDeliverables} variant="dot" className="mt-4 text-sm" />
         </Surface>
       </SectionShell>
@@ -158,7 +158,7 @@ export default function ServicesPage() {
           />
 
           <div className="mt-6">
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Typical constraints</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">Typical constraints</div>
             <ConstraintSet
               className="mt-3"
               ariaLabel="Typical constraints for Build"
@@ -173,7 +173,7 @@ export default function ServicesPage() {
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-8">
-          <div className="text-sm font-semibold text-gray-900">What it includes</div>
+          <div className="text-sm font-semibold text-ink-1">What it includes</div>
           <List items={buildDeliverables} variant="dot" className="mt-4 text-sm" />
         </Surface>
       </SectionShell>
@@ -196,7 +196,7 @@ export default function ServicesPage() {
           />
 
           <div className="mt-6">
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Typical constraints</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">Typical constraints</div>
             <ConstraintSet
               className="mt-3"
               ariaLabel="Typical constraints for Calibrate"
@@ -211,7 +211,7 @@ export default function ServicesPage() {
         </div>
 
         <Surface variant="inset" className="mt-10 p-6 md:p-8">
-          <div className="text-sm font-semibold text-gray-900">What it includes</div>
+          <div className="text-sm font-semibold text-ink-1">What it includes</div>
           <List items={calibrateDeliverables} variant="dot" className="mt-4 text-sm" />
         </Surface>
       </SectionShell>

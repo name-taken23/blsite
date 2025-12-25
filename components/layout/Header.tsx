@@ -67,13 +67,13 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b border-gray-200 bg-white/85 backdrop-blur supports-[backdrop-filter]:bg-white/70 transition-shadow duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-line-2 bg-surface-1/85 backdrop-blur supports-[backdrop-filter]:bg-surface-1/70 transition-shadow duration-300 ${
         isScrolled ? "shadow-sm" : ""
       }`}
     >
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] rounded-lg bg-surface-2 px-4 py-2 text-sm font-semibold text-ink-1 shadow-sm ring-1 ring-line-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
         Skip to content
       </a>
@@ -111,8 +111,8 @@ export default function Header() {
                 aria-current={isActive ? "page" : undefined}
                 className={`rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-electric focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                   isActive
-                    ? "text-gray-900"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "text-ink-1"
+                    : "text-ink-2 hover:text-ink-1"
                 }`}
               >
                 {label}
@@ -158,7 +158,7 @@ export default function Header() {
       >
         {isMobileMenuOpen && (
           <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white border-l border-gray-200 shadow-sm">
-            <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100">
+            <div className="h-20 px-6 flex items-center justify-between border-b border-line-2">
               <Link
                 href="/"
                 onClick={closeMobileMenu}

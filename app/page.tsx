@@ -144,7 +144,7 @@ export default function Home() {
               <h3 className="mt-6 text-xl font-semibold text-gray-900 tracking-tight">{service.title}</h3>
               <p className="mt-3 text-base text-gray-600 leading-relaxed flex-grow">{service.description}</p>
               
-              <div className="mt-8 pt-8 border-t border-gray-100">
+              <div className="mt-8 pt-8 border-t border-line-2">
                 <Button
                   href="/services"
                   variant="tertiary"
@@ -221,16 +221,16 @@ export default function Home() {
 
               <div className="relative">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink-3">
                   {caseStudy.industry}
                 </p>
                 <Chip label={caseStudy.timeline} size="sm" tone="neutral" />
               </div>
               
-              <h3 className="mt-4 text-xl font-semibold text-gray-900 group-hover:text-accent-electric transition-colors">
+              <h3 className="mt-4 text-xl font-semibold text-ink-1 group-hover:text-accent-electric transition-colors">
                 {caseStudy.title}
               </h3>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed line-clamp-3">
+              <p className="mt-3 text-sm text-ink-2 leading-relaxed line-clamp-3">
                 {caseStudy.description}
               </p>
               

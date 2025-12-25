@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { cn } from "@/lib/utils";
-import { visualOpacity, visualRadius, visualStroke } from "./visualTokens";
+import { visualOpacity, visualRadius, visualStroke, visualStrokeColor } from "./visualTokens";
 
 export type SystemMapMotifProps = {
   /** Tailwind className applied to the root svg element. */
@@ -36,25 +36,29 @@ export function SystemMapMotif({
     >
       {decorative ? null : <title>{title}</title>}
 
+      {/* Decorative grid - uses muted stroke, very low opacity to stay secondary */}
       {grid ? (
         <g
-          className="stroke-gray-200 dark:stroke-gray-700"
+          className={visualStrokeColor.muted}
           strokeWidth={visualStroke.hairline}
           opacity={visualOpacity.grid}
           vectorEffect="non-scaling-stroke"
         >
-          {Array.from({ length: 11 }).map((_, i) => (
-            <line key={`v-${i}`} x1={24 + i * 34} y1={14} x2={24 + i * 34} y2={166} />
+          {/* Reduced density: 6 vertical lines instead of 11 */}
+          {Array.from({ length: 6 }).map((_, i) => (
+            <line key={`v-${i}`} x1={44 + i * 68} y1={14} x2={44 + i * 68} y2={166} />
           ))}
-          {Array.from({ length: 5 }).map((_, i) => (
-            <line key={`h-${i}`} x1={16} y1={24 + i * 34} x2={404} y2={24 + i * 34} />
+          {/* Reduced density: 3 horizontal lines instead of 5 */}
+          {Array.from({ length: 3 }).map((_, i) => (
+            <line key={`h-${i}`} x1={16} y1={44 + i * 50} x2={404} y2={44 + i * 50} />
           ))}
         </g>
       ) : null}
 
+      {/* Frame - uses frame stroke color */}
       {framed ? (
         <g
-          className="stroke-gray-300 dark:stroke-gray-600"
+          className={visualStrokeColor.frame}
           strokeWidth={visualStroke.hairline}
           opacity={visualOpacity.frame}
           vectorEffect="non-scaling-stroke"
@@ -68,10 +72,10 @@ export function SystemMapMotif({
         </g>
       ) : null}
 
+      {/* Primary topology edges - uses strong stroke, no opacity reduction */}
       <g
-        className="stroke-gray-300 dark:stroke-gray-600"
+        className={visualStrokeColor.strong}
         strokeWidth={visualStroke.thin}
-        opacity={0.9}
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -83,6 +87,7 @@ export function SystemMapMotif({
         <path d="M 314 44 L 314 132" />
       </g>
 
+      {/* Accent connector overlay - meaningful, uses higher opacity */}
       <g
         className="text-accent-electric"
         stroke="currentColor"
@@ -97,7 +102,8 @@ export function SystemMapMotif({
         <path d="M 226 96 L 314 44" />
       </g>
 
-      <g className="fill-white dark:fill-bg-panel stroke-gray-300 dark:stroke-gray-600" strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
+      {/* Node circles - frame stroke */}
+      <g className={cn("fill-white dark:fill-bg-panel", visualStrokeColor.frame)} strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
         <circle cx="66" cy="120" r="6" />
         <circle cx="142" cy="56" r="6" />
         <circle cx="226" cy="96" r="6" />
@@ -108,6 +114,7 @@ export function SystemMapMotif({
         <circle cx="314" cy="132" r="5" />
       </g>
 
+      {/* Accent highlight dots */}
       <g className="fill-accent-electric" opacity={visualOpacity.accentStrong}>
         <circle cx="142" cy="56" r="2.5" />
         <circle cx="314" cy="44" r="2.5" />

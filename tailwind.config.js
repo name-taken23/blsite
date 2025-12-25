@@ -55,6 +55,43 @@ module.exports = {
           error: "#EF4444",
           info: "#3B82F6",
         },
+        // ============================================
+        // CONTRAST LADDER TOKENS
+        // ============================================
+        // These semantic tokens map to CSS variables for theme-aware colors.
+        // Prefer these over raw gray-* values for text, borders, and surfaces.
+        //
+        // INK (text hierarchy):
+        //   ink-1: Headings, high-impact primary text
+        //   ink-2: Body copy, descriptions
+        //   ink-3: Labels, microcopy, metadata (never for critical info in light mode)
+        //   ink-4: Placeholders, disabled states only
+        //
+        // LINE (borders/strokes):
+        //   line-1: Meaningful borders (cards, inputs, diagram edges)
+        //   line-2: Decorative dividers (subtle separators)
+        //
+        // SURFACE (backgrounds):
+        //   surface-1: Page background
+        //   surface-2: Cards, elevated elements
+        //   surface-3: Panels, inset containers
+        //   surface-tint: Subtle highlighted regions
+        ink: {
+          1: "var(--ink-1)",
+          2: "var(--ink-2)",
+          3: "var(--ink-3)",
+          4: "var(--ink-4)",
+        },
+        line: {
+          1: "var(--line-1)",
+          2: "var(--line-2)",
+        },
+        surface: {
+          1: "var(--surface-1)",
+          2: "var(--surface-2)",
+          3: "var(--surface-3)",
+          tint: "var(--surface-tint)",
+        },
       },
       // ============================================
       // BORDER RADIUS SCALE
