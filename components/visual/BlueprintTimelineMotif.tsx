@@ -51,7 +51,7 @@ export function BlueprintTimelineMotif({
       {decorative ? null : <title>{title}</title>}
 
       <g
-        className="stroke-gray-300 dark:stroke-gray-600"
+        className="stroke-gray-300"
         strokeWidth={visualStroke.thin}
         fill="none"
         strokeLinecap="round"
@@ -64,7 +64,7 @@ export function BlueprintTimelineMotif({
         <path d="M 480 36 l -10 6" />
       </g>
 
-      <g className="fill-white dark:fill-bg-panel stroke-gray-300 dark:stroke-gray-600" strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
+      <g className="fill-white stroke-gray-300" strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
         <circle cx="120" cy="36" r="8" />
         <circle cx="260" cy="36" r="8" />
         <circle cx="400" cy="36" r="8" />
@@ -77,7 +77,7 @@ export function BlueprintTimelineMotif({
       </g>
 
       {showLabels ? (
-        <g className="fill-gray-600 dark:fill-gray-300" opacity={0.95}>
+        <g className="fill-gray-600" opacity={0.95}>
           <text x="120" y="68" textAnchor="middle" fontSize="12" fontWeight="600">
             {labelBlueprint}
           </text>

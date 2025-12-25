@@ -72,7 +72,7 @@ export default function WorkPageClient() {
                 caseStudy={featured}
                 variant="spotlight"
                 rightSlot={
-                  <div className="grid gap-4 bg-surface-3 dark:bg-bg-dark rounded-xl p-2 border border-line-2 dark:border-gray-800">
+                  <div className="grid gap-4 bg-surface-3 rounded-xl p-2 border border-line-2">
                     {pickTopResults(featured.results).map((result) => (
                       <OutcomeTile
                         key={`${featured.slug}::${result.metric}`}

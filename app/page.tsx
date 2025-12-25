@@ -207,7 +207,7 @@ export default function Home() {
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {caseStudies.map((caseStudy) => (
+          {caseStudies.map((caseStudy, index) => (
             <Surface
               key={caseStudy.slug}
               as={Link}
@@ -216,7 +216,11 @@ export default function Home() {
               className="group relative overflow-hidden p-6 transition-all hover:-translate-y-1"
             >
               <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40">
-                <ArtifactTileBackground className="h-full w-full" density="subtle" />
+                <ArtifactTileBackground
+                  className="h-full w-full"
+                  density="subtle"
+                  variant={index % 3 === 0 ? "signal" : index % 3 === 1 ? "matrix" : "ripple"}
+                />
               </div>
 
               <div className="relative">

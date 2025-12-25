@@ -83,33 +83,6 @@
   --texture-noise-size: 26px;
 }
 
-:root.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 12, 12, 13;
-  --background-end-rgb: 12, 12, 13;
-  
-  /* Dark mode contrast ladder: INK */
-  --ink-1: #F9FAFB; /* gray-50 */
-  --ink-2: #D1D5DB; /* gray-300 */
-  --ink-3: #9CA3AF; /* gray-400 */
-  --ink-4: #6B7280; /* gray-500 */
-  
-  /* Dark mode contrast ladder: LINE */
-  --line-1: #4B5563; /* gray-600 */
-  --line-2: #374151; /* gray-700 */
-  
-  /* Dark mode contrast ladder: SURFACE */
-  --surface-1: #0C0C0D; /* bg-dark */
-  --surface-2: #1A1A1B; /* bg-panel */
-  --surface-3: #111827; /* gray-900 */
-  --surface-tint: #141415; /* Solid subtle tint - between bg-dark and bg-panel */
-
-  --texture-grid-rgb: 255, 255, 255;
-  --texture-grid-alpha: 0.018;
-  --texture-glow-alpha: 0.04;
-  --texture-noise-alpha: 0.01;
-}
-
 /* ============================================
    BASE STYLES
    ============================================ */

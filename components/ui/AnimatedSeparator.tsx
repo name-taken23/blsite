@@ -15,7 +15,7 @@ export default function AnimatedSeparator(props: {
   const motionSettings = useMotionSettings();
 
   if (motionSettings.reduced) {
-    return <SectionSeparatorMotif text={text} align={align} className={cn("h-8 w-full", className)} />;
+    return <SectionSeparatorMotif text={text} align={align} className={cn("h-9 w-full md:h-10", className)} />;
   }
 
   return (
@@ -27,7 +27,7 @@ export default function AnimatedSeparator(props: {
       whileInView="visible"
       viewport={{ once: true, amount: 0.8 }}
     >
-      <SectionSeparatorMotif text={text} align={align} className="h-8 w-full" />
+      <SectionSeparatorMotif text={text} align={align} className="h-9 w-full md:h-10" />
     </motion.div>
   );
 }

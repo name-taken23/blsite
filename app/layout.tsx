@@ -3,7 +3,6 @@ import Script from "next/script";
 import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { pageMetadata, getOrganizationSchema, siteConfig } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -41,18 +40,16 @@ export default function RootLayout({
           "min-h-screen bg-bg-white text-gray-800 antialiased"
         )}
       >
-        <ThemeProvider>
-          {children}
-          
-          {/* Structured Data - Organization Schema */}
-          <Script
-            id="organization-schema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(getOrganizationSchema()),
-            }}
-          />
-        </ThemeProvider>
+        {children}
+        
+        {/* Structured Data - Organization Schema */}
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getOrganizationSchema()),
+          }}
+        />
       </body>
     </html>
   );

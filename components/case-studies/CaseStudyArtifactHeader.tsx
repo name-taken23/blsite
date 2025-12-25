@@ -37,20 +37,20 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
             <div className="flex items-start justify-between gap-6">
               <div>
                 <div className="flex items-center gap-3">
-                  <div className="font-mono text-xs tracking-widest text-ink-3 dark:text-gray-400">
+                  <div className="font-mono text-xs tracking-widest text-ink-3">
                     {refId}
                   </div>
-                  <div className="h-4 w-px bg-line-2 dark:bg-gray-700" aria-hidden="true" />
-                  <div className="text-xs font-semibold uppercase tracking-wide text-ink-3 dark:text-gray-400">
+                  <div className="h-4 w-px bg-line-2" aria-hidden="true" />
+                  <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">
                     Project artifact
                   </div>
                 </div>
 
-                <h1 className="mt-4 text-3xl md:text-5xl font-semibold tracking-tight text-ink-1 dark:text-gray-100">
+                <h1 className="mt-4 text-3xl md:text-5xl font-semibold tracking-tight text-ink-1">
                   {caseStudy.title}
                 </h1>
 
-                <p className="mt-5 text-base md:text-lg leading-relaxed text-ink-2 dark:text-gray-300">
+                <p className="mt-5 text-base md:text-lg leading-relaxed text-ink-2">
                   {caseStudy.description}
                 </p>
               </div>
@@ -72,30 +72,30 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
               ))}
             </div>
 
-            <div className="mt-6 pt-6 border-t border-line-2 dark:border-gray-700 grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+            <div className="mt-6 pt-6 border-t border-line-2 grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
               <div>
-                <div className="text-ink-3 dark:text-gray-400">Industry</div>
-                <div className="mt-1 font-semibold text-ink-1 dark:text-gray-100">{caseStudy.industry}</div>
+                <div className="text-ink-3">Industry</div>
+                <div className="mt-1 font-semibold text-ink-1">{caseStudy.industry}</div>
               </div>
               <div>
-                <div className="text-ink-3 dark:text-gray-400">Timeline</div>
-                <div className="mt-1 font-semibold text-ink-1 dark:text-gray-100">{caseStudy.timeline}</div>
+                <div className="text-ink-3">Timeline</div>
+                <div className="mt-1 font-semibold text-ink-1">{caseStudy.timeline}</div>
               </div>
               <div className="hidden sm:block">
-                <div className="text-ink-3 dark:text-gray-400">Delivery model</div>
-                <div className="mt-1 font-semibold text-ink-1 dark:text-gray-100">Founder-led</div>
+                <div className="text-ink-3">Delivery model</div>
+                <div className="mt-1 font-semibold text-ink-1">Founder-led</div>
               </div>
             </div>
           </div>
 
           {/* RIGHT: executive skim panel */}
-          <div className="border-t lg:border-t-0 lg:border-l border-line-2 dark:border-line-2 bg-surface-tint dark:bg-surface-tint p-6 md:p-8">
+          <div className="border-t lg:border-t-0 lg:border-l border-line-2 bg-surface-tint p-6 md:p-8">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-wide text-ink-3 dark:text-gray-400">
+                <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">
                   Executive skim
                 </div>
-                <div className="mt-1 text-sm font-semibold text-ink-1 dark:text-gray-100">Three measured signals</div>
+                <div className="mt-1 text-sm font-semibold text-ink-1">Three measured signals</div>
               </div>
 
               <Link
@@ -110,25 +110,25 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
               {skim.map((item) => (
                 <div
                   key={item.metric}
-                  className="rounded-xl border border-line-2 dark:border-gray-700 bg-surface-2 dark:bg-bg-panel p-4"
+                  className="rounded-xl border border-line-2 bg-surface-2 p-4"
                 >
                   <div className="flex items-baseline justify-between gap-4">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-ink-3 dark:text-gray-400">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">
                       {item.metric}
                     </div>
-                    <div className="text-sm font-semibold text-ink-1 dark:text-gray-100">
+                    <div className="text-sm font-semibold text-ink-1">
                       {item.value}
                     </div>
                   </div>
-                  <div className="mt-2 text-sm text-ink-2 dark:text-gray-300 leading-relaxed line-clamp-2">
+                  <div className="mt-2 text-sm text-ink-2 leading-relaxed line-clamp-2">
                     {item.description}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 pt-6 border-t border-line-2 dark:border-gray-700">
-              <div className="text-xs font-semibold uppercase tracking-wide text-ink-3 dark:text-gray-400">
+            <div className="mt-6 pt-6 border-t border-line-2">
+              <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">
                 System sketch
               </div>
               <div className="mt-3 md:hidden">

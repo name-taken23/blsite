@@ -10,6 +10,8 @@ export type ArtifactTileBackgroundProps = {
   title?: string;
   /** Density of the background grid. */
   density?: "subtle" | "normal";
+  /** Variant motif to keep cards visually distinct. */
+  variant?: "signal" | "matrix" | "ripple";
 };
 
 const GRID_V_X = Array.from({ length: 9 }, (_, i) => 24 + i * 46);
@@ -28,8 +30,11 @@ export function ArtifactTileBackground({
   decorative = true,
   title = "Artifact tile background",
   density = "normal",
+  variant = "signal",
 }: ArtifactTileBackgroundProps): ReactElement {
   const gridOpacity = density === "subtle" ? 0.25 : visualOpacity.grid;
+  const accentOpacity = visualOpacity.accent;
+  const accentStrong = visualOpacity.accentStrong;
 
   return (
     <svg
@@ -76,22 +81,98 @@ export function ArtifactTileBackground({
         <path d="M 406 248 h -18" />
       </g>
 
-      <g className="text-accent-electric" stroke="currentColor" strokeWidth={visualStroke.accent} opacity={visualOpacity.accent} fill="none" vectorEffect="non-scaling-stroke">
-        <path d="M 76 196 L 162 116 L 246 146 L 330 92" />
-      </g>
+      {variant === "signal" ? (
+        <>
+          <g
+            className="text-accent-electric"
+            stroke="currentColor"
+            strokeWidth={visualStroke.accent}
+            opacity={accentOpacity}
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+          >
+            <path d="M 74 198 L 152 128 L 236 154 L 324 96" />
+          </g>
 
-      {/* Node circles */}
-      <g className={cn("fill-white dark:fill-bg-panel", visualStrokeColor.frame)} strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
-        <circle cx="76" cy="196" r="6" />
-        <circle cx="162" cy="116" r="6" />
-        <circle cx="246" cy="146" r="6" />
-        <circle cx="330" cy="92" r="6" />
-      </g>
+          {/* Node circles */}
+          <g
+            className={cn("fill-white", visualStrokeColor.frame)}
+            strokeWidth={visualStroke.hairline}
+            vectorEffect="non-scaling-stroke"
+          >
+            <circle cx="74" cy="198" r="6" />
+            <circle cx="152" cy="128" r="6" />
+            <circle cx="236" cy="154" r="6" />
+            <circle cx="324" cy="96" r="6" />
+          </g>
 
-      <g className="fill-accent-electric" opacity={visualOpacity.accentStrong}>
-        <circle cx="162" cy="116" r="2.6" />
-        <circle cx="330" cy="92" r="2.6" />
-      </g>
+          <g className="fill-accent-electric" opacity={accentStrong}>
+            <circle cx="152" cy="128" r="2.6" />
+            <circle cx="324" cy="96" r="2.6" />
+          </g>
+        </>
+      ) : null}
+
+      {variant === "matrix" ? (
+        <>
+          <g
+            className="text-accent-electric"
+            stroke="currentColor"
+            strokeWidth={visualStroke.accent}
+            opacity={accentOpacity}
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+          >
+            <path d="M 92 208 L 92 112 L 232 112 L 232 168 L 330 168" />
+          </g>
+
+          <g
+            className={cn("fill-white", visualStrokeColor.frame)}
+            strokeWidth={visualStroke.hairline}
+            vectorEffect="non-scaling-stroke"
+          >
+            <rect x="86" y="106" width="12" height="12" rx="3" />
+            <rect x="226" y="162" width="12" height="12" rx="3" />
+            <rect x="324" y="162" width="12" height="12" rx="3" />
+          </g>
+
+          <g className="fill-accent-electric" opacity={accentStrong}>
+            <rect x="90" y="110" width="4" height="4" rx="1" />
+            <rect x="328" y="166" width="4" height="4" rx="1" />
+          </g>
+        </>
+      ) : null}
+
+      {variant === "ripple" ? (
+        <>
+          <g
+            className="text-accent-electric"
+            stroke="currentColor"
+            strokeWidth={visualStroke.accent}
+            opacity={accentOpacity}
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+          >
+            <path d="M 84 164 C 138 110, 202 108, 252 146 S 344 186, 356 120" />
+          </g>
+
+          <g
+            className={cn("fill-white", visualStrokeColor.frame)}
+            strokeWidth={visualStroke.hairline}
+            vectorEffect="non-scaling-stroke"
+          >
+            <circle cx="84" cy="164" r="6" />
+            <circle cx="196" cy="118" r="6" />
+            <circle cx="252" cy="146" r="6" />
+            <circle cx="356" cy="120" r="6" />
+          </g>
+
+          <g className="fill-accent-electric" opacity={accentStrong}>
+            <circle cx="196" cy="118" r="2.6" />
+            <circle cx="356" cy="120" r="2.6" />
+          </g>
+        </>
+      ) : null}
     </svg>
   );
 }

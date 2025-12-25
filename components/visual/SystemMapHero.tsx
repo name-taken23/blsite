@@ -4,9 +4,17 @@ import type { ReactElement } from "react";
 import { useId } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { SystemMapMotif } from "./SystemMapMotif";
-import { visualOpacity, visualStroke, visualStrokeColor, visualTextColor } from "./visualTokens";
-import { pathDrawVariants, pulseVariants, useMotionSettings } from "@/lib/motion-framer";
+import {
+  visualOpacity,
+  visualStroke,
+  visualStrokeColor,
+  visualTextColor,
+} from "./visualTokens";
+import {
+  pathDrawVariants,
+  pulseVariants,
+  useMotionSettings,
+} from "@/lib/motion-framer";
 
 export type SystemMapHeroProps = {
   /** Tailwind className applied to the outer wrapper. */
@@ -21,217 +29,283 @@ export type SystemMapHeroProps = {
 
 /**
  * SystemMapHero
- * Hero-grade system map diagram with understated in-view motion.
- * - Path draw triggers once on viewport entry.
- * - Node pulse is subtle and stops after a few seconds.
- * - Respects prefers-reduced-motion (renders static).
+ * A professional system architecture diagram showing the flow from
+ * chaotic inputs → constraint analysis → structured deliverable.
+ *
+ * Visual narrative:
+ * 1. LEFT: Multiple incoming signals (data streams, events, requests)
+ * 2. CENTER: Constraint processor (the "brain" that analyzes)
+ * 3. RIGHT: Clean deliverable output (structured, validated)
  */
 export function SystemMapHero({
   className,
   decorative = true,
-  title = "System map diagram",
-  description = "Schematic diagram showing Signal, Constraints, and Deliverable as connected clusters.",
+  title = "System architecture diagram",
+  description = "Diagram showing signals flowing through constraint analysis to produce a structured deliverable.",
 }: SystemMapHeroProps): ReactElement {
   const motionSettings = useMotionSettings();
   const a11yId = useId();
   const titleId = `system-map-title-${a11yId}`;
   const descId = `system-map-desc-${a11yId}`;
 
-  const draw = pathDrawVariants(motionSettings, { duration: 0.4 });
-  const pulse = pulseVariants(motionSettings, { duration: 0.3, repeat: 2 });
+  const draw = pathDrawVariants(motionSettings, { duration: 0.5 });
+  const pulse = pulseVariants(motionSettings, { duration: 0.35, repeat: 2 });
+
+  // Common SVG content shared between static and animated versions
+  const renderDiagram = (animated: boolean) => {
+    const Path = animated ? motion.path : "path";
+    const Circle = animated ? motion.circle : "circle";
+    const Line = animated ? motion.line : "line";
+
+    const drawProps = (delay: number) =>
+      animated ? { variants: draw, custom: delay } : {};
+    const pulseProps = (delay: number) =>
+      animated ? { variants: pulse, custom: delay } : {};
+
+    return (
+      <>
+        {/* BACKGROUND GRID - Subtle blueprint aesthetic */}
+        <g
+          className={visualStrokeColor.muted}
+          strokeWidth={0.5}
+          opacity={0.35}
+          vectorEffect="non-scaling-stroke"
+        >
+          {/* Vertical grid lines */}
+          {[60, 120, 180, 240, 300, 360, 420, 480, 540].map((x) => (
+            <line key={`v-${x}`} x1={x} y1={20} x2={x} y2={260} />
+          ))}
+          {/* Horizontal grid lines */}
+          {[60, 100, 140, 180, 220].map((y) => (
+            <line key={`h-${y}`} x1={20} y1={y} x2={580} y2={y} />
+          ))}
+        </g>
+
+        {/* SECTION LABELS - Clear zone identification */}
+        <g className={visualTextColor.secondary} fontSize="9" fontWeight="600" letterSpacing="0.12em">
+          <text x="85" y="38">INPUTS</text>
+          <text x="265" y="38">ANALYSIS</text>
+          <text x="460" y="38">OUTPUT</text>
+        </g>
+
+        {/* LEFT ZONE: INPUT SIGNALS - Three distinct data streams */}
+        
+        {/* Signal source nodes */}
+        <g
+          className={cn("fill-white", visualStrokeColor.strong)}
+          strokeWidth={visualStroke.thin}
+          vectorEffect="non-scaling-stroke"
+        >
+          <Circle {...drawProps(0)} cx="50" cy="80" r="12" />
+          <Circle {...drawProps(0.02)} cx="50" cy="140" r="12" />
+          <Circle {...drawProps(0.04)} cx="50" cy="200" r="12" />
+        </g>
+
+        {/* Signal icons inside nodes */}
+        <g
+          className={visualStrokeColor.strong}
+          strokeWidth={1.5}
+          fill="none"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+        >
+          {/* Top node: data/database icon */}
+          <Path {...drawProps(0.06)} d="M 44 77 h 12 M 44 80 h 12 M 44 83 h 12" />
+          {/* Middle node: event/lightning icon */}
+          <Path {...drawProps(0.08)} d="M 52 134 l -4 6 h 4 l -4 6" />
+          {/* Bottom node: API/brackets icon */}
+          <Path {...drawProps(0.1)} d="M 46 196 l -2 4 l 2 4 M 54 196 l 2 4 l -2 4" />
+        </g>
+
+        {/* Signal flow lines from sources to convergence */}
+        <g
+          className={visualStrokeColor.strong}
+          strokeWidth={visualStroke.thin}
+          fill="none"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+        >
+          <Path {...drawProps(0.12)} d="M 62 80 Q 100 80, 130 105" />
+          <Path {...drawProps(0.14)} d="M 62 140 L 130 140" />
+          <Path {...drawProps(0.16)} d="M 62 200 Q 100 200, 130 175" />
+        </g>
+
+        {/* Convergence point */}
+        <g className="fill-white" stroke="none">
+          <Circle {...drawProps(0.18)} cx="145" cy="140" r="8" className={cn("fill-white", visualStrokeColor.frame)} strokeWidth={visualStroke.thin} />
+        </g>
+
+        {/* CENTER ZONE: CONSTRAINT PROCESSOR - Hexagonal shape */}
+        
+        {/* Main processor hexagon */}
+        <g
+          className={cn("fill-surface-3", visualStrokeColor.strong)}
+          strokeWidth={visualStroke.thin}
+          vectorEffect="non-scaling-stroke"
+        >
+          <Path
+            {...drawProps(0.22)}
+            d="M 230 100 L 270 80 L 330 80 L 370 100 L 370 180 L 330 200 L 270 200 L 230 180 Z"
+            className="fill-white"
+          />
+        </g>
+
+        {/* Inner processor detail - circuit-like pattern */}
+        <g
+          className={visualStrokeColor.frame}
+          strokeWidth={1}
+          fill="none"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          opacity={0.7}
+        >
+          {/* Horizontal analysis lines */}
+          <Path {...drawProps(0.26)} d="M 250 120 h 100" />
+          <Path {...drawProps(0.28)} d="M 250 140 h 100" />
+          <Path {...drawProps(0.30)} d="M 250 160 h 100" />
+          
+          {/* Vertical connectors */}
+          <Path {...drawProps(0.32)} d="M 280 110 v 70" />
+          <Path {...drawProps(0.34)} d="M 320 110 v 70" />
+        </g>
+
+        {/* Constraint indicators inside processor */}
+        <g className="fill-accent-electric" opacity={visualOpacity.accentStrong}>
+          <Circle {...pulseProps(0)} cx="280" cy="120" r="4" />
+          <Circle {...pulseProps(0.1)} cx="320" cy="140" r="4" />
+          <Circle {...pulseProps(0.2)} cx="280" cy="160" r="4" />
+        </g>
+
+        {/* Processor label */}
+        <g className={visualTextColor.label} fontSize="10" fontWeight="700" letterSpacing="0.08em">
+          <text x="300" y="230" textAnchor="middle">CONSTRAINTS</text>
+        </g>
+
+        {/* Flow line: convergence → processor */}
+        <g
+          className="text-accent-electric"
+          stroke="currentColor"
+          strokeWidth={visualStroke.accent}
+          fill="none"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          opacity={visualOpacity.accent}
+        >
+          <Path {...drawProps(0.2)} d="M 153 140 L 228 140" />
+          {/* Arrow head */}
+          <Path {...drawProps(0.21)} d="M 218 135 L 228 140 L 218 145" />
+        </g>
+
+        {/* RIGHT ZONE: DELIVERABLE OUTPUT */}
+        
+        {/* Flow line: processor → deliverable */}
+        <g
+          className="text-accent-electric"
+          stroke="currentColor"
+          strokeWidth={visualStroke.accent}
+          fill="none"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          opacity={visualOpacity.accent}
+        >
+          <Path {...drawProps(0.4)} d="M 372 140 L 440 140" />
+          <Path {...drawProps(0.41)} d="M 430 135 L 440 140 L 430 145" />
+        </g>
+
+        {/* Deliverable document shape */}
+        <g
+          className={cn("fill-white", visualStrokeColor.strong)}
+          strokeWidth={visualStroke.thin}
+          vectorEffect="non-scaling-stroke"
+        >
+          {/* Document with folded corner */}
+          <Path
+            {...drawProps(0.44)}
+            d="M 455 80 L 545 80 L 545 200 L 455 200 L 455 80 M 525 80 L 545 100 L 525 100 Z"
+          />
+        </g>
+
+        {/* Document content lines */}
+        <g
+          className={visualStrokeColor.frame}
+          strokeWidth={1.5}
+          fill="none"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+        >
+          <Line {...drawProps(0.48)} x1="470" y1="120" x2="530" y2="120" />
+          <Line {...drawProps(0.50)} x1="470" y1="135" x2="520" y2="135" />
+          <Line {...drawProps(0.52)} x1="470" y1="150" x2="525" y2="150" />
+          <Line {...drawProps(0.54)} x1="470" y1="165" x2="510" y2="165" />
+        </g>
+
+        {/* Checkmark indicating validated output */}
+        <g
+          className="text-accent-electric"
+          stroke="currentColor"
+          strokeWidth={2}
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
+        >
+          <Path {...drawProps(0.58)} d="M 475 182 l 6 6 l 14 -14" />
+        </g>
+
+        {/* Output success indicator */}
+        <g className="fill-accent-electric" opacity={visualOpacity.accentStrong}>
+          <Circle {...pulseProps(0.3)} cx="540" cy="85" r="5" />
+        </g>
+
+        {/* Deliverable label */}
+        <g className={visualTextColor.label} fontSize="10" fontWeight="700" letterSpacing="0.08em">
+          <text x="500" y="230" textAnchor="middle">BLUEPRINT</text>
+        </g>
+
+        {/* ACCENT DOTS - Visual rhythm markers */}
+        <g className="fill-accent-electric" opacity={0.5}>
+          <circle cx="95" cy="105" r="2" />
+          <circle cx="95" cy="175" r="2" />
+          <circle cx="400" cy="110" r="2" />
+          <circle cx="400" cy="170" r="2" />
+        </g>
+      </>
+    );
+  };
+
+  const svgProps = {
+    viewBox: "0 0 600 280",
+    className: "h-full w-full",
+    focusable: "false" as const,
+    "aria-hidden": decorative ? true : undefined,
+    role: decorative ? undefined : ("img" as const),
+    "aria-labelledby": decorative ? undefined : titleId,
+    "aria-describedby": decorative ? undefined : descId,
+  };
+
+  const a11yContent = decorative ? null : (
+    <>
+      <title id={titleId}>{title}</title>
+      <desc id={descId}>{description}</desc>
+    </>
+  );
 
   return (
-    <div
-      className={cn("relative h-full w-full", className)}
-      data-system-map-hero={motionSettings.reduced ? "reduced" : "full"}
-    >
-      <SystemMapMotif
-        className="absolute inset-0 h-full w-full"
-        decorative={true}
-        framed
-        grid
-      />
-
+    <div className={cn("relative h-full w-full", className)}>
       {motionSettings.reduced ? (
-        <svg
-          aria-hidden={decorative ? true : undefined}
-          role={decorative ? undefined : "img"}
-          aria-labelledby={decorative ? undefined : titleId}
-          aria-describedby={decorative ? undefined : descId}
-          viewBox="0 0 420 180"
-          className="absolute inset-0 h-full w-full"
-          focusable="false"
-        >
-          {decorative ? null : (
-            <>
-              <title id={titleId}>{title}</title>
-              <desc id={descId}>{description}</desc>
-            </>
-          )}
-          {/* SIGNAL cluster */}
-          <g
-            className={visualStrokeColor.strong}
-            strokeWidth={visualStroke.thin}
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-          >
-            <path d="M 46 96 C 60 84, 72 108, 86 96 S 112 108, 126 96 S 152 84, 166 96" />
-            <path d="M 66 120 L 66 104" />
-          </g>
-
-          {/* CONSTRAINTS cluster */}
-          <g
-            className={visualStrokeColor.strong}
-            strokeWidth={visualStroke.hairline}
-            fill="none"
-            vectorEffect="non-scaling-stroke"
-          >
-            <rect x="196" y="118" width="60" height="34" rx="10" />
-            <path d="M 206 129 h 20" />
-            <path d="M 206 139 h 32" />
-            <path d="M 206 149 h 14" />
-          </g>
-
-          <g className="text-accent-electric" stroke="currentColor" strokeWidth={visualStroke.accent} fill="none" vectorEffect="non-scaling-stroke" opacity={visualOpacity.accent}>
-            <path d="M 166 96 L 206 126" />
-            <path d="M 256 126 L 290 82" />
-          </g>
-
-          {/* DELIVERABLE cluster */}
-          <g
-            className={visualStrokeColor.strong}
-            strokeWidth={visualStroke.thin}
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-          >
-            <path d="M 306 110 h 58 a 10 10 0 0 1 10 10 v 24 a 10 10 0 0 1 -10 10 h -58 a 10 10 0 0 1 -10 -10 v -24 a 10 10 0 0 1 10 -10 z" />
-            <path d="M 312 128 h 34" />
-            <path d="M 312 140 h 28" />
-            <path d="M 314 152 l 6 6 l 12 -14" />
-          </g>
-
-          <g className="text-accent-electric" opacity={visualOpacity.accentStrong}>
-            <circle cx="142" cy="56" r="2.8" fill="currentColor" />
-            <circle cx="226" cy="96" r="2.8" fill="currentColor" />
-            <circle cx="314" cy="44" r="2.8" fill="currentColor" />
-          </g>
-
-          {/* Labels - use readable ink tokens, no opacity reduction */}
-          <g className={visualTextColor.label}>
-            <text x="46" y="150" fontSize="11" fontWeight="700" letterSpacing="0.1em">
-              SIGNAL
-            </text>
-            <text x="196" y="166" fontSize="11" fontWeight="700" letterSpacing="0.1em">
-              CONSTRAINTS
-            </text>
-            <text x="306" y="100" fontSize="11" fontWeight="700" letterSpacing="0.1em">
-              DELIVERABLE
-            </text>
-          </g>
-
-          <g className="text-accent-electric" opacity={visualOpacity.accent}>
-            <circle cx="40" cy="146" r="2" fill="currentColor" />
-            <circle cx="190" cy="162" r="2" fill="currentColor" />
-            <circle cx="300" cy="96" r="2" fill="currentColor" />
-          </g>
+        <svg {...svgProps}>
+          {a11yContent}
+          {renderDiagram(false)}
         </svg>
       ) : (
         <motion.svg
-          aria-hidden={decorative ? true : undefined}
-          role={decorative ? undefined : "img"}
-          aria-labelledby={decorative ? undefined : titleId}
-          aria-describedby={decorative ? undefined : descId}
-          viewBox="0 0 420 180"
-          className="absolute inset-0 h-full w-full"
-          focusable="false"
+          {...svgProps}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.55 }}
+          viewport={{ once: true, amount: 0.4 }}
         >
-          {decorative ? null : (
-            <>
-              <title id={titleId}>{title}</title>
-              <desc id={descId}>{description}</desc>
-            </>
-          )}
-          {/* SIGNAL cluster */}
-          <g
-            className={visualStrokeColor.strong}
-            strokeWidth={visualStroke.thin}
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-          >
-            <motion.path
-              variants={draw}
-              custom={0}
-              d="M 46 96 C 60 84, 72 108, 86 96 S 112 108, 126 96 S 152 84, 166 96"
-            />
-            <motion.path variants={draw} custom={0.05} d="M 66 120 L 66 104" />
-          </g>
-
-          {/* CONSTRAINTS cluster: a tight schematic block */}
-          <g
-            className={visualStrokeColor.strong}
-            strokeWidth={visualStroke.hairline}
-            fill="none"
-            vectorEffect="non-scaling-stroke"
-          >
-            <motion.rect variants={draw} custom={0.1} x="196" y="118" width="60" height="34" rx="10" />
-            <motion.path variants={draw} custom={0.12} d="M 206 129 h 20" />
-            <motion.path variants={draw} custom={0.14} d="M 206 139 h 32" />
-            <motion.path variants={draw} custom={0.16} d="M 206 149 h 14" />
-          </g>
-
-          <g className="text-accent-electric" stroke="currentColor" strokeWidth={visualStroke.accent} fill="none" vectorEffect="non-scaling-stroke" opacity={visualOpacity.accent}>
-            <motion.path variants={draw} custom={0.2} d="M 166 96 L 206 126" />
-            <motion.path variants={draw} custom={0.25} d="M 256 126 L 290 82" />
-          </g>
-
-          {/* DELIVERABLE cluster: document + check */}
-          <g
-            className={visualStrokeColor.strong}
-            strokeWidth={visualStroke.thin}
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-          >
-            <motion.path variants={draw} custom={0.3} d="M 306 110 h 58 a 10 10 0 0 1 10 10 v 24 a 10 10 0 0 1 -10 10 h -58 a 10 10 0 0 1 -10 -10 v -24 a 10 10 0 0 1 10 -10 z" />
-            <motion.path variants={draw} custom={0.34} d="M 312 128 h 34" />
-            <motion.path variants={draw} custom={0.36} d="M 312 140 h 28" />
-            <motion.path variants={draw} custom={0.4} d="M 314 152 l 6 6 l 12 -14" />
-          </g>
-
-          <g className="text-accent-electric" opacity={visualOpacity.accentStrong}>
-            <motion.circle variants={pulse} custom={0} cx="142" cy="56" r="2.8" fill="currentColor" />
-            <motion.circle variants={pulse} custom={0.12} cx="226" cy="96" r="2.8" fill="currentColor" />
-            <motion.circle variants={pulse} custom={0.24} cx="314" cy="44" r="2.8" fill="currentColor" />
-          </g>
-
-          {/* Labels - use readable ink tokens, no opacity reduction */}
-          <g className={visualTextColor.label}>
-            <text x="46" y="150" fontSize="11" fontWeight="700" letterSpacing="0.1em">
-              SIGNAL
-            </text>
-            <text x="196" y="166" fontSize="11" fontWeight="700" letterSpacing="0.1em">
-              CONSTRAINTS
-            </text>
-            <text x="306" y="100" fontSize="11" fontWeight="700" letterSpacing="0.1em">
-              DELIVERABLE
-            </text>
-          </g>
-
-          <g className="text-accent-electric" opacity={visualOpacity.accent}>
-            <circle cx="40" cy="146" r="2" fill="currentColor" />
-            <circle cx="190" cy="162" r="2" fill="currentColor" />
-            <circle cx="300" cy="96" r="2" fill="currentColor" />
-          </g>
+          {a11yContent}
+          {renderDiagram(true)}
         </motion.svg>
       )}
     </div>

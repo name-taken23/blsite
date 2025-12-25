@@ -77,7 +77,7 @@ export function OutcomeStripMotif({
       </g>
 
       {/* Before bar - muted fill */}
-      <g className="fill-gray-300 dark:fill-gray-600" opacity={0.55}>
+      <g className="fill-gray-300" opacity={0.55}>
         <rect x={trackX} y={trackYBefore} width={trackW * beforeValue} height={trackH} rx={visualRadius.sm} />
       </g>
 

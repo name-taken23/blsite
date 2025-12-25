@@ -1,7 +1,6 @@
 "use client";
 
 import PageShell from "@/components/layout/PageShell";
-import BrandMark from "@/components/brand/BrandMark";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Button from "@/components/ui/Button";
 import Stepper from "@/components/ui/Stepper";
@@ -209,13 +208,6 @@ export default function ContactPageClient() {
           {/* RIGHT COLUMN: FORM */}
           <div className="lg:pl-8">
             <Surface variant="raised" className="relative p-6 md:p-10">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-10 -top-10 opacity-[0.04] scale-[3] origin-top-right"
-              >
-                <BrandMark variant="mark" size="lg" />
-              </div>
-
               <div className="relative z-10 text-center md:text-left mb-8">
                  <SectionHeading
                     title="Blueprint intake"

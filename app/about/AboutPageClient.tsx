@@ -6,7 +6,6 @@ import Section from "@/components/ui/Section";
 import Surface from "@/components/ui/Surface";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TopologyLines from "@/components/graphics/TopologyLines";
-import BrandMark from "@/components/brand/BrandMark";
 import LazyMount from "@/components/ui/LazyMount";
 
 const principles = [
@@ -52,13 +51,6 @@ export default function AboutPageClient() {
     <PageShell>
       <Section variant="plain">
         <div className="max-w-3xl relative">
-          {/* Brand moment - subtle watermark */}
-          <div aria-hidden="true" className="pointer-events-none absolute -right-20 top-0 opacity-[0.04] hidden lg:block">
-            <div className="scale-[2] origin-top-right">
-              <BrandMark variant="mark" size="lg" />
-            </div>
-          </div>
-
           <Chip label="Operating philosophy" tone="neutral" />
 
           <div className="mt-6">

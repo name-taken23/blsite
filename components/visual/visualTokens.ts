@@ -13,16 +13,16 @@ export const visualRadius = {
 /**
  * 2-tier stroke color system for blueprint visuals.
  * Use Tailwind classes that reference these semantically:
- * - strokeStrong: primary topology, meaningful outlines (stroke-gray-400 / dark:stroke-gray-500)
+ * - strokeStrong: primary topology, meaningful outlines (stroke-gray-400)
  * - strokeMuted: decorative grids, scaffolding (uses muted gray) // contrast-ok: token definition
  */
 export const visualStrokeColor = {
   /** Primary topology lines, meaningful outlines - clearly visible on white */
-  strong: "stroke-gray-400 dark:stroke-gray-500",
+  strong: "stroke-gray-400",
   /** Decorative grids, secondary scaffolding - visible but recessive */
-  muted: "stroke-gray-200 dark:stroke-gray-700", // contrast-ok: token definition for decorative use
+  muted: "stroke-gray-200", // contrast-ok: token definition for decorative use
   /** Frame borders, outer boundaries */
-  frame: "stroke-gray-300 dark:stroke-gray-600",
+  frame: "stroke-gray-300",
 } as const;
 
 /**
@@ -31,9 +31,9 @@ export const visualStrokeColor = {
  */
 export const visualTextColor = {
   /** Primary labels - equivalent to ink-2 (gray-600) */
-  label: "fill-gray-600 dark:fill-gray-300",
+  label: "fill-gray-600",
   /** Secondary/helper labels - equivalent to ink-3 (gray-500) */
-  secondary: "fill-gray-500 dark:fill-gray-400",
+  secondary: "fill-gray-500",
 } as const;
 
 export const visualOpacity = {

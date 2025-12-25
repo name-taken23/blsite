@@ -116,7 +116,7 @@ export default function SectionShell<T extends ElementType = "section">({
       <SectionBackplateLayer kind={backplate} opacity={backplateOpacity} />
 
       {separatorText ? (
-        <div aria-hidden="true" className="mb-10">
+        <div aria-hidden="true" className="mb-12 md:mb-14">
           <AnimatedSeparator text={separatorText} align={separatorAlign} />
         </div>
       ) : null}

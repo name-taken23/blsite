@@ -77,8 +77,6 @@ When refactoring, replace these patterns:
 | `bg-gray-50`             | `bg-surface-3`           |
 | `bg-white/60`            | `bg-surface-tint`        |
 
-**Dark mode:** The CSS variables automatically switch values in dark mode, so you only need light mode classes in most cases. For explicit dark overrides, use `dark:` prefix with appropriate gray values.
-
 ---
 
 ## SVG Visual Tokens
@@ -87,27 +85,27 @@ Blueprint visuals (SystemMapMotif, ArtifactTileBackground, etc.) use a dedicated
 
 ### 2-Tier Stroke System
 
-| Token               | Class                                        | Use Case                                |
-|---------------------|----------------------------------------------|-----------------------------------------|
-| `strokeStrong`      | `stroke-gray-400 dark:stroke-gray-500`       | Primary topology, meaningful outlines   |
-| `strokeMuted`       | `stroke-gray-200 dark:stroke-gray-700`       | Decorative grids, scaffolding           |
-| `strokeFrame`       | `stroke-gray-300 dark:stroke-gray-600`       | Frame borders, outer boundaries         |
+| Token               | Class                | Use Case                                |
+|---------------------|----------------------|-----------------------------------------|
+| `strokeStrong`      | `stroke-gray-400`    | Primary topology, meaningful outlines   |
+| `strokeMuted`       | `stroke-gray-200`    | Decorative grids, scaffolding           |
+| `strokeFrame`       | `stroke-gray-300`    | Frame borders, outer boundaries         |
 
 ### SVG Text Colors
 
-| Token        | Class                                  | Use Case                        |
-|--------------|----------------------------------------|---------------------------------|
-| `label`      | `fill-gray-600 dark:fill-gray-300`     | Primary labels (≈ ink-2)        |
-| `secondary`  | `fill-gray-500 dark:fill-gray-400`     | Helper labels (≈ ink-3)         |
+| Token        | Class            | Use Case                        |
+|--------------|------------------|---------------------------------|
+| `label`      | `fill-gray-600`  | Primary labels (≈ ink-2)        |
+| `secondary`  | `fill-gray-500`  | Helper labels (≈ ink-3)         |
 
 ### Opacity Tokens
 
 | Token          | Value | Use Case                                    |
 |----------------|-------|---------------------------------------------|
-| `grid`         | 0.45  | Grid lines (kept low to avoid noise)        |
+| `grid`         | 0.25  | Grid lines (kept low to avoid noise)        |
 | `frame`        | 0.65  | Frame/border elements                       |
-| `accent`       | 0.55  | Accent connectors (raised for visibility)   |
-| `accentStrong` | 0.75  | Strong accent dots/highlights               |
+| `accent`       | 0.70  | Accent connectors (raised for visibility)   |
+| `accentStrong` | 0.85  | Strong accent dots/highlights               |
 
 **Rules:**
 - Use `strokeStrong` for meaningful topology (paths, outlines) — no opacity reduction.

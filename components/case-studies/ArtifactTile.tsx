@@ -19,6 +19,12 @@ type ArtifactTileProps = {
   rightSlot?: ReactNode;
 };
 
+const backgroundVariants = ["signal", "matrix", "ripple"] as const;
+
+function backgroundVariantFromSlug(slug: string): (typeof backgroundVariants)[number] {
+  const hash = Array.from(slug).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return backgroundVariants[Math.abs(hash) % backgroundVariants.length];
+}
 
 export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
   const { caseStudy, variant = "grid", href, className, rightSlot } = props;
@@ -35,10 +41,10 @@ export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
 
   const surfaceBase = cn(
     "h-full",
-    "bg-surface-2 dark:bg-bg-panel",
-    "border border-line-2 dark:border-gray-700",
+    "bg-surface-2",
+    "border border-line-2",
     "shadow-card hover:shadow-card-hover",
-    "hover:border-line-1 dark:hover:border-gray-600"
+    "hover:border-line-1"
   );
 
   const thumbnail = (
@@ -46,13 +52,17 @@ export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
       aria-hidden="true"
       className={cn(
         "relative overflow-hidden rounded-xl",
-        "border border-line-2 dark:border-gray-700",
-        "bg-surface-3 dark:bg-bg-dark",
+        "border border-line-2",
+        "bg-surface-3",
         variant === "spotlight" ? "h-20 w-28" : "h-14 w-20"
       )}
     >
       <div className="absolute inset-0 opacity-50">
-        <ArtifactTileBackground className="h-full w-full" density="subtle" />
+        <ArtifactTileBackground
+          className="h-full w-full"
+          density="subtle"
+          variant={backgroundVariantFromSlug(caseStudy.slug)}
+        />
       </div>
     </div>
   );
@@ -69,21 +79,21 @@ export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
           <div className="flex flex-col h-full">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <div className="text-xs font-semibold tracking-widest text-ink-3 dark:text-gray-400 font-mono">
+                <div className="text-xs font-semibold tracking-widest text-ink-3 font-mono">
                   {refId}
                 </div>
-                <div className="mt-3 text-sm font-semibold uppercase tracking-normal text-ink-3 dark:text-gray-500">
+                <div className="mt-3 text-sm font-semibold uppercase tracking-normal text-ink-3">
                   {caseStudy.industry}
                 </div>
               </div>
               {thumbnail}
             </div>
 
-            <h3 className="mt-5 text-3xl font-semibold tracking-tight text-ink-1 dark:text-gray-100 group-hover:text-accent-electric transition-colors duration-fast">
+            <h3 className="mt-5 text-3xl font-semibold tracking-tight text-ink-1 group-hover:text-accent-electric transition-colors duration-fast">
               {caseStudy.title}
             </h3>
 
-            <p className="mt-4 text-lg text-ink-2 dark:text-gray-300 leading-relaxed flex-grow">
+            <p className="mt-4 text-lg text-ink-2 leading-relaxed flex-grow">
               {caseStudy.description}
             </p>
 
@@ -99,8 +109,8 @@ export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
               ))}
             </div>
 
-            <div className="mt-6 text-sm font-semibold text-ink-1 dark:text-gray-100">
-              <span className="text-ink-3 dark:text-gray-400">Outcome:</span> {caseStudy.results[0]?.value ?? ""}
+            <div className="mt-6 text-sm font-semibold text-ink-1">
+              <span className="text-ink-3">Outcome:</span> {caseStudy.results[0]?.value ?? ""}
             </div>
           </div>
 
@@ -119,17 +129,17 @@ export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="text-xs font-semibold tracking-widest text-ink-3 dark:text-gray-400 font-mono">
+          <div className="text-xs font-semibold tracking-widest text-ink-3 font-mono">
             {refId}
           </div>
-          <h3 className="mt-3 text-xl font-semibold tracking-tight text-ink-1 dark:text-gray-100 group-hover:text-accent-electric transition-colors duration-fast">
+          <h3 className="mt-3 text-xl font-semibold tracking-tight text-ink-1 group-hover:text-accent-electric transition-colors duration-fast">
             {caseStudy.title}
           </h3>
         </div>
         {thumbnail}
       </div>
 
-      <p className="mt-4 text-sm text-ink-2 dark:text-gray-300 line-clamp-2">
+      <p className="mt-4 text-sm text-ink-2 line-clamp-2">
         {caseStudy.summaryContext ?? caseStudy.description}
       </p>
 
@@ -146,8 +156,8 @@ export default function ArtifactTile(props: ArtifactTileProps): ReactElement {
       </div>
 
       <div className="mt-auto pt-6">
-        <div className="text-sm text-ink-2 dark:text-gray-200">
-          <span className="text-ink-3 dark:text-gray-400">Outcome:</span> {caseStudy.summaryOutcome ?? caseStudy.results[0]?.value ?? ""}
+        <div className="text-sm text-ink-2">
+          <span className="text-ink-3">Outcome:</span> {caseStudy.summaryOutcome ?? caseStudy.results[0]?.value ?? ""}
         </div>
       </div>
     </Surface>

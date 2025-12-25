@@ -103,7 +103,7 @@ export function SystemMapMotif({
       </g>
 
       {/* Node circles - frame stroke */}
-      <g className={cn("fill-white dark:fill-bg-panel", visualStrokeColor.frame)} strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
+      <g className={cn("fill-white", visualStrokeColor.frame)} strokeWidth={visualStroke.hairline} vectorEffect="non-scaling-stroke">
         <circle cx="66" cy="120" r="6" />
         <circle cx="142" cy="56" r="6" />
         <circle cx="226" cy="96" r="6" />

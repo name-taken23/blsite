@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import ThemeToggle from "./ThemeToggle";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -139,7 +138,6 @@ export default function Header() {
           >
             Start with a Blueprint
           </Button>
-          <ThemeToggle />
         </div>
       </div>
 

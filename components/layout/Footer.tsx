@@ -12,10 +12,6 @@ export default function Footer() {
 
   return (
     <footer className="relative border-t border-line-2 bg-surface-1 overflow-hidden">
-      <div aria-hidden="true" className="pointer-events-none absolute right-6 top-1/2 -translate-y-1/2 opacity-5">
-        <BrandMark variant="mark" size="lg" />
-      </div>
-
       <div className="relative max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
           <div className="space-y-2">

@@ -34,7 +34,7 @@ export default function OutcomeTile(props: {
   } = props;
 
   const content = (
-    <>
+    <div className="flex flex-col h-full">
       {/* Accent rail - shown for rail and full */}
       {ornament !== "none" ? (
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent-electric/20" />
@@ -47,16 +47,38 @@ export default function OutcomeTile(props: {
         </div>
       ) : null}
 
+      {/* Main metric - prominent display */}
+      <div className="mb-4">
+        <div className="text-3xl md:text-4xl font-bold text-ink-1 leading-none tracking-tight">
+          {value}
+        </div>
+        <div className="mt-2 text-sm font-semibold text-ink-2 uppercase tracking-wide">
+          {metric}
+        </div>
+      </div>
+
+      {/* Context description */}
+      <p className="text-sm text-ink-3 leading-relaxed flex-grow">
+        {context}
+      </p>
+
+      {/* Transformation diagram strip - at bottom */}
       {strip ? (
-        <div className="mb-4">
+        <div className="mt-4 pt-4 border-t border-line-2">
           <OutcomeStrip {...strip} />
         </div>
       ) : null}
 
-      <div className="text-2xl md:text-3xl font-semibold text-ink-1 leading-none">{value}</div>
-      <div className="mt-2 text-sm font-semibold text-ink-1">{metric}</div>
-      <div className="mt-2 text-sm text-ink-2 leading-relaxed">{context}</div>
-    </>
+      {/* Link indicator for clickable tiles */}
+      {href ? (
+        <div className="mt-4 flex items-center text-xs font-medium text-accent-electric opacity-0 group-hover:opacity-100 transition-opacity">
+          <span>View case study</span>
+          <svg className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="2">
+            <path d="M3 6h6M7 4l2 2-2 2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      ) : null}
+    </div>
   );
 
   if (href) {
@@ -66,10 +88,11 @@ export default function OutcomeTile(props: {
         href={href}
         variant={surfaceVariant}
         className={cn(
-          "group p-6",
+          "group relative p-6",
           motionClasses.interactiveCard,
           motionClasses.focusRing,
-          "hover:border-line-1",
+          "hover:border-accent-electric/30 hover:shadow-lg hover:shadow-accent-electric/5",
+          "transition-all duration-200",
           className
         )}
       >
@@ -79,7 +102,7 @@ export default function OutcomeTile(props: {
   }
 
   return (
-    <Surface variant={surfaceVariant} className={cn("p-6", className)}>
+    <Surface variant={surfaceVariant} className={cn("relative p-6", className)}>
       {content}
     </Surface>
   );

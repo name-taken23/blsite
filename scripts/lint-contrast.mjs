@@ -30,14 +30,12 @@ const EXTENSIONS = [".tsx", ".ts", ".jsx", ".js"];
  */
 const FORBIDDEN_PATTERNS = [
   {
-    // Match text-gray-400 NOT preceded by "dark:" on the same class
-    pattern: /(?<!dark:)\btext-gray-400\b/,
+    pattern: /\btext-gray-400\b/,
     message: "text-gray-400 is too faint for light mode. Use text-ink-3 or text-ink-4 tokens.",
     id: "text-gray-400",
   },
   {
-    // Match stroke-gray-200 NOT preceded by "dark:" - for meaningful visuals only
-    pattern: /(?<!dark:)\bstroke-gray-200\b/,
+    pattern: /\bstroke-gray-200\b/,
     message: "stroke-gray-200 is too faint for meaningful visuals. Use visualStrokeColor tokens or add // contrast-ok: decorative",
     id: "stroke-gray-200",
   },
@@ -62,7 +60,7 @@ const FORBIDDEN_PATTERNS = [
     id: "border-gray-200/50",
   },
   {
-    pattern: /(?<!dark:)\bborder-gray-100\b/,
+    pattern: /\bborder-gray-100\b/,
     message: "border-gray-100 is too faint. Use border-line-2 for decorative or border-line-1 for structural.",
     id: "border-gray-100",
   },

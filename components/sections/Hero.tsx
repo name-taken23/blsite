@@ -27,15 +27,6 @@ export default function Hero() {
           </div>
 
           <div className="relative">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-6 -top-8 opacity-[0.035] sm:opacity-[0.05]"
-            >
-              <div className="scale-[2.25] sm:scale-[2.75] origin-top-right">
-                <BrandMark variant="mark" size="lg" />
-              </div>
-            </div>
-
             <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-1">
               Modernise production systems.
               <br />
@@ -78,14 +69,14 @@ export default function Hero() {
               <SystemMapHero
                 className="h-full w-full"
                 decorative={false}
-                title="System map diagram"
-                description="Schematic diagram encoding Signal, Constraints, and Deliverable as connected clusters."
+                title="Blueprint process diagram"
+                description="Diagram showing multiple inputs flowing through constraint analysis to produce a validated Blueprint deliverable."
               />
             </div>
 
             <div className="mt-5 pt-5 border-t border-line-2">
               <p className="text-sm text-ink-2 leading-relaxed">
-                A clean schematic view that encodes <span className="font-semibold text-gray-800">Signal</span>, <span className="font-semibold text-gray-800">Constraints</span>, and the <span className="font-semibold text-gray-800">Deliverable</span>.
+                Multiple <span className="font-semibold text-gray-800">inputs</span> flow through <span className="font-semibold text-gray-800">constraint analysis</span> to produce a validated <span className="font-semibold text-gray-800">Blueprint</span>.
               </p>
 
               <div className="mt-4">
