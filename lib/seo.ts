@@ -162,9 +162,9 @@ export const pageMetadata = {
   }),
 
   services: generateMetadata({
-    title: "Services",
+    title: "Services: Production Modernisation, AI & Automation",
     description:
-      "BlackLake Blueprint: A fixed-price technical assessment that delivers a system map, risk register, and sequenced modernisation plan.",
+      "Blueprint → Build → Calibrate delivery for cloud, data, and applied AI systems. Published pricing ranges with clear scope, baselines, and guardrails for production change.",
     path: "/services",
   }),
 
@@ -307,4 +307,3 @@ export function getBreadcrumbSchema(items: Array<{ name: string; url: string }>)
     })),
   };
 }
-

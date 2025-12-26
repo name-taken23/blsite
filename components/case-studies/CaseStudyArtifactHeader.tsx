@@ -8,6 +8,7 @@ import Surface from "@/components/ui/Surface";
 import Chip from "@/components/ui/Chip";
 import ConstraintBadge from "@/components/ui/ConstraintBadge";
 import { CaseStudyDiagram } from "@/components/visual/CaseStudyDiagram";
+import SystemSketchModal from "@/components/case-studies/SystemSketchModal";
 import {
   getConstraintBadgesForStudy,
   makeRefIdFromSlug,
@@ -30,7 +31,7 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
         </Button>
       </div>
 
-      <Surface variant="inset" className="p-0 overflow-hidden">
+      <Surface variant="inset" className="p-0 overflow-visible">
         <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
           {/* LEFT: identity + constraints */}
           <div className="p-6 md:p-8">
@@ -131,12 +132,7 @@ export default function CaseStudyArtifactHeader(props: { caseStudy: CaseStudy })
               <div className="text-xs font-semibold uppercase tracking-wide text-ink-3">
                 System sketch
               </div>
-              <div className="mt-3 md:hidden">
-                <CaseStudyDiagram slug={caseStudy.slug} className="h-20 w-full" framed={true} />
-              </div>
-              <div className="mt-3 hidden md:block">
-                <CaseStudyDiagram slug={caseStudy.slug} className="h-24 w-full" framed={true} />
-              </div>
+              <SystemSketchModal slug={caseStudy.slug} className="mt-3" />
             </div>
           </div>
         </div>

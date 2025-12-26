@@ -13,6 +13,7 @@ import List from "@/components/ui/List";
 import FeatureIcon from "@/components/ui/FeatureIcon";
 import { Mail, MapPin, AlertCircle } from "lucide-react";
 import { FormEvent, useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import AppIcon from "@/components/ui/AppIcon";
 import ConstraintSet from "@/components/ui/ConstraintSet";
 
@@ -35,6 +36,7 @@ const primaryConstraintItems = [
 ] as const;
 
 export default function ContactPageClient() {
+  const searchParams = useSearchParams();
   const [mountedAt, setMountedAt] = useState<number>(0);
   
   useEffect(() => {
@@ -52,6 +54,28 @@ export default function ContactPageClient() {
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState<string>("");
+  const intentParam = searchParams.get("intent")?.toLowerCase() ?? "";
+  const intentConfig = useMemo(
+    () => ({
+      blueprint: {
+        label: "Blueprint",
+        subject: "BlackLake Blueprint request",
+        placeholder: "System in scope for Blueprint (e.g. data pipeline, platform, API)",
+      },
+      build: {
+        label: "Build sprint",
+        subject: "BlackLake Build sprint request",
+        placeholder: "System in scope for Build sprint (e.g. data pipeline, platform, API)",
+      },
+      calibrate: {
+        label: "Calibrate retainer",
+        subject: "BlackLake Calibrate retainer request",
+        placeholder: "System in scope for Calibrate (e.g. data pipeline, platform, API)",
+      },
+    }),
+    []
+  );
+  const intent = intentConfig[intentParam as keyof typeof intentConfig];
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -100,7 +124,7 @@ export default function ContactPageClient() {
   };
 
   const mailtoHref = useMemo(() => {
-    const subject = "BlackLake Blueprint request";
+    const subject = intent?.subject ?? "BlackLake Blueprint request";
     const bodyLines = [
       `Name: ${form.name.trim() || ""}`,
       `Email: ${form.email.trim() || ""}`,
@@ -114,7 +138,7 @@ export default function ContactPageClient() {
     mailto.searchParams.set("subject", subject);
     mailto.searchParams.set("body", bodyLines.join("\n"));
     return mailto.toString();
-  }, [form]);
+  }, [form, intent?.subject]);
 
   return (
     <PageShell>
@@ -215,6 +239,11 @@ export default function ContactPageClient() {
                     size="md"
                     as="h2"
                   />
+                  {intent ? (
+                    <div className="mt-3 inline-flex items-center rounded-full border border-line-2 bg-surface-3 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink-3">
+                      Intent: {intent.label}
+                    </div>
+                  ) : null}
               </div>
 
               <div className="relative z-10">
@@ -310,7 +339,7 @@ export default function ContactPageClient() {
                         id="systemInScope"
                         name="systemInScope"
                         autoComplete="off"
-                        placeholder="System in scope (e.g. data pipeline, platform, API)"
+                        placeholder={intent?.placeholder ?? "System in scope (e.g. data pipeline, platform, API)"}
                         value={form.systemInScope}
                         onChange={(e) => setForm((s) => ({ ...s, systemInScope: e.target.value }))}
                         required
